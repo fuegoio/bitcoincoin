@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  database:
+    image: postgres:10
+    environment:
+      - POSTGRES_USER=pokedex
+      - POSTGRES_PASSWORD=pokedex
+    volumes:
+      - ./volumes/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  web:
+    build: back/
+    environment:
+      - DB_HOST=database
+      - REDIS_HOST=redis
+    ports:
+      - 8000:8000
+
+  redis:
+    image: redis
+
+  worker:
+    build: back/
+    environment:
+      - DB_HOST=database
+      - REDIS_HOST=redis
+    command: "celery machin"
