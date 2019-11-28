@@ -12,6 +12,24 @@ from .egg_groups import EggGroups
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
+import requests
+url = 'https://rest.coinapi.io/v1/exchanges'
+headers = {'X-CoinAPI-Key' : '2A4700C5-30A8-4713-88F9-E32DA83071E0'}
+response = requests.get(url, headers=headers)
+print(response.json()[0])
+
+import requests
+url = 'https://rest.coinapi.io/v1/assets'
+headers = {'X-CoinAPI-Key' : '2A4700C5-30A8-4713-88F9-E32DA83071E0'}
+response = requests.get(url, headers=headers)
+print(response.json()[0])
+
+import requests
+url = 'https://rest.coinapi.io/v1/symbols'
+headers = {'X-CoinAPI-Key' : '73034021-THIS-IS-SAMPLE-KEY'}
+response = requests.get(url, headers=headers)
+print(response.json()[0])
+
 
 def register_api(app):
     @api_bp.before_request
