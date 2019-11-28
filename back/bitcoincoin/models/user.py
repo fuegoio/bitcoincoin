@@ -8,5 +8,5 @@ class User(BaseModel):
     username = CharField(unique=True)
     password = CharField()
     email = CharField()
-    cashflow = DecimalField(decimal_places=2, default=0)
+    cash_flow = DecimalField(decimal_places=2, default=0)
     join_date = DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
