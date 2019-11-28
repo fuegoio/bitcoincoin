@@ -9,4 +9,4 @@ class User(BaseModel):
     password = CharField()
     email = CharField()
     cash_flow = DecimalField(decimal_places=2, default=0)
-    join_date = DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
+    join_date = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
