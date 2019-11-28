@@ -1,13 +1,9 @@
-from peewee import *
-from playhouse.shortcuts import model_to_dict
+from .base_model import BaseModel
+
+
+class Currency(BaseModel):
+    pass
 
 
 class CurrencyRates(BaseModel):
-    id = PrimaryKeyField()
-    currency_id = ForeignKeyField()
-    datetime = DateTimeField()
-    value = FloatField()
-
-class LastCurrency(BaseModel):
-    id = PrimaryKeyField()
-    name = TextField()
+    pass
