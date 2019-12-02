@@ -8,6 +8,7 @@ from .base_model import BaseModel
 class Currency(BaseModel):
     id = AutoField()
     name = TextField()
+    symbol = FixedCharField(max_length=3)
     last_value = FloatField()
 
 
