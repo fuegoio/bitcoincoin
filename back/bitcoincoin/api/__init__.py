@@ -3,7 +3,8 @@ from flask_restful import Api
 
 from bitcoincoin.models.database import db
 
-from .users import User, Users
+from .users import User, Users, UserTransactions
+from .currencies import Currencies, Currency, CurrencyLastRate, CurrencyRates
 
 api_bp = Blueprint("api", __name__)
 api = Api(api_bp)
