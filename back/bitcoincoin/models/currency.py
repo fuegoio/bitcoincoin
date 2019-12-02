@@ -6,13 +6,13 @@ from .base_model import BaseModel
 
 
 class Currency(BaseModel):
-    id = PrimaryKeyField()
+    id = AutoField()
     name = TextField()
     last_value = FloatField()
 
 
 class CurrencyRate(BaseModel):
-    id = PrimaryKeyField()
+    id = AutoField()
     currency = ForeignKeyField(Currency)
     datetime = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
     value = FloatField()
