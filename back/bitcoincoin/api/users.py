@@ -5,6 +5,7 @@ from flask_restful import Resource
 # search_users(query)
 # get_user_by_id(user_id)
 # delete_user(user_id)
+# get_user_transactions_history(user_id)
 
 
 class Users(Resource):
@@ -18,3 +19,8 @@ class User(Resource):
 
     def delete(self, user_id):
         return delete_user(user_id)
+
+
+class UserTransactions(Resource):
+    def get(self, user_id):
+        return get_user_transactions_history(user_id)
