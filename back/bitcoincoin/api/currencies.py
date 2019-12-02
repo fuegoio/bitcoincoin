@@ -6,6 +6,8 @@ from flask_restful import Resource
 # create_currency(name, symbol)
 # get_currency_by_id(currency_id)
 # delete_currency(currency_id)
+# get_currency_rates_history(currency_id)
+# get_currency_last_rate(currency_id)
 
 
 class Currencies(Resource):
@@ -24,3 +26,13 @@ class Currency(Resource):
 
     def delete(self, currency_id):
         return delete_currency(currency_id)
+
+
+class CurrencyRates(Resource):
+    def get(self, currency_id):
+        return get_currency_rates_history(currency_id)
+
+
+class CurrencyLastRate(Resource):
+    def get(self, currency_id):
+        return get_currency_last_rate(currency_id)

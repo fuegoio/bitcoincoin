@@ -29,5 +29,7 @@ def register_api(app):
 
     api.add_resource(Currencies, "/currencies")
     api.add_resource(Currency, "/currencies/<currency_id:int>")
+    api.add_resource(CurrencyRates, "/currencies/<currency_id:int>/rates")
+    api.add_resource(CurrencyLastRate, "/currencies/<currency_id:int>/rates/last")
 
     app.register_blueprint(api_bp, url_prefix="/api/v1")
