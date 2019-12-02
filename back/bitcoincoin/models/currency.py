@@ -1,5 +1,7 @@
 from peewee import *
 
+from bitcoincoin.core import db
+
 from .base_model import BaseModel
 
 
@@ -20,3 +22,8 @@ class CurrencyRate(BaseModel):
         currency = Currency.get(Currency.id == self.currency_id)
         currency.last_value = self.value
         currency.save()
+
+
+with db:
+    Currency.create_table(fail_silently=True)
+    CurrencyRate.create_table(fail_silently=True)
