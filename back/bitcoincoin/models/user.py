@@ -4,7 +4,7 @@ from .base_model import BaseModel
 
 
 class User(BaseModel):
-    user_id = AutoField()
+    id = AutoField()
     username = CharField(unique=True)
     password = CharField()
     email = CharField()
