@@ -1,20 +1,23 @@
 from peewee import *
-from playhouse.shortcuts import model_to_dict
-from base_model import BaseModel
 
-class CurrencyRates(BaseModel):
-    id = PrimaryKeyField()
-    currency_id = ForeignKeyField(Currencies)
-    datetime = DateTimeField()
-    value = FloatField()
+from .base_model import BaseModel
 
-    def save(self):
-        BaseModel.save(self)
-        currency = Currencies.get(Currencies.id == self.currency_id)
-        currency.last_value = self.value
-        currency.save()
 
-class Currencies(BaseModel):
+class Currency(BaseModel):
     id = PrimaryKeyField()
     name = TextField()
     last_value = FloatField()
+
+
+class CurrencyRate(BaseModel):
+    id = PrimaryKeyField()
+    currency = ForeignKeyField(Currency)
+    datetime = DateTimeField()
+    value = FloatField()
+
+    def save(self, **kwargs):
+        super().save(self, **kwargs)
+
+        currency = Currency.get(Currency.id == self.currency_id)
+        currency.last_value = self.value
+        currency.save()

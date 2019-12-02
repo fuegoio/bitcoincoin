@@ -1,8 +1,8 @@
 from peewee import *
 
 from .base_model import BaseModel
-from .user import User
 from .currency import Currency
+from .user import User
 
 
 class Transaction(BaseModel):

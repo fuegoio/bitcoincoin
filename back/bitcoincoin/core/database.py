@@ -3,9 +3,9 @@ import os
 from peewee import PostgresqlDatabase
 
 db = PostgresqlDatabase(
-    'pokedex',
-    user='pokedex',
-    password='pokedex',
+    'bitcoincoin',
+    user='bitcoincoin',
+    password='bitcoincoin',
     host=os.environ.get('DB_HOST', 'localhost'),
     autorollback=True
 )
