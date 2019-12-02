@@ -12,6 +12,7 @@ class CurrencyRates(BaseModel):
         BaseModel.save(self)
         currency = Currencies.get(Currencies.id == self.currency_id)
         currency.last_value = self.value
+        currency.save()
 
 class Currencies(BaseModel):
     id = PrimaryKeyField()
