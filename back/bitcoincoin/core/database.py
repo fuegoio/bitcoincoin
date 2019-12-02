@@ -3,9 +3,9 @@ from peewee import PostgresqlDatabase
 from .config import config
 
 db = PostgresqlDatabase(
-    'bitcoincoin',
-    user='bitcoincoin',
-    password='bitcoincoin',
+    'bitcoin',
+    user='bitcoin',
+    password='bitcoin',
     host=config['database']['host'],
     autorollback=True
 )

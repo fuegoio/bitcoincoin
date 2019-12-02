@@ -1,4 +1,4 @@
-from web import create_app
+from bitcoincoin import create_app
 
 app = create_app()
 
