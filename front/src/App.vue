@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title class="font-weight-bold">LumioGraph</v-toolbar-title>
+      <v-toolbar-title class="font-weight-bold">BitCoinCoin</v-toolbar-title>
       <v-autocomplete
         v-model="search.molecule"
         :loading="search.loading"
@@ -14,13 +14,13 @@
         flat
         hide-no-data
         hide-details
-        label="Molecule"
+        label="Quack ! Tu veux trouver une nouvelle crypto ?"
         solo-inverted
       ></v-autocomplete>
     </v-app-bar>
 
     <v-content>
-      <v-container fluid class="fill-height py-0">
+      <v-container fluid class="py-0">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -37,8 +37,10 @@ export default Vue.extend({
       query: 'Paracétamol',
       molecule: 0,
       molecules: [
-        { name: 'Paracétamol', id: 34 },
-        { name: 'Acide acétylsalicylique', id: 54 },
+        { name: 'BitCoin', id: 34 },
+        { name: 'Ethereum', id: 54 },
+        { name: 'CoinCoin', id: 60 },
+        { name: 'Bitcoin Cash', id: 70 },
       ],
       loading: false,
     },

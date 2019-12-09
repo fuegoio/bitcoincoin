@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MoleculePage from '@/pages/MoleculePage.vue'
+import ProfilePage from '@/pages/ProfilePage.vue'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ const routes = [
     path: '/molecule/:id',
     name: 'molecule',
     component: MoleculePage,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfilePage,
   },
 ]
 
