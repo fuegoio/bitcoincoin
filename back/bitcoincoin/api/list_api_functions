@@ -22,8 +22,8 @@ create one currency
 delete one currency
 get one currency rate history
     or time period history
-get one currency last rate
 create one currency new rate
+get one currency last rate
 
 
 TRANSACTIONS
