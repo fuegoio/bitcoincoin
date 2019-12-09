@@ -1,0 +1,21 @@
+/api
+    /v1
+
+        /users                              =>  GET: search users (with query filters)
+            /<user_id:int>                  =>  GET: get user
+                                                DELETE: delete user
+                /transactions               =>  GET: get user transactions (with query filters)
+                    /last                   =>  GET: get user last transaction (with query filters)
+                /wallet                     =>  GET: get user wallet all currencies
+                    /<currency_id:int>      =>  GET: get user wallet one currency
+
+        /currencies                         =>  GET: search currencies (with query filters)
+                                                POST: create new currency
+            /<currency_id:int>              =>  GET: get currency
+                                                DELETE: delete currency
+                /rates                      =>  GET: get currency rates history (with query filters)
+                                                POST: create new currency rate
+                    /last                   =>  GET: get currency last rate
+
+        /transactions                       =>  GET: search transactions (with query filters)
+                                                POST: create new transaction
