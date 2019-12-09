@@ -34,11 +34,11 @@ def register_api(app):
     #     return response, 404
 
     api.add_resource(Users, "/users")
-    api.add_resource(User, "/user/<user_id:int>")
-    api.add_resource(UserTransactions, "/user/<user_id:int>/transactions")
-    api.add_resource(UserLastTransaction, "/user/<user_id:int>/transactions/last")
-    api.add_resource(UserWallet, "/user/<user_id:int>/wallet")
-    api.add_resource(UserWalletCurrency, "/user/<user_id:int>/wallet/<currency_id:int>")
+    api.add_resource(User, "/users/<user_id:int>")
+    api.add_resource(UserTransactions, "/users/<user_id:int>/transactions")
+    api.add_resource(UserLastTransaction, "/users/<user_id:int>/transactions/last")
+    api.add_resource(UserWallet, "/users/<user_id:int>/wallet")
+    api.add_resource(UserWalletCurrency, "/users/<user_id:int>/wallet/<currency_id:int>")
 
     api.add_resource(Currencies, "/currencies")
     api.add_resource(Currency, "/currencies/<currency_id:int>")
