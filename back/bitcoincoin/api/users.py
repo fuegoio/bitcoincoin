@@ -5,7 +5,9 @@ from flask_restful import Resource
 # search_users(query)
 # get_user_by_id(user_id)
 # delete_user(user_id)
-# get_user_transactions_history(user_id)
+# get_user_transactions(user_id, query)
+# get_user_last_transaction(user_id, query)
+# get_user_wallet(user_id, currency_id=None)
 
 
 class Users(Resource):
@@ -23,4 +25,19 @@ class User(Resource):
 
 class UserTransactions(Resource):
     def get(self, user_id):
-        return get_user_transactions_history(user_id)
+        return get_user_transactions(user_id, request.args["query"])
+
+
+class UserLastTransaction(Resource):
+    def get(self, user_id):
+        return get_user_last_transaction(user_id, request.args["query"])
+
+
+class UserWallet(Resource):
+    def get(self, user_id):
+        return get_user_wallet(user_id)
+
+
+class UserWalletCurrency(Resource):
+    def get(self, user_id, currency_id):
+        return get_user_wallet(user_id, currency_id)
