@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <v-row>
+  <v-row>
+    <v-col cols="12">
       <ProfileContainer />
-    </v-row>
-    <v-row>
+    </v-col>
+    <v-col cols="12">
       <WalletContainer />
-    </v-row>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ml-2 pa-2 secondary" elevation="4">
+  <v-card class="ml-2 pa-2" elevation="4">
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
