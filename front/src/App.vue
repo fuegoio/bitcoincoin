@@ -158,4 +158,8 @@ export default Vue.extend({
 .theme--dark.v-navigation-drawer {
   background-color: #343949 !important;
 }
+
+.theme--dark.v-list {
+  background-color: #2a2e3a !important;
+}
 </style>
