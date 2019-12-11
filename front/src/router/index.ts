@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MoleculePage from '@/pages/MoleculePage.vue'
+import DashboardPage from '@/pages/DashboardPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 
 Vue.use(VueRouter)
@@ -9,12 +9,12 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/molecule/34',
+    redirect: '/dashboard',
   },
   {
-    path: '/molecule/:id',
-    name: 'molecule',
-    component: MoleculePage,
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardPage,
   },
   {
     path: '/profile',
