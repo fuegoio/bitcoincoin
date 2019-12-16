@@ -10,6 +10,7 @@ class Currency(BaseModel):
     name = TextField()
     symbol = FixedCharField(max_length=4)
     last_value = FloatField()
+    provider = TextField()
 
 
 class CurrencyRate(BaseModel):
