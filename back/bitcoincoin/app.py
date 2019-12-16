@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 
-from pokedex.api import register_api
+from bitcoincoin.api import register_api
+from bitcoincoin.auth import register_auth
 
 
 def create_app():
@@ -11,6 +12,7 @@ def create_app():
 
     CORS(app, resources={r"*": {"origins": "*"}}, supports_credentials=True)
 
+    register_auth(app)
     register_api(app)
 
     return app

@@ -1,11 +1,11 @@
-import os
-
 from peewee import PostgresqlDatabase
 
+from .config import config
+
 db = PostgresqlDatabase(
-    'bitcoincoin',
-    user='bitcoincoin',
-    password='bitcoincoin',
-    host=os.environ.get('DB_HOST', 'localhost'),
+    'bitcoin',
+    user='bitcoin',
+    password='bitcoin',
+    host=config['database']['host'],
     autorollback=True
 )
