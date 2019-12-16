@@ -1,0 +1,35 @@
+USERS
+
+get all users
+    or search with query
+get one user
+delete one user
+get one user all transactions
+    or one currency
+    or time period
+get one user last transaction
+    or one currency
+get one user wallet all currencies
+get one user wallet one currency
+
+
+CURRENCIES
+
+get all currencies
+    or search with query
+get one currency
+create one currency
+delete one currency
+get one currency rate history
+    or time period history
+create one currency new rate
+get one currency last rate
+
+
+TRANSACTIONS
+
+get all transactions
+    or search with query (user, currency)
+    or time period
+create one transaction
+
