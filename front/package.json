@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.7.15",
     "@mdi/font": "^3.6.95",
     "core-js": "^3.1.2",
     "lodash": "^4.17.15",
