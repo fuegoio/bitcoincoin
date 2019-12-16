@@ -30,16 +30,16 @@ def after_request(exception=None):
 
 
 api.add_resource(Users, "/users")
-api.add_resource(User, "/users/<user_id>")
-api.add_resource(UserTransactions, "/users/<user_id>/transactions")
-api.add_resource(UserLastTransaction, "/users/<user_id>/transactions/last")
-api.add_resource(UserWallet, "/users/<user_id>/wallet")
-api.add_resource(UserWalletCurrency, "/users/<user_id>/wallet/<currency_id>")
+api.add_resource(User, "/users/<int:user_id>")
+api.add_resource(UserTransactions, "/users/<int:user_id>/transactions")
+api.add_resource(UserLastTransaction, "/users/<int:user_id>/transactions/last")
+api.add_resource(UserWallet, "/users/<int:user_id>/wallet")
+api.add_resource(UserWalletCurrency, "/users/<int:user_id>/wallet/<int:currency_id>")
 
 api.add_resource(Currencies, "/currencies")
-api.add_resource(Currency, "/currencies/<currency_id>")
-api.add_resource(CurrencyRates, "/currencies/<currency_id>/rates")
-api.add_resource(CurrencyLastRate, "/currencies/<currency_id>/rates/last")
+api.add_resource(Currency, "/currencies/<int:currency_id>")
+api.add_resource(CurrencyRates, "/currencies/<int:currency_id>/rates")
+api.add_resource(CurrencyLastRate, "/currencies/<int:currency_id>/rates/last")
 
 api.add_resource(Transactions, "/transactions")
 
