@@ -20,10 +20,8 @@ def update_currency():
             data = {'symbol': cur, 'last_value': value['close'], 'name': cur, 'provider':'cryptocompare'}
             if currency is None:
                 currency = Currency.create(**data)
-            else:
-                update_model_from_dict(currency, data)
             data = {'currency': currency.id, 'datetime': datetime.datetime.fromtimestamp(value['time']),
-                    'value': value['close']}
+                    'value': value['close'], 'provider': 'cryptocompare'}
             currency_rate = CurrencyRate(**data)
             currency_rate.save()
         except Exception as e:

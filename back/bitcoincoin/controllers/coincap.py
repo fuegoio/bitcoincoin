@@ -10,25 +10,20 @@ def load_currency_rates():
     currency_rates = request.json()
     timestamp = currency_rates['timestamp']
     print(timestamp)
-    time = datetime.datetime.fromtimestamp(timestamp)
+    time = datetime.datetime.fromtimestamp(timestamp/1000)
     for currency_rate in currency_rates['data']:
         try:
             symbol = currency_rate['symbol']
             print(symbol)
             name = currency_rate["id"]
             last_value = currency_rate["rateUsd"]
-            data = {'name': name, 'last_value': last_value, 'symbol': symbol}
+            data = {'name': name, 'last_value': last_value, 'symbol': symbol, 'provider': 'coincap'}
             currency = Currency.get_or_none(symbol=symbol)
             if currency is None:
                 currency = Currency.create(**data)
-            else:
-                update_model_from_dict(currency, data)
-                currency.save()
-            data = {'currency': currency.id, 'value': last_value, 'datetime': time}
+            data = {'currency': currency.id, 'value': last_value, 'datetime': time, 'provider': 'coincap'}
             currency_rate = CurrencyRate(**data)
             currency_rate.save()
         except Exception as e:
             print(e)
     return True
-
-load_currency_rates()

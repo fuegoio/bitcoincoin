@@ -8,7 +8,7 @@ from .base_model import BaseModel
 class Currency(BaseModel):
     id = AutoField()
     name = TextField()
-    symbol = FixedCharField(max_length=4)
+    symbol = FixedCharField()
     last_value = FloatField()
     provider = TextField()
 
@@ -18,11 +18,13 @@ class CurrencyRate(BaseModel):
     currency = ForeignKeyField(Currency)
     datetime = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
     value = FloatField()
+    provider = TextField()
 
     def save(self, **kwargs):
         super().save(self, **kwargs)
         currency = Currency.get(Currency.id == self.currency_id)
         currency.last_value = self.value
+        currency.provider = self.provider
         currency.save()
 
 
