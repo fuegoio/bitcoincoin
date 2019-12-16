@@ -4,7 +4,10 @@ class NotFoundError(Exception):
         self.resource = resource
         self.resource_id = resource_id
 
+    def get_dict(self):
+        return {'error': f"{self.resource} {self.resource_id} not found"}
 
-class PokemonNotFoundError(NotFoundError):
+
+class CurrencyNotFoundError(NotFoundError):
     def __init__(self, resource_id):
-        NotFoundError.__init__(self, "Pokemon", resource_id)
+        NotFoundError.__init__(self, "Currency", resource_id)
