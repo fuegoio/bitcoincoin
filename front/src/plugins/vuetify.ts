@@ -6,18 +6,19 @@ Vue.use(Vuetify)
 
 export default new Vuetify({
   theme: {
+    dark: true,
     options: {
       customProperties: true,
     },
     themes: {
-      light: {
-        primary: '#25414f',
-        secondary: '#44758e',
-        accent: '#EC655D',
-        error: '#ec2a2c',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107',
+      dark: {
+        primary: '#617be2',
+        secondary: '#ffde6c',
+        accent: '#ff6473',
+        error: '#ff6473',
+        info: '#a7baff',
+        success: '#3fcc98',
+        warning: '#ffde6c',
       },
     },
   },
