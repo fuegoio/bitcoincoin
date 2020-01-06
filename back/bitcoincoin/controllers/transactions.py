@@ -1,4 +1,5 @@
 from bitcoincoin.models.transaction import Transaction
+from .currencies import get_currency_last_rate
 
 
 def search_transactions(filters: dict):
@@ -24,5 +25,7 @@ def search_transactions(filters: dict):
     return [transaction.get_small_data() for transaction in transactions_found]
 
 
-def create_transaction(user_id: int, currency_id: int, quantity: int):
-    return Transaction.create(user=user_id, currency=currency_id, quantity=quantity)
+def create_transaction(user_id: int, currency_id: int, quantity: int, is_sell: bool):
+    value = get_currency_last_rate(currency_id) * quantity
+    # TODO: check if value is available in user wallet
+    return Transaction.create(user=user_id, currency=currency_id, quantity=quantity, value=value, is_sell=is_sell)

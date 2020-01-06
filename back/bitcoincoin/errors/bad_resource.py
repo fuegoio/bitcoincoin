@@ -15,3 +15,7 @@ class BadIdError(BadResourceError):
 class BadQuantityError(BadResourceError):
     def __init__(self, resource):
         BadResource.__init__(self, resource, 'quantity')
+
+class BadBoolError(BadResourceError):
+    def __init__(self, resource):
+        BadResource.__init__(self, resource, 'boolean')
