@@ -3,7 +3,12 @@
     <v-navigation-drawer app clipped permanent width="330" floating>
       <v-list shaped>
         <v-list-item-group v-model="item" color="primary">
-          <v-list-item v-for="(item, i) in items" :key="i" class="pl-10 my-4">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            class="pl-10 my-4"
+            :to="item.path"
+          >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -155,10 +160,10 @@ export default Vue.extend({
     profile: false,
     item: 0,
     items: [
-      { text: 'Dashboard', icon: 'mdi-view-dashboard' },
-      { text: 'Monnaies', icon: 'mdi-bitcoin' },
-      { text: 'Banques', icon: 'mdi-bank' },
-      { text: 'Classement', icon: 'mdi-flag' },
+      { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
+      { text: 'Monnaies', icon: 'mdi-bitcoin', path: '/currencies' },
+      { text: 'Banques', icon: 'mdi-bank', path: '/banks' },
+      { text: 'Classement', icon: 'mdi-flag', path: '/ranking' },
     ],
   }),
   mounted() {

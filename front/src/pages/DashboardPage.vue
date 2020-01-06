@@ -102,12 +102,6 @@ export default class DashboardPage extends Vue {
 
     customizeGrip(chart.scrollbarX.startGrip)
     customizeGrip(chart.scrollbarX.endGrip)
-
-    // Configure scrollbar series
-    const scrollSeries = chart.scrollbarX.scrollbarChart.series.getIndex(0)
-    scrollSeries.filters.clear()
-    scrollSeries.fillOpacity = 0
-    scrollSeries.strokeDasharray = '2,2'
   }
 }
 </script>
