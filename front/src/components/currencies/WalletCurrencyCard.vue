@@ -24,15 +24,16 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
-      <v-btn text>Buy More</v-btn>
-      <v-btn text>Sell</v-btn>
+      <BuyingButton></BuyingButton>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import BuyingButton from '@/components/transactions/BuyingButton'
 export default {
   name: 'CurrencyCard',
+  components: { BuyingButton },
   props: {
     currency: Object,
   },
