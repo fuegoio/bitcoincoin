@@ -1,22 +1,7 @@
 from bitcoincoin.models.transaction import Transaction
 
 
-def search_transactions(query: dict):
-    filters = {}
-    if "user" in query:
-        try:
-            user = int(query["user"])
-        except:
-            print("User should be an int")
-        else:
-            filters["user"] = user
-    if "currency" in query:
-        try:
-            currency = int(query["currency"])
-        except:
-            print("Currency should be an int")
-        else:
-            filters["currency"] = currency
+def search_transactions(filters: dict):
     # TODO: startdate and endate in query
 
     # HOW TO DO THIS WITH PEEWEE SYNTAX

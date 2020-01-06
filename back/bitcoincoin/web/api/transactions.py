@@ -7,7 +7,22 @@ from bitcoincoin.errors.bad_resource import BadIdError, BadQuantityError
 
 class Transactions(Resource):
     def get(self):
-        return search_transactions(request.args)
+        filters = {}
+        if "user" in request.args:
+            try:
+                user_id = int(request.args["user"])
+                assert user_id > 0
+            except:
+                raise BadIdError(request.args["user"])
+            filters["user"] = user_id
+        if "currency" in request.args:
+            try:
+                user_id = int(request.args["currency"])
+                assert user_id > 0
+            except:
+                raise BadIdError(request.args["currency"])
+            filters["user"] = user_id
+        return search_transactions(filters)
 
     def post(self):
         data = request.json
