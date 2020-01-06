@@ -1,9 +1,9 @@
 <template>
   <v-row class="fill-height">
-    <v-col cols="3">
+    <v-col cols="12">
       <ProfileContainer />
     </v-col>
-    <v-col cols="9">
+    <v-col cols="12" class="my-2">
       <WalletContainer />
     </v-col>
   </v-row>
