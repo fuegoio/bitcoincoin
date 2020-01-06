@@ -38,5 +38,6 @@ def search_transactions(query: dict):
 
     return [transaction.get_small_data() for transaction in transactions_found]
 
+
 def create_transaction(user_id: int, currency_id: int, quantity: int):
     return Transaction.create(user=user_id, currency=currency_id, quantity=quantity)
