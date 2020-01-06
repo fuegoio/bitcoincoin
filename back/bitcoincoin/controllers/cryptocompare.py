@@ -17,13 +17,11 @@ def update_currency():
             currency = Currency.get_or_none(symbol=cur)
             response_unique = requests.get(url_unique, headers=headers)
             value = response_unique.json()['Data']['Data'][-1]
-            data = {'symbol': cur, 'last_value': value['close'], 'name': cur}
+            data = {'symbol': cur, 'last_value': value['close'], 'name': cur, 'provider':'cryptocompare'}
             if currency is None:
                 currency = Currency.create(**data)
-            else:
-                update_model_from_dict(currency, data)
             data = {'currency': currency.id, 'datetime': datetime.datetime.fromtimestamp(value['time']),
-                    'value': value['close']}
+                    'value': value['close'], 'provider': 'cryptocompare'}
             currency_rate = CurrencyRate(**data)
             currency_rate.save()
         except Exception as e:
@@ -33,11 +31,11 @@ def update_currency():
 
 
 def get_historic(symbol, nb_days=730):
-    url = 'https://min-api.cryptocompare.com/data/v2/histoday?fsym={}&tsym=USD&limit={}'.format(symbol, nb_days)
+    url = 'https://min-api.cryptocompare.com/data/v2/histoday?fsym={}&tsym=USD&limit={}'.format(str(symbol),str(nb_days))
     response = requests.get(url, headers=headers)
     currency = Currency.get_or_none(symbol=symbol)
     if currency:
-        for day in response.json()['Data']:
+        for day in response.json()['Data']['Data']:
             try:
                 data = {'currency': currency.id, 'datetime': datetime.datetime.fromtimestamp(day['time']),
                         'value': day['close']}
@@ -49,4 +47,4 @@ def get_historic(symbol, nb_days=730):
     return True
 
 
-update_currency()
+# update_currency()
