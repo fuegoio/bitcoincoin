@@ -14,4 +14,4 @@ class Transactions(Resource):
         user_id = int(data["user_id"])
         currency_id = int(data["currency_id"])
         quantity = int(data["quantity_id"])
-        return create_transaction(=user_id, currency_id, quantity)
+        return create_transaction(user_id, currency_id, quantity)
