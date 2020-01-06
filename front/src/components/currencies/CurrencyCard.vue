@@ -3,13 +3,13 @@
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
-          {{ crypto.name }}
+          {{ currency.name }}
         </v-list-item-title>
         <v-list-item-subtitle>
-          Current Value : {{ crypto.currentValue }} $
+          Current Value : {{ currency.last_value }} $
         </v-list-item-subtitle>
         <v-list-item-subtitle>
-          Quantity Owned : {{ crypto.number }}
+          Quantity Owned : {{ currency.volume }}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>

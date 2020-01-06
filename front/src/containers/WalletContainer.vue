@@ -1,7 +1,7 @@
 <template>
   <v-row>
-    <v-col v-for="crypto in cryptoCurrencies" :key="crypto.id" :cols="4">
-      <CurrencyCard :crypto="crypto" />
+    <v-col v-for="currency in cryptoCurrencies" :key="currency.id" :cols="4">
+      <CurrencyCard :currency="currency" />
     </v-col>
   </v-row>
 </template>
@@ -16,12 +16,12 @@ export default {
       cryptoCurrencies: [
         {
           name: 'Bitcoin',
-          number: 30,
+          volume: 30,
           currentValue: 6780.82,
         },
         {
           name: 'Ethereum',
-          number: 50,
+          volume: 50,
           currentValue: 135.19,
         },
         {
