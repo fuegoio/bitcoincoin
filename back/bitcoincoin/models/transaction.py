@@ -16,4 +16,4 @@ class Transaction(BaseModel):
 
 
 with db:
-    Transaction.create_table(fail_silently=True)
+    Transaction.create_table(safe=True)

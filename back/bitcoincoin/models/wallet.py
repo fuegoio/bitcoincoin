@@ -14,4 +14,4 @@ class Wallet(BaseModel):
 
 
 with db:
-    Wallet.create_table(fail_silently=True)
+    Wallet.create_table(safe=True)
