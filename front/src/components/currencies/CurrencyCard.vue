@@ -1,14 +1,17 @@
 <template>
   <v-card hover shaped>
-    <v-row>
-      <v-col cols="8" class="pl-10 currency-card-name">
+    <v-row class="px-3">
+      <v-col cols="7" class="pl-6 pt-3 currency-card-name">
         <img :src="image" :alt="currency.symbol" class="currency-icon" />
-        <span class="display-1 font-weight-bold">{{ currency.name }}</span>
+        <span class="headline font-weight-bold">{{ currency.name }}</span>
+        <div class="caption">
+          {{ currency.symbol.toUpperCase() }}
+        </div>
       </v-col>
-      <v-col cols="4" class="text-right pr-10 currency-card-value">
+      <v-col cols="5" class="pr-6 pt-5 text-right currency-card-value">
         <v-row justify="center" align="center">
           <v-icon large color="success">mdi-menu-up</v-icon>
-          <span class="display-1 font-weight-light ml-3">
+          <span class="headline font-weight-light ml-3">
             $ {{ currency.lastValue }}
           </span>
         </v-row>
@@ -47,7 +50,8 @@ export default class CurrencyCard extends Vue {
 
 <style scoped>
 .currency-icon {
-  width: 40px;
+  width: 42px;
+  margin-top: 6px;
   margin-right: 22px;
   float: left;
 }

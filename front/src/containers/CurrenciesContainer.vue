@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-for="currency in currencies" :key="currency.name" cols="6">
+    <v-col v-for="currency in currencies" :key="currency.name" cols="4">
       <CurrencyCard :currency="currency" />
     </v-col>
   </v-row>
@@ -26,6 +26,30 @@ export default class CurrenciesContainer extends Vue {
       name: 'Ethereum',
       lastValue: 135.19,
       symbol: 'eth',
+    },
+    {
+      name: 'Cosmos',
+      volume: 100,
+      lastValue: 150,
+      symbol: 'atom',
+    },
+    {
+      name: 'Bitcoin Cash',
+      volume: 200,
+      lastValue: 190.86,
+      symbol: 'bch',
+    },
+    {
+      name: 'Litecoin',
+      volume: 100,
+      lastValue: 40.68,
+      symbol: 'ltc',
+    },
+    {
+      name: 'XRP',
+      volume: 100,
+      lastValue: 0.21,
+      symbol: 'xrp',
     },
   ]
 }
