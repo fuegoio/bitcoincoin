@@ -16,7 +16,7 @@ function logout() {
 }
 
 function checkAuth() {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const jwt = localStorage.getItem('access_token')
     if (jwt !== null) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt
@@ -39,7 +39,28 @@ function checkAuth() {
   })
 }
 
+function login(email: string, password: string) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post('http://localhost:5000/auth/login', {
+        email: email,
+        password: password,
+      })
+      .then(response => {
+        localStorage.setItem('access_token', response.data.access_token)
+        checkAuth().then(() => {
+          router.replace('/')
+        })
+        resolve()
+      })
+      .catch(() => {
+        reject()
+      })
+  })
+}
+
 export default {
   user,
+  login,
   checkAuth,
 }
