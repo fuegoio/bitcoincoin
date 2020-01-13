@@ -142,6 +142,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import auth from './modules/auth'
 
 export default Vue.extend({
   name: 'App',
@@ -157,7 +158,7 @@ export default Vue.extend({
       ],
       loading: false,
     },
-    profile: false,
+    profile: auth.user.profile,
     item: 0,
     items: [
       { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
@@ -170,6 +171,8 @@ export default Vue.extend({
     if (this.$route.name === 'molecule') {
       this.search.molecule = parseInt(this.$route.params.id)
     }
+
+    auth.checkAuth()
   },
   methods: {
     goProfile(): void {
