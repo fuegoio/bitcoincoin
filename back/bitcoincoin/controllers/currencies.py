@@ -13,9 +13,9 @@ from bitcoincoin.models.currency import Currency, CurrencyRate
 def search_currencies(query: dict):
     currencies = Currency.select()
     if "symbol" in query:
-        currencies = currencies.where(Currency.symbol == str(query["symbol"]))
+        currencies = currencies.where(Currency.symbol == query["symbol"])
     if "name" in query:
-        currencies = currencies.where(Currency.name == str(query["name"]))
+        currencies = currencies.where(Currency.name == query["name"])
     return [cur.get_small_data() for cur in currencies]
 
 
