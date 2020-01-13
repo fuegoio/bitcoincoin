@@ -1,14 +1,12 @@
 <template>
   <v-row justify="center">
     <v-btn color="primary" dark @click.stop="dialog = true">
-      Buy More
+      Acheter Plus
     </v-btn>
 
-    <v-dialog v-model="dialog" max-width="290">
+    <v-dialog v-model="dialog" transition="slide-x-reverse-transition">
       <v-card>
-        <v-card-title class="headline"
-          >Use Google's location service?</v-card-title
-        >
+        <v-card-title class="headline">{{ currency.name }}</v-card-title>
 
         <v-card-text>
           Let Google help apps determine location. This means sending anonymous
@@ -33,6 +31,9 @@
 <script>
 export default {
   name: 'BuyingButton',
+  props: {
+    currency: Object,
+  },
   data: function() {
     return {
       dialog: false,

@@ -24,7 +24,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
-      <BuyingButton></BuyingButton>
+      <BuyingButton :currency="currency"></BuyingButton>
     </v-card-actions>
   </v-card>
 </template>
