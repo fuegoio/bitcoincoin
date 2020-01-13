@@ -33,7 +33,7 @@ def get_historic(symbol, nb_days=730):
     if currency:
         for day in response.json()['Data']['Data']:
             try:
-                create_currency_rate(currency_id=currency.id, datetime=datetime.datetime.fromtimestamp(day['time']), value=day['close'])
+                create_currency_rate(currency_id=currency.id, datetime=datetime.datetime.fromtimestamp(day['time']), value=day['close'], provider='cryptocompare')
             except Exception as e:
                 print(e)
                 continue
