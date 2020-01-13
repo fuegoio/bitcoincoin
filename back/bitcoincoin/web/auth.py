@@ -12,7 +12,7 @@ jwt = JWTManager(app)
 auth_bp = Blueprint('login', __name__)
 
 
-@auth_bp.route('/register')
+@auth_bp.route('/register', methods=['POST'])
 @db.connection_context()
 def register():
     email = request.json['email']
@@ -29,7 +29,7 @@ def register():
     return jsonify(access_token=access_token), 200
 
 
-@auth_bp.route('/login')
+@auth_bp.route('/login', methods=['POST'])
 @db.connection_context()
 def login():
     email = request.json['email']
