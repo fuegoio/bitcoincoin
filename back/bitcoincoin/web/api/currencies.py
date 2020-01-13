@@ -65,31 +65,40 @@ class Currency(Resource):
 
 
 class CurrencyRates(Resource):
-    def get(self, currency_id):
+    def get(self, currency_id, from_date, to_date):
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
         except:
             raise BadIdError(currency_id)
-        return get_currency_rates_history(currency_id, request.args)
+        try:
+            from_date = datetime.strptime(from_date,'%Y-%m-%dT%H:%M:%S%z')
+        except:
+            raise BadFromDatetimeError(from_date)
+        try:
+            to_date = datetime.strptime(to_date,'%Y-%m-%dT%H:%M:%S%z')
+        except:
+            raise BadToDatetimeError(to_date)
+        return get_currency_rates_history(currency_id, from_date, to_date)
 
-    def post(self, currency_id):
+    def post(self, currency_id, provider):
         data = request.json
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
         except:
             raise BadIdError(currency_id)
-        # try:
-        #     datetime = #TODO
-        # except:
-        #     raise TypeError('date in not well given')
         try:
             value = float(data["value"])
             assert value > 0
         except:
             raise BadCurrencyValueError(value)
-        return create_currency_rate(currency_id=currency_id, value=value)
+        try:
+            provider = str(data["provider"])
+            assert provider in ["cryptocompare", "coincap"]
+        except:
+            raise BadCurrencyProviderError(data["provider"])
+        return create_currency_rate(currency_id=currency_id, value=value, provider=provider)
 
 
 class CurrencyLastRate(Resource):
