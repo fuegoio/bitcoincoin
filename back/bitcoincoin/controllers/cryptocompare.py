@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from playhouse.shortcuts import update_model_from_dict
-
+from currencies import create_currency, create_currency_rate
 from bitcoincoin.models.currency import Currency, CurrencyRate
 
 headers = {'authorization': 'Apikey {}'.format('7bdf4764d02940ee49fa5198c51d2cfb1ca440d3dbe2de46d3fb9391e0a9f045')}
@@ -17,13 +17,9 @@ def update_currency():
             currency = Currency.get_or_none(symbol=cur)
             response_unique = requests.get(url_unique, headers=headers)
             value = response_unique.json()['Data']['Data'][-1]
-            data = {'symbol': cur, 'last_value': value['close'], 'name': cur, 'provider':'cryptocompare'}
             if currency is None:
-                currency = Currency.create(**data)
-            data = {'currency': currency.id, 'datetime': datetime.datetime.fromtimestamp(value['time']),
-                    'value': value['close'], 'provider': 'cryptocompare'}
-            currency_rate = CurrencyRate(**data)
-            currency_rate.save()
+                currency = create_currency(name=cur, symbol=cur, last_value=value['close'], provider='cryptocompare')
+            create_currency_rate(currency_id=currency.id, datetime=datetime.datetime.fromtimestamp(value['time']), value=value['close'])
         except Exception as e:
             print(e)
             continue
@@ -37,10 +33,7 @@ def get_historic(symbol, nb_days=730):
     if currency:
         for day in response.json()['Data']['Data']:
             try:
-                data = {'currency': currency.id, 'datetime': datetime.datetime.fromtimestamp(day['time']),
-                        'value': day['close']}
-                currency_rate = CurrencyRate(**data)
-                currency_rate.save()
+                create_currency_rate(currency_id=currency.id, datetime=datetime.datetime.fromtimestamp(day['time']), value=day['close'])
             except Exception as e:
                 print(e)
                 continue
