@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-if="auth.loading">
     <v-navigation-drawer app clipped permanent width="330" floating>
       <v-list shaped>
         <v-list-item-group v-model="item" color="primary">
@@ -138,6 +138,8 @@
       </v-container>
     </v-content>
   </v-app>
+
+  <v-app v-else> </v-app>
 </template>
 
 <script lang="ts">
@@ -158,7 +160,11 @@ export default Vue.extend({
       ],
       loading: false,
     },
-    profile: auth.user.profile,
+    auth: {
+      profile: auth.user.profile,
+      loading: false,
+    },
+    profile: false,
     item: 0,
     items: [
       { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
@@ -167,12 +173,10 @@ export default Vue.extend({
       { text: 'Classement', icon: 'mdi-flag', path: '/ranking' },
     ],
   }),
-  mounted() {
-    if (this.$route.name === 'molecule') {
-      this.search.molecule = parseInt(this.$route.params.id)
-    }
-
-    auth.checkAuth()
+  created() {
+    auth.checkAuth().then(() => {
+      this.auth.loading = true
+    })
   },
   methods: {
     goProfile(): void {
