@@ -1,6 +1,13 @@
 <template>
   <v-app v-if="auth.loading">
-    <v-navigation-drawer app clipped permanent width="330" floating>
+    <v-navigation-drawer
+      v-if="$route.name !== 'login'"
+      app
+      clipped
+      permanent
+      width="330"
+      floating
+    >
       <v-list shaped>
         <v-list-item-group v-model="item" color="primary">
           <v-list-item
@@ -20,7 +27,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="transparent" flat height="128" clipped-left>
+    <v-app-bar
+      v-if="$route.name !== 'login'"
+      app
+      color="transparent"
+      flat
+      height="128"
+      clipped-left
+    >
       <v-toolbar-title>
         <img
           src="./assets/logo.png"
@@ -132,8 +146,8 @@
       </v-row>
     </v-app-bar>
 
-    <v-content>
-      <v-container fluid>
+    <v-content class="fill-height">
+      <v-container fluid class="fill-height pa-0">
         <router-view></router-view>
       </v-container>
     </v-content>

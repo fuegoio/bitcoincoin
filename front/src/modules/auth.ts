@@ -21,7 +21,7 @@ function checkAuth() {
     if (jwt !== null) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt
       axios
-        .get(process.env.API_URL + '/me')
+        .get('http://localhost:8000/auth/me')
         .then(function(response) {
           user.authenticated = true
           user.profile = response.data
@@ -42,7 +42,7 @@ function checkAuth() {
 function login(email: string, password: string) {
   return new Promise((resolve, reject) => {
     axios
-      .post('http://localhost:5000/auth/login', {
+      .post('http://localhost:8000/auth/login', {
         email: email,
         password: password,
       })
