@@ -4,8 +4,8 @@ from bitcoincoin.models.wallet import Wallet
 
 def search_users(filters: dict):
     users = User.select()
-    if "id" in filters:
-        users = users.where(User.id == filters["id"])
+    if "user_id" in filters:
+        users = users.where(User.id == filters["user_id"])
     if "username" in filters:
         users = users.where(User.username == filters["username"])
     if "email" in filters:

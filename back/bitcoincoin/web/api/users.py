@@ -1,6 +1,8 @@
 from flask import request
 from flask_restful import Resource
 
+from bitcoincoin.errors.bad_ressource import BadIdError, BadLimitError
+
 # TODO: import from managers all useful functions
 # search_users(query)
 # get_user_by_id(user_id)
@@ -15,16 +17,16 @@ class Users(Resource):
         filters = {}
         if "id" in request.args:
         try:
-            id = int(request.args["user"]) 
-            assert id > 0
+            user_id = int(request.args["user"]) 
+            assert user_id > 0
         except:
-            raise NameError("Id should be an int")
+            raise BadIdError(request.args["user"])
         else:
-            filters["id"] = id
+            filters["user_id"] = user_id
         if "username" in request.args:
-        filters["username"] = request.args["username"]
+            filters["username"] = request.args["username"]
         if "email" in request.args:
-        filters["email"] = request.args["email"]
+            filters["email"] = request.args["email"]
         return search_users(filters)
 
 
@@ -34,7 +36,7 @@ class User(Resource):
             user_id = int(user_id)
             assert user_id > 0
         except:
-            raise NameError("Id should be an int")
+            raise BadIdError(user_id)
         return get_user_by_id(user_id)
 
     def delete(self, user_id):
@@ -42,7 +44,7 @@ class User(Resource):
             user_id = int(user_id)
             assert user_id > 0
         except:
-            raise NameError("Id should be an int")
+            raise BadIdError(user_id)
         return delete_user(user_id)
 
 
@@ -54,16 +56,16 @@ class UserTransactions(Resource):
                 currency_id = int(request.args["currency"])
                 assert currency_id > 0
             except:
-                raise NameError("Currency_id should be an int")
+                raise BadIdError(user_id)
             else:
                 filters["currency"] = currency_id 
         if "limit" in request.args:
             try:
-                limit = int(limit)
+                limit = int(request.args["limit"])
                 assert limit > 0
             except:
-                raise NameError("Limit should be an int")
-            else filters["limit"] = limit             
+                raise BadLimitError(request.args["limit"])
+            else filters["limit"] = request.args["limit"]             
         return get_user_transactions(user_id, filters)
 
 
@@ -92,7 +94,7 @@ class UserWallet(Resource):
             user_id = int(user_id)
             assert user_id > 0
         except:
-            raise NameError("Id should be an int")
+            raise BadIdError(user_id)
         return get_user_wallet(user_id)
 
 
@@ -102,10 +104,10 @@ class UserWalletCurrency(Resource):
             user_id = int(user_id)
             assert user_id > 0
         except:
-            raise NameError("user_id should be an int")
+            raise BadIdError(user_id)
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
         except:
-            raise NameError("currency_id should be an int")
+            raise BadIdError(currency_id)
         return get_user_wallet(user_id, currency_id)
