@@ -168,7 +168,7 @@
 import Vue from 'vue'
 import auth from './modules/auth'
 
-import LoginPage from '@/pages/LoginPage.vue'
+import LoginPage from '@/pages/AuthPage.vue'
 
 export default Vue.extend({
   name: 'App',
