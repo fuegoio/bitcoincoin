@@ -6,16 +6,16 @@ const user = {
   profile: undefined,
 }
 
-function logout() {
+function logout(): void {
   localStorage.removeItem('access_token')
   localStorage.removeItem('profile')
   axios.defaults.headers.common['Authorization'] = ''
   user.authenticated = false
   user.profile = null
-  router.replace('/login')
+  router.push('/').catch(err => {})
 }
 
-function checkAuth() {
+function checkAuth(): Promise<void> {
   return new Promise(resolve => {
     const jwt = localStorage.getItem('access_token')
     if (jwt !== null) {
@@ -33,7 +33,6 @@ function checkAuth() {
           resolve()
         })
     } else {
-      router.replace('/login')
       resolve()
     }
   })
@@ -49,12 +48,11 @@ function login(email: string, password: string) {
       .then(response => {
         localStorage.setItem('access_token', response.data.access_token)
         checkAuth().then(() => {
-          router.replace('/')
+          resolve()
         })
-        resolve()
       })
-      .catch(() => {
-        reject()
+      .catch(error => {
+        reject(error.response.data.msg)
       })
   })
 }
@@ -63,4 +61,5 @@ export default {
   user,
   login,
   checkAuth,
+  logout,
 }
