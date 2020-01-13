@@ -1,5 +1,5 @@
 <template>
-  <v-row class="fill-height pt-4">
+  <v-row class="pt-4">
     <v-col cols="12" class="pa-0 pl-3">
       <span class="display-1 font-weight-bold">Dashboard</span>
     </v-col>

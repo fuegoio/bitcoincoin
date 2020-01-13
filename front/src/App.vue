@@ -153,7 +153,17 @@
     </v-content>
   </v-app>
 
-  <v-app v-else> </v-app>
+  <v-app v-else>
+    <v-content>
+      <v-container class="fill-height">
+        <v-row justify="center" class="fill-height" align="center">
+          <v-col class="text-cs">
+            <v-progress-circular indeterminate />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script lang="ts">
