@@ -26,8 +26,10 @@ am4core.useTheme(am4themes_animated)
 
 @Component({})
 export default class DashboardPage extends Vue {
+  chart: am4charts.XYChart = undefined
+
   mounted(): void {
-    const chart = am4core.create('chartdiv', am4charts.XYChart)
+    this.chart = am4core.create('chartdiv', am4charts.XYChart)
 
     const data = []
     let value = 50
@@ -39,16 +41,16 @@ export default class DashboardPage extends Vue {
       data.push({ date: date, value: value })
     }
 
-    chart.data = data
+    this.chart.data = data
 
     // Create axes
-    const dateAxis = chart.xAxes.push(new am4charts.DateAxis())
+    const dateAxis = this.chart.xAxes.push(new am4charts.DateAxis())
     dateAxis.renderer.minGridDistance = 60
 
-    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+    const valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis())
 
     // Create series
-    const series = chart.series.push(new am4charts.LineSeries())
+    const series = this.chart.series.push(new am4charts.LineSeries())
     series.dataFields.valueY = 'value'
     series.dataFields.dateX = 'date'
     series.stroke = am4core.color('#617be2')
@@ -62,17 +64,17 @@ export default class DashboardPage extends Vue {
       series.tooltip.pointerOrientation = 'vertical'
     }
 
-    chart.cursor = new am4charts.XYCursor()
-    chart.cursor.snapToSeries = series
-    chart.cursor.xAxis = dateAxis
+    this.chart.cursor = new am4charts.XYCursor()
+    this.chart.cursor.snapToSeries = series
+    this.chart.cursor.xAxis = dateAxis
 
     //chart.scrollbarY = new am4core.Scrollbar();
     // chart.scrollbarX = new am4core.Scrollbar()
-    chart.scrollbarX = new am4charts.XYChartScrollbar()
-    chart.scrollbarX.series.push(series)
-    chart.scrollbarX.parent = chart.bottomAxesContainer
-    chart.scrollbarX.background.fill = am4core.color('#424242')
-    chart.scrollbarX.background.fillOpacity = 0
+    this.chart.scrollbarX = new am4charts.XYChartScrollbar()
+    this.chart.scrollbarX.series.push(series)
+    this.chart.scrollbarX.parent = this.chart.bottomAxesContainer
+    this.chart.scrollbarX.background.fill = am4core.color('#424242')
+    this.chart.scrollbarX.background.fillOpacity = 0
 
     // Style scrollbar
     function customizeGrip(grip: am4core.ResizeButton): void {
@@ -100,8 +102,12 @@ export default class DashboardPage extends Vue {
       line.valign = 'middle'
     }
 
-    customizeGrip(chart.scrollbarX.startGrip)
-    customizeGrip(chart.scrollbarX.endGrip)
+    customizeGrip(this.chart.scrollbarX.startGrip)
+    customizeGrip(this.chart.scrollbarX.endGrip)
+  }
+
+  beforeDestroy(): void {
+    this.chart.dispose()
   }
 }
 </script>
