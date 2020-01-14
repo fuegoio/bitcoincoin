@@ -199,7 +199,7 @@ export default Vue.extend({
     ],
   }),
   created() {
-    auth.checkAuth().then(() => {
+    auth.checkAuth(undefined).then(() => {
       this.auth.loading = false
     })
   },
@@ -209,6 +209,7 @@ export default Vue.extend({
       this.$router.push('/profile')
     },
     logout(): void {
+      this.profile = false
       auth.logout()
     },
   },

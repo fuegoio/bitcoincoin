@@ -2,6 +2,7 @@ import hashlib
 
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from peewee import IntegrityError
 
 from bitcoincoin.core import db
 from bitcoincoin.models.user import User
@@ -22,7 +23,10 @@ def register():
     hash.update(password.encode())
     password_hash = hash.hexdigest()
 
-    user = User.create(username=username, email=email, password=password_hash)
+    try:
+        user = User.create(username=username, email=email, password=password_hash)
+    except IntegrityError:
+        return jsonify({'msg': 'Email already registered'}), 400
 
     access_token = create_access_token(identity=user.get_identity())
     return jsonify(access_token=access_token), 200

@@ -2,9 +2,9 @@
   <v-row class="fill-height ma-0">
     <v-col lg="6" md="4" class="hidden-sm-and-down auth-left" />
     <v-col lg="6" md="8" sm="12" class="auth elevation-10">
-      <v-slide-x-transition mode="out-in">
+      <v-fade-transition mode="out-in">
         <v-row
-          v-if="!register && !forget"
+          v-if="!registering && !forgeting"
           key="login"
           class="fill-height px-10"
           align="center"
@@ -55,7 +55,9 @@
                 />
               </v-col>
               <v-col class="text-right" sm="6" cols="12">
-                <a class="primary--text font-weight-bold" @click="forget = true"
+                <a
+                  class="primary--text font-weight-bold"
+                  @click="forgeting = true"
                   >Mot de passe oublié ?</a
                 >
               </v-col>
@@ -64,15 +66,17 @@
 
           <div class="footer text-center">
             Pas de compte ? Rejoignez
-            <a class="primary--text font-weight-bold" @click="register = true"
+            <a
+              class="primary--text font-weight-bold"
+              @click="registering = true"
               >Bitcoincoin</a
             >
           </div>
         </v-row>
 
         <v-row
-          v-else-if="register"
-          key="register"
+          v-else-if="registering"
+          key="registering"
           class="fill-height px-10"
           align="center"
           justify="center"
@@ -116,20 +120,73 @@
               large
               rounded
               :loading="loading"
-              @click="login"
+              @click="register"
             >
               S'inscrire
+            </v-btn>
+
+            <v-row justify="space-between" align="center" class="mt-4 px-1">
+              <v-col cols="12">
+                <v-checkbox
+                  v-model="remember"
+                  label="Se souvenir de moi"
+                  light
+                  color="primary"
+                />
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <div class="footer text-center">
+            Déja un compte ?
+            <a
+              class="primary--text font-weight-bold"
+              @click="registering = false"
+              >Connectez vous</a
+            >
+          </div>
+        </v-row>
+
+        <v-row
+          v-else-if="forgeting"
+          key="forgeting"
+          class="fill-height px-10"
+          align="center"
+          justify="center"
+        >
+          <v-col xl="8" lg="10" md="12">
+            <img src="../assets/logo.white.png" class="logo px-10 mb-10" />
+
+            <v-text-field
+              v-model="email"
+              label="E-mail"
+              required
+              light
+              filled
+              rounded
+            />
+
+            <v-btn
+              color="primary"
+              class="mt-2"
+              block
+              light
+              large
+              rounded
+              :loading="loading"
+            >
+              J'ai oublié mon mot de passe
             </v-btn>
           </v-col>
 
           <div class="footer text-center">
             Déja un compte ?
-            <a class="primary--text font-weight-bold" @click="register = false"
+            <a class="primary--text font-weight-bold" @click="forgeting = false"
               >Connectez vous</a
             >
           </div>
         </v-row>
-      </v-slide-x-transition>
+      </v-fade-transition>
       <v-snackbar v-model="error" right absolute class="ma-4">
         {{ errorText }}
         <v-btn color="accent" text @click="error = false">
@@ -155,16 +212,27 @@ export default class LoginPage extends Vue {
   errorText = ''
 
   loading = false
-  register = false
-  forget = false
+  registering = false
+  forgeting = false
 
-  login() {
+  login(): void {
     this.loading = true
-    auth.login(this.email, this.password).catch(error => {
+    auth.login(this.email, this.password, this.remember).catch(error => {
       this.errorText = error
       this.error = true
       this.loading = false
     })
+  }
+
+  register(): void {
+    this.loading = true
+    auth
+      .register(this.email, this.password, this.username, this.remember)
+      .catch(error => {
+        this.errorText = error
+        this.error = true
+        this.loading = false
+      })
   }
 }
 </script>
