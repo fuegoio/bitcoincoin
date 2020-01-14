@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ml-2 pa-2" elevation="4">
+  <v-card class="ml-2 pa-2">
     <v-list-item three-line>
       <v-list-item-avatar>
         <img
