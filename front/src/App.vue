@@ -21,8 +21,42 @@
     </template>
 
     <template v-else>
-      <v-navigation-drawer app clipped permanent width="330" floating>
-        <v-list shaped>
+      <v-navigation-drawer
+        app
+        width="360"
+        clipped
+        class="elevation-4 background"
+      >
+        <v-card outlined class="ma-4" hover to="/profile">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">Compte</div>
+              <v-list-item-title class="headline mb-1">{{
+                auth.user.profile.username
+              }}</v-list-item-title>
+              <v-list-item-subtitle>
+                Trader
+              </v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar tile size="80" color="primary">
+              <span class="white--text headline">{{
+                auth.user.profile.username[0]
+              }}</span>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-card-actions class="primary py-0 mt-4">
+            <v-col>
+              Balance
+            </v-col>
+            <v-col class="text-right font-weight-bold">
+              $100,000,000.00
+            </v-col>
+          </v-card-actions>
+        </v-card>
+
+        <v-list rounded class="mt-4 transparent">
           <v-list-item-group v-model="item" color="primary">
             <v-list-item
               v-for="(item, i) in items"
@@ -39,9 +73,13 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
+
+        <v-btn color="error" text absolute block bottom @click="logout"
+          >Deconnexion</v-btn
+        >
       </v-navigation-drawer>
 
-      <v-app-bar app color="transparent" flat height="128" clipped-left>
+      <v-app-bar app class="background elevation-2" height="112" clipped-left>
         <v-toolbar-title>
           <img
             src="./assets/logo.png"
@@ -51,7 +89,7 @@
             @click="$router.push('/')"
           />
         </v-toolbar-title>
-        <v-row class="ml-2">
+        <v-row class="tools">
           <v-col cols="8">
             <v-autocomplete
               v-model="search.molecule"
@@ -62,11 +100,12 @@
               :search-input.sync="search.query"
               cache-items
               class="mx-4"
-              flat
               hide-no-data
               hide-details
-              label="Quack ! Tu veux trouver une nouvelle crypto ?"
-              solo-inverted
+              placeholder="Quack ! Tu veux trouver une nouvelle crypto ?"
+              outlined
+              flat
+              rounded
             >
             </v-autocomplete>
           </v-col>
@@ -75,86 +114,11 @@
               <v-icon>mdi-tag-plus</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="3">
-            <v-menu
-              v-model="profile"
-              :close-on-content-click="false"
-              :nudge-width="200"
-              offset-x
-            >
-              <template v-slot:activator="{ on }">
-                <v-card flat color="transparent" max-height="48" v-on="on">
-                  <v-list color="transparent" class="py-0">
-                    <v-list-item>
-                      <v-list-item-content class="text-right py-2">
-                        <v-list-item-title class="font-weight-bold"
-                          >Quentin Churet
-                        </v-list-item-title>
-                        <v-list-item-subtitle class="caption">
-                          Trader
-                        </v-list-item-subtitle>
-                      </v-list-item-content>
-
-                      <v-list-item-action class="my-0">
-                        <v-btn icon disabled>
-                          <v-icon>mdi-menu-down</v-icon>
-                        </v-btn>
-                      </v-list-item-action>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
-              </template>
-
-              <v-card>
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-avatar>
-                      <img
-                        src="https://cdn.vuetifyjs.com/images/john.jpg"
-                        alt="John"
-                      />
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                      <v-list-item-title>Quentin Churet</v-list-item-title>
-                      <v-list-item-subtitle>
-                        Trader
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-
-                <v-divider />
-
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-switch color="secondary" />
-                    </v-list-item-action>
-                    <v-list-item-title>Enable notifications</v-list-item-title>
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-switch color="secondary" />
-                    </v-list-item-action>
-                    <v-list-item-title>Enable hints</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-
-                <v-card-actions>
-                  <v-btn color="error" text @click="logout">Deconnexion</v-btn>
-                  <v-spacer />
-                  <v-btn color="primary" text @click="goProfile">Profile</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-menu>
-          </v-col>
         </v-row>
       </v-app-bar>
 
-      <v-content>
-        <v-container fluid>
+      <v-content class="elevation-4 background darken-1">
+        <v-container fluid class="pa-6">
           <v-fade-transition mode="out-in" appear>
             <router-view :key="$route.fullPath" />
           </v-fade-transition>
@@ -223,17 +187,14 @@ export default Vue.extend({
 
 .theme--dark.v-card {
   background-color: #2a2e3a !important;
-}
-
-.theme--dark.v-navigation-drawer {
-  background-color: #343949 !important;
+  border-radius: 16px !important;
 }
 
 .theme--dark.v-list {
   background-color: #2a2e3a !important;
 }
 
-.v-navigation-drawer .v-list {
-  background: #343949 !important;
+.tools {
+  margin-left: 80px;
 }
 </style>

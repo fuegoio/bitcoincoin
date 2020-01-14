@@ -15,7 +15,7 @@
 
             <v-text-field
               v-model="email"
-              label="E-mail"
+              placeholder="E-mail"
               required
               light
               filled
@@ -24,7 +24,7 @@
 
             <v-text-field
               v-model="password"
-              label="Mot de passe"
+              placeholder="Mot de passe"
               required
               light
               filled
