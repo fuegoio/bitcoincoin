@@ -4,7 +4,6 @@ import requests
 from playhouse.shortcuts import update_model_from_dict
 from .currencies import create_currency, create_currency_rate
 from bitcoincoin.models.currency import Currency, CurrencyRate
-from .data.currencies_list import currencies_list
 
 headers = {'authorization': 'Apikey {}'.format('7bdf4764d02940ee49fa5198c51d2cfb1ca440d3dbe2de46d3fb9391e0a9f045')}
 
