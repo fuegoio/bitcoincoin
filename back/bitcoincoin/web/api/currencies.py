@@ -8,7 +8,10 @@ from bitcoincoin.tasks.coincap import update_currencies, fetch_currency_history
 
 class Currencies(Resource):
     def get(self):
-        return search_currencies(request.args)
+        currencies = search_currencies(request.args)
+        for currency in currencies:
+            currency['last_rates'] = get_currency_rates_last_days(currency['id'], 5) + [currency['last_value']]
+        return currencies
 
     def post(self):
         task = update_currencies.delay()

@@ -5,4 +5,5 @@ export interface Currency {
   symbol: string
   last_value: number
   icon: string
+  last_rates: number[] | undefined
 }

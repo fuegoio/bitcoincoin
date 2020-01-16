@@ -1,5 +1,7 @@
 from datetime import datetime
 
+import pendulum
+
 from bitcoincoin.core import db
 from bitcoincoin.models.currency import Currency, CurrencyRate
 
@@ -23,6 +25,17 @@ def get_currency_by_id(currency_id: int):
 
 def delete_currency(currency_id: int):
     return Currency.get(id=currency_id).delete_instance()
+
+
+def get_currency_rates_last_days(currency_id: int, number_days: int):
+    rates = []
+    now = pendulum.today('UTC')
+    for days in range(number_days - 1, -1, -1):
+        date = now.subtract(days=days)
+        available_rates = CurrencyRate.select().where(CurrencyRate.currency == currency_id, CurrencyRate.datetime >= date).order_by(CurrencyRate.datetime).limit(1)
+        if len(available_rates) > 0:
+            rates.append(available_rates[0].value)
+    return rates
 
 
 def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_date: datetime = None):

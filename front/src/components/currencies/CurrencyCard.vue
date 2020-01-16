@@ -22,11 +22,13 @@
       </v-col>
       <v-col cols="12" class="currency-trend px-6">
         <v-sparkline
-          :value="value"
+          :value="currency.last_rates"
           auto-draw
           :gradient="gradient"
+          :labels="labels"
+          label-size="6"
           gradient-direction="right"
-          line-width="0.7"
+          line-width="2"
           height="80"
           padding="12"
           stroke-linecap="round"
@@ -46,7 +48,7 @@ import { Currency } from '@/models/currency'
 export default class CurrencyCard extends Vue {
   @Prop() currency: Currency
 
-  value = [423, 446, 675, 510, 590, 610, 760]
+  labels = ['4j', '3j', '2j', '1j', 'ce matin', '-']
   gradient = ['#617be2', '#ff6473']
 }
 </script>
