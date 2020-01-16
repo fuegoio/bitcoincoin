@@ -3,7 +3,7 @@ from flask_restful import Resource
 
 from bitcoincoin.controllers.currencies import *
 from bitcoincoin.errors.bad_resource import *
-
+from bitcoincoin.controllers import cryptocompare
 
 class Currencies(Resource):
     def get(self):
@@ -35,6 +35,12 @@ class Currencies(Resource):
         return create_currency(
             name=name, symbol=symbol, last_value=last_value, provider=provider
         )
+    def update_currencies(self):
+        data = request.json
+        if data['currency_list']:
+            return cryptocompare.update_currency(currency_list)
+        else:
+            return cryptocompare.update_currency()
 
 
 class Currency(Resource):
@@ -99,3 +105,19 @@ class CurrencyRates(Resource):
 class CurrencyLastRate(Resource):
     def get(self, currency_id):
         return get_currency_last_rate(currency_id)
+
+
+class CurrencyHistoric(Resource):
+    def post(self, currency_id):
+        symbol = get_currency_by_id(currency_id).symbol
+        data = request.json
+        if data['nb_days']:
+            try:
+                nb_days = int(data['nb_days'])
+                assert nb_days > 0
+            except:
+                raise BadQuantityError(nb_days)
+            return cryptocompare.retrieve_historic(symbol, data['nb_days'])
+        else:
+            return cryptocompare.retrieve_historic(symbol)
+

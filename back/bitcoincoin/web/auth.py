@@ -28,7 +28,7 @@ def register():
     except IntegrityError:
         return jsonify({'msg': 'Email already registered'}), 400
 
-    access_token = create_access_token(identity=user.get_identity())
+    access_token = create_access_token(identity=user.get_small_data())
     return jsonify(access_token=access_token), 200
 
 
@@ -46,17 +46,8 @@ def login():
     if user is None:
         return jsonify({'msg': 'Unknown email or password not matching'}), 403
 
-    access_token = create_access_token(identity=user.get_identity())
+    access_token = create_access_token(identity=user.get_small_data())
     return jsonify(access_token=access_token), 200
-
-
-@auth_bp.route('/me')
-@jwt_required
-@db.connection_context()
-def me():
-    identity = get_jwt_identity()
-    user = User.get_by_id(identity['id'])
-    return user.get_identity()
 
 
 app.register_blueprint(auth_bp, url_prefix="/auth")

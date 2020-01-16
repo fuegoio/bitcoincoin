@@ -17,7 +17,7 @@ class User(BaseModel):
     def wallet_value(self):
         return round(sum([c.value for c in self.currencies]), 2)
 
-    def get_identity(self):
+    def get_small_data(self):
         return {"id": self.id, "username": self.username, "email": self.email,
                 "cash_flow": self.cash_flow,
                 "join_date": self.join_date,
