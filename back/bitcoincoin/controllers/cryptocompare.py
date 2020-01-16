@@ -8,13 +8,12 @@ from .data.currencies_list import currencies_list
 
 headers = {'authorization': 'Apikey {}'.format('7bdf4764d02940ee49fa5198c51d2cfb1ca440d3dbe2de46d3fb9391e0a9f045')}
 
-def update_currency(*args):
+def update_currency(currency_list=None):
     url_all = 'https://min-api.cryptocompare.com/data/blockchain/list'
     response_all = requests.get(url_all, headers=headers)
-    use_favorites = args
     for cur in response_all.json()['Data']:
-        if args:
-            if cur in use_favorites:
+        if currency_list:
+            if cur in currency_list:
                 url_unique = 'https://min-api.cryptocompare.com/data/v2/histominute?fsym={}&tsym=USD&limit=1'.format(cur)
                 try:
                     currency = Currency.get_or_none(symbol=cur)
@@ -54,4 +53,4 @@ def get_historic(symbol, nb_days=730):
     return True
 
 
-# update_currency()
+update_currency()
