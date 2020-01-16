@@ -8,9 +8,13 @@ from .user import User
 
 
 class Wallet(BaseModel):
-    user = ForeignKeyField(User)
+    user = ForeignKeyField(User, backref='currencies')
     currency = ForeignKeyField(Currency)
-    volume = IntegerField(default=0)
+    volume = FloatField()
+
+    @property
+    def value(self):
+        return self.currency.last_value * self.volume
 
 
 with db:

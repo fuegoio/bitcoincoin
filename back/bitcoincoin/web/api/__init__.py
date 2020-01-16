@@ -8,7 +8,6 @@ from .users import (
     User,
     Users,
     UserTransactions,
-    UserLastTransaction,
     UserWallet,
     UserWalletCurrency,
 )
@@ -32,7 +31,6 @@ def after_request(exception=None):
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<int:user_id>")
 api.add_resource(UserTransactions, "/users/<int:user_id>/transactions")
-api.add_resource(UserLastTransaction, "/users/<int:user_id>/transactions/last")
 api.add_resource(UserWallet, "/users/<int:user_id>/wallet")
 api.add_resource(UserWalletCurrency, "/users/<int:user_id>/wallet/<int:currency_id>")
 
