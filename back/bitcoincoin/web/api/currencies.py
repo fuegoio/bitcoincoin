@@ -1,5 +1,6 @@
 from flask import request
 from flask_restful import Resource
+from datetime import datetime
 
 from bitcoincoin.controllers.currencies import *
 from bitcoincoin.errors.bad_resource import *
@@ -56,20 +57,24 @@ class Currency(Resource):
 
 
 class CurrencyRates(Resource):
-    def get(self, currency_id, from_date, to_date):
+    def get(self, currency_id):
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
         except:
             raise BadIdError(currency_id)
-        try:
-            from_date = datetime.strptime(from_date,'%Y-%m-%dT%H:%M:%S%z')
-        except:
-            raise BadFromDatetimeError(from_date)
-        try:
-            to_date = datetime.strptime(to_date,'%Y-%m-%dT%H:%M:%S%z')
-        except:
-            raise BadToDatetimeError(to_date)
+        from_date = None
+        if "from_date" in request.args:
+            try:
+                from_date = datetime.strptime(request.args["from_date"],'%Y-%m-%dT%H:%M:%S%z')
+            except:
+                raise BadFromDatetimeError(request.args["from_date"])
+        to_date = None
+        if "to_date" in request.args:
+            try:
+                to_date = datetime.strptime(request.args["to_date"],'%Y-%m-%dT%H:%M:%S%z')
+            except:
+                raise BadToDatetimeError(request.args["to_date"])
         return get_currency_rates_history(currency_id, from_date, to_date)
 
     def post(self, currency_id, provider):

@@ -4,7 +4,6 @@ from .users import get_user_cash_flow, get_user_wallet
 
 
 def search_transactions(filters: dict):
-    # TODO: startdate and endate in query
     transactions_found = Transaction.select()
     if "user" in filters:
         transactions_found = transactions_found.where(
@@ -14,6 +13,10 @@ def search_transactions(filters: dict):
         transactions_found = transactions_found.where(
             Transaction.currency == filters["currency"]
         )
+    if "from_date" in filters:
+        history = history.where(CurrencyRate.datetime >= filters["from_date"])
+    if "to_date" in filters:
+        history = history.where(CurrencyRate.datetime <= filters["to_date"])
 
     return [transaction.get_small_data() for transaction in transactions_found]
 
