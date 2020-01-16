@@ -7,6 +7,7 @@
 # get_currency_rates_history(currency_id, query)
 # create_currency_rate(currency_id, value)
 from datetime import datetime
+
 from bitcoincoin.models.currency import Currency, CurrencyRate
 
 
@@ -24,6 +25,7 @@ def create_currency(name: str, symbol: str, last_value: float, provider: str):
         name=name, symbol=symbol, last_value=last_value, provider=provider
     )
 
+
 def get_currency_by_id(currency_id: int):
     return Currency.get(id=currency_id).get_small_data()
 
@@ -32,7 +34,7 @@ def delete_currency(currency_id: int):
     return Currency.get(id=currency_id).delete_instance()
 
 
-def get_currency_rates_history(currency_id: int, from_date=None:datetime, to_date=None:datetime):
+def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_date: datetime = None):
     history = CurrencyRate.select().where(CurrencyRate.currency == currency_id)
     if from_date:
         history = history.where(CurrencyRate.datetime >= from_date)
@@ -41,7 +43,7 @@ def get_currency_rates_history(currency_id: int, from_date=None:datetime, to_dat
     return [hist.get_small_data() for hist in history]
 
 
-def create_currency_rate(currency_id: int, value: float, provider:str):
+def create_currency_rate(currency_id: int, value: float, provider: str):
     return CurrencyRate.create(currency=currency_id, value=value, provider=provider)
 
 

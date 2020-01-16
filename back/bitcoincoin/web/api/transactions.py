@@ -29,18 +29,21 @@ class Transactions(Resource):
         try:
             user_id = int(data["user_id"])
             assert user_id > 0
-        except ValueError, AssertionError:
+        except (ValueError, AssertionError):
             raise BadIdError(data["user_id"])
+
         try:
             currency_id = int(data["currency_id"])
             assert currency_id > 0
-        except ValueError, AssertionError:
+        except (ValueError, AssertionError):
             raise BadIdError(data["currency_id"])
+
         try:
             quantity = int(data["quantity"])
             assert quantity > 0
-        except ValueError, AssertionError:
+        except (ValueError, AssertionError):
             raise BadQuantityError(data["quantity"])
+
         if not isinstance(data["is_sell"], bool):
-            raise BadBoolError(is_sell)
+            raise BadBoolError(data["is_sell"])
         return create_transaction(user_id, currency_id, quantity, data["is_sell"])

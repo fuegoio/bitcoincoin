@@ -1,32 +1,28 @@
 from flask import request
 from flask_restful import Resource
 
-from bitcoincoin.errors.bad_ressource import BadIdError, BadLimitError
-
-# TODO: import from managers all useful functions
-# search_users(query)
-# get_user_by_id(user_id)
-# delete_user(user_id)
-# get_user_transactions(user_id, query)
-# get_user_last_transaction(user_id, query)
-# get_user_wallet(user_id, currency_id=None)
+from bitcoincoin.errors.bad_resource import BadIdError, BadLimitError
+from bitcoincoin.controllers.users import search_users, get_user_transactions, get_user_wallet, get_user_by_id, \
+    delete_user
 
 
 class Users(Resource):
     def get(self):
         filters = {}
-        if "id" in request.args:
-        try:
-            user_id = int(request.args["user"]) 
-            assert user_id > 0
-        except:
-            raise BadIdError(request.args["user"])
-        else:
-            filters["user_id"] = user_id
+        if "user" in request.args:
+            try:
+                user_id = int(request.args["user"])
+                assert user_id > 0
+            except:
+                raise BadIdError(request.args["user"])
+            else:
+                filters["user_id"] = user_id
+
         if "username" in request.args:
             filters["username"] = request.args["username"]
         if "email" in request.args:
             filters["email"] = request.args["email"]
+
         return search_users(filters)
 
 
@@ -58,19 +54,23 @@ class UserTransactions(Resource):
             except:
                 raise BadIdError(user_id)
             else:
-                filters["currency"] = currency_id 
+                filters["currency"] = currency_id
+
         if "limit" in request.args:
             try:
                 limit = int(request.args["limit"])
                 assert limit > 0
             except:
                 raise BadLimitError(request.args["limit"])
-            else filters["limit"] = request.args["limit"]             
+            else:
+                filters["limit"] = request.args["limit"]
+
         return get_user_transactions(user_id, filters)
 
 
-#class UserLastTransaction(Resource):
-#    def get(self, user_id):
+class UserLastTransaction(Resource):
+    def get(self, user_id):
+        pass
 #        try:
 #            user_id = int(user_id)
 #            assert user_id > 0
@@ -85,7 +85,6 @@ class UserTransactions(Resource):
 #            else:
 #                filters["currency"] = currency_id
 #        return get_user_last_transaction(user_id, filters)
-
 
 
 class UserWallet(Resource):
