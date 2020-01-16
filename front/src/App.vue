@@ -22,52 +22,18 @@
 
     <template v-else>
       <v-navigation-drawer
+        v-model="drawer"
         app
         width="360"
         clipped
         class="elevation-4 background"
       >
-        <v-card outlined class="ma-4" hover to="/profile">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">Compte</div>
-              <v-list-item-title class="headline mb-1">{{
-                auth.user.profile.username
-              }}</v-list-item-title>
-              <v-list-item-subtitle>
-                Trader
-              </v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-avatar tile size="80" color="primary">
-              <span class="white--text headline">{{
-                auth.user.profile.username[0]
-              }}</span>
-            </v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions class="py-0 mt-2">
-            <v-col>
-              Cash
-            </v-col>
-            <v-col class="text-right">
-              {{ auth.user.profile.cash_flow | toCurrency }}
-            </v-col>
-          </v-card-actions>
-          <v-card-actions class="primary py-0">
-            <v-col>
-              Portfolio
-            </v-col>
-            <v-col class="text-right font-weight-bold">
-              {{ auth.user.profile.wallet_value | toCurrency }}
-            </v-col>
-          </v-card-actions>
-        </v-card>
+        <ProfileSummaryCard :profile="auth.user.profile" />
 
         <v-list rounded class="mt-4 transparent">
-          <v-list-item-group v-model="item" color="primary">
+          <v-list-item-group color="primary">
             <v-list-item
-              v-for="(item, i) in items"
+              v-for="(item, i) in nav"
               :key="i"
               class="pl-10 my-4"
               :to="item.path"
@@ -82,12 +48,19 @@
           </v-list-item-group>
         </v-list>
 
-        <v-btn color="error" text absolute block bottom @click="logout"
-          >Deconnexion</v-btn
-        >
+        <v-btn color="error" text absolute block bottom @click="logout">
+          Deconnexion
+        </v-btn>
       </v-navigation-drawer>
 
-      <v-app-bar app class="background elevation-2" height="112" clipped-left>
+      <v-app-bar
+        app
+        class="background elevation-2 px-4"
+        height="112"
+        clipped-left
+      >
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+
         <v-toolbar-title>
           <img
             src="./assets/logo.png"
@@ -97,25 +70,10 @@
             @click="$router.push('/')"
           />
         </v-toolbar-title>
+
         <v-row class="tools">
           <v-col cols="8">
-            <v-autocomplete
-              v-model="search.molecule"
-              :loading="search.loading"
-              :items="search.molecules"
-              item-text="name"
-              item-value="id"
-              :search-input.sync="search.query"
-              cache-items
-              class="mx-4"
-              hide-no-data
-              hide-details
-              placeholder="Quack ! Tu veux trouver une nouvelle crypto ?"
-              outlined
-              flat
-              rounded
-            >
-            </v-autocomplete>
+            <SearchBar />
           </v-col>
           <v-col cols="1">
             <v-btn icon class="mx-3">
@@ -141,11 +99,14 @@ import Vue from 'vue'
 import auth from './modules/auth'
 
 import LoginPage from '@/pages/AuthPage.vue'
+import ProfileSummaryCard from '@/components/profiles/ProfileSummaryCard.vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 export default Vue.extend({
   name: 'App',
-  components: { LoginPage },
+  components: { SearchBar, ProfileSummaryCard, LoginPage },
   data: () => ({
+    drawer: true,
     search: {
       query: '',
       molecule: 0,
@@ -162,8 +123,7 @@ export default Vue.extend({
       loading: true,
     },
     profile: false,
-    item: 0,
-    items: [
+    nav: [
       { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
       { text: 'Monnaies', icon: 'mdi-bitcoin', path: '/currencies' },
       { text: 'Banques', icon: 'mdi-bank', path: '/banks' },
@@ -174,6 +134,8 @@ export default Vue.extend({
     auth.checkAuth(undefined).then(() => {
       this.auth.loading = false
     })
+
+    setInterval(() => auth.checkAuth(undefined), 5000)
   },
   methods: {
     goProfile(): void {

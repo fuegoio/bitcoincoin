@@ -1,8 +1,9 @@
 from flask import request
 from flask_restful import Resource
+from datetime import datetime
 
-from bitcoincoin.controllers.transactions import search_transactions, create_transaction
-from bitcoincoin.errors.bad_resource import BadIdError, BadQuantityError, BadBoolError
+from bitcoincoin.controllers.transactions import *
+from bitcoincoin.errors.bad_resource import *
 
 
 class Transactions(Resource):
@@ -22,6 +23,18 @@ class Transactions(Resource):
             except:
                 raise BadIdError(request.args["currency"])
             filters["currency"] = currency_id
+        if "from_date" in request.args:
+            try:
+                from_date = datetime.strptime(request.args["from_date"],'%Y-%m-%dT%H:%M:%S%z')
+            except:
+                raise BadFromDatetimeError(request.args["from_date"])
+            filters["from_date"] = from_date
+        if "to_date" in request.args:
+            try:
+                to_date = datetime.strptime(request.args["to_date"],'%Y-%m-%dT%H:%M:%S%z')
+            except:
+                raise BadToDatetimeError(request.args["to_date"])
+            filters["to_date"] = to_date
         return search_transactions(filters)
 
     def post(self):
@@ -39,11 +52,12 @@ class Transactions(Resource):
             raise BadIdError(data["currency_id"])
 
         try:
-            quantity = int(data["quantity"])
+            quantity = float(data["quantity"])
             assert quantity > 0
         except (ValueError, AssertionError):
             raise BadQuantityError(data["quantity"])
+        if not isinstance(data["is_sale"], bool):
+            raise BadBoolError(data["is_sale"])
 
-        if not isinstance(data["is_sell"], bool):
-            raise BadBoolError(data["is_sell"])
-        return create_transaction(user_id, currency_id, quantity, data["is_sell"])
+        transaction = create_transaction(user_id, currency_id, quantity, data["is_sale"])
+        return transaction.get_small_data()
