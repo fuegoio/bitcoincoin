@@ -19,7 +19,7 @@
       User Cash Flow : {{ user.cash_flow | toCurrency }}
     </v-card-subtitle>
     <v-card-subtitle>
-      Current Value : {{ currency.lastValue | toCurrency }}
+      Current Value : {{ currency.last_value | toCurrency }}
     </v-card-subtitle>
   </v-row>
 </template>

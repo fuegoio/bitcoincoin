@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     predictedCashFlowIfBuy: function() {
-      return this.user.cash_flow - this.buyingAmount * this.currency.lastValue
+      return this.user.cash_flow - this.buyingAmount * this.currency.last_value
     },
   },
 }

@@ -11,7 +11,6 @@ class Currency(BaseModel):
     name = TextField()
     symbol = FixedCharField()
     last_value = FloatField()
-    provider = TextField()
 
     @property
     def icon(self):

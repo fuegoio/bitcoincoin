@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-row>
+    <v-row class="mx-0">
       <v-col class="currency-trend px-6" cols="8">
         <v-sparkline
           :value="value"
@@ -28,6 +28,7 @@ import BuyingForm from '@/components/transactions/BuyingForm'
 import SellingForm from '@/components/transactions/SellingForm'
 import HeaderTransactionForm from '@/components/transactions/HeaderTransactionForm'
 import auth from '@/modules/auth'
+
 export default {
   name: 'TransactionCard',
   components: { SellingForm, BuyingForm, HeaderTransactionForm },

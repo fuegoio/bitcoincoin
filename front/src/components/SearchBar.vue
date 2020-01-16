@@ -14,17 +14,21 @@
     flat
     rounded
     return-object
+    @change="selectCurrency"
   >
     <template v-slot:item="{ item, index }">
-      <v-list-item two-line>
-        <v-list-item-avatar>
-          <v-img :src="item.icon" />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
-          <v-list-item-subtitle>{{ item.symbol }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-item-avatar>
+        <v-img :src="item.icon" />
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title>{{ item.name }}</v-list-item-title>
+        <v-list-item-subtitle>{{ item.symbol }}</v-list-item-subtitle>
+      </v-list-item-content>
+      <v-list-item-icon>
+        <span class="font-weight-thin">
+          {{ item.last_value | toCurrency }}
+        </span>
+      </v-list-item-icon>
     </template>
   </v-autocomplete>
 </template>
@@ -48,6 +52,14 @@ export default class SearchBar extends Vue {
       params: { name: this.query },
     })
     this.currencies = response.data
+  }
+
+  selectCurrency(): void {
+    this.$router.push('/currencies/' + this.currency.id)
+    this.$nextTick(() => {
+      this.currency = null
+      this.query = ''
+    })
   }
 }
 </script>
