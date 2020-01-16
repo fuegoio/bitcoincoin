@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import DashboardPage from '@/pages/DashboardPage.vue'
+import CurrenciesPage from '@/pages/CurrenciesPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 
 Vue.use(VueRouter)
@@ -15,6 +17,11 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardPage,
+  },
+  {
+    path: '/currencies',
+    name: 'currencies',
+    component: CurrenciesPage,
   },
   {
     path: '/profile',
