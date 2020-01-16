@@ -1,16 +1,15 @@
 <template>
   <v-row>
     <v-col cols="6">
-      <v-avatar tile size="80">
-        <img
-          :src="
-            'https://static.coincap.io/assets/icons/' +
-              currency.symbol +
-              '@2x.png'
-          "
-          :alt="currency.symbol"
-        />
-      </v-avatar>
+      <v-img
+        :src="
+          'https://static.coincap.io/assets/icons/' +
+            currency.symbol +
+            '@2x.png'
+        "
+        :alt="currency.symbol"
+        height="80"
+      />
     </v-col>
     <v-col cols="6">
       <h1>{{ currency.name }}</h1>
