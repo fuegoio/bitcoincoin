@@ -1,3 +1,5 @@
+import pendulum
+
 from bitcoincoin.models.transaction import Transaction
 from bitcoincoin.models.user import User
 from bitcoincoin.models.wallet import Wallet
@@ -67,14 +69,13 @@ def create_transaction(user_id: int, currency_id: int, quantity: float, is_sale:
                 raise Exception(
                     "Problem while updating user's cash flow, transaction cancelled"
                 )
-            if (
-                not Wallet.update(volume=Wallet.volume + quantity)
-                .where(Wallet.user == user_id, Wallet.currency == currency_id)
-                .execute()
-            ):
-                raise Exception(
-                    "Problem while updating user's wallet for currency, transaction cancelled"
-                )
+
+            wallet = Wallet.get_or_none(user=user_id, currency=currency_id)
+            if wallet is None:
+                wallet = Wallet.create(user=user_id, currency=currency_id, volume=0)
+            wallet.volume += quantity
+            wallet.save()
+
         return Transaction.create(
             user=user_id,
             currency=currency_id,
