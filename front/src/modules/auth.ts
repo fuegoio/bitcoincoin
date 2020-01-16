@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import axios from 'axios'
 import router from '../router'
 import { User } from '@/models/user'
@@ -28,7 +29,7 @@ function checkAuth(jwt: string): Promise<void> {
         .get('http://localhost:8000/auth/me')
         .then(function(response) {
           user.authenticated = true
-          user.profile = response.data
+          Vue.set(user, 'profile', response.data)
           resolve()
         })
         .catch(function() {
