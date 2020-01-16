@@ -8,6 +8,7 @@
                     /last                   =>  GET: get user last transaction (with query filters)
                 /wallet                     =>  GET: get user wallet all currencies
                     /<currency_id:int>      =>  GET: get user wallet one currency
+                /cash_flow                  =>  GET: get user cash flow
 
         /currencies                         =>  GET: search currencies (with query filters)
                                                 POST: create new currency
@@ -16,6 +17,5 @@
                 /rates                      =>  GET: get currency rates history (with query filters)
                                                 POST: create new currency rate
                     /last                   =>  GET: get currency last rate
-
         /transactions                       =>  GET: search transactions (with query filters)
                                                 POST: create new transaction

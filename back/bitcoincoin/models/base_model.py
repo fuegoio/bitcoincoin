@@ -1,7 +1,7 @@
 from peewee import Model
 from playhouse.shortcuts import model_to_dict
 
-from bitcoincoin.core import db
+from bitcoincoin.core import db, config
 
 
 class BaseModel(Model):
@@ -10,3 +10,4 @@ class BaseModel(Model):
 
     class Meta:
         database = db
+        schema = config['database']['schema']

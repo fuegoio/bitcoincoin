@@ -18,4 +18,4 @@ class User(BaseModel):
 
 
 with db:
-    User.create_table(fail_silently=True)
+    User.create_table(safe=True)

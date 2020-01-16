@@ -29,5 +29,5 @@ class CurrencyRate(BaseModel):
 
 
 with db:
-    Currency.create_table(fail_silently=True)
-    CurrencyRate.create_table(fail_silently=True)
+    Currency.create_table(safe=True)
+    CurrencyRate.create_table(safe=True)

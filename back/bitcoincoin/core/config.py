@@ -3,7 +3,8 @@ import os
 
 config = {
     "database": {
-        "host": os.environ.get('DB_HOST', 'localhost')
+        "host": os.environ.get('DB_HOST', 'localhost'),
+        "schema": "public"
     }
 }
 
