@@ -13,7 +13,7 @@ def update_currency(*args):
     response_all = requests.get(url_all, headers=headers)
     use_favorites = args
     for cur in response_all.json()['Data']:
-        if use_favorites != []:
+        if args:
             if cur in use_favorites:
                 url_unique = 'https://min-api.cryptocompare.com/data/v2/histominute?fsym={}&tsym=USD&limit=1'.format(cur)
                 try:
