@@ -1,4 +1,5 @@
 from peewee import *
+from playhouse.shortcuts import model_to_dict
 
 from bitcoincoin.core import db
 
@@ -11,6 +12,15 @@ class Currency(BaseModel):
     symbol = FixedCharField()
     last_value = FloatField()
     provider = TextField()
+
+    @property
+    def icon(self):
+        return f'https://static.coincap.io/assets/icons/{str(self.symbol).lower()}@2x.png'
+
+    def get_small_data(self):
+        data = model_to_dict(self)
+        data['icon'] = self.icon
+        return data
 
 
 class CurrencyRate(BaseModel):

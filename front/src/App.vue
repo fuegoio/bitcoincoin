@@ -30,7 +30,9 @@
       >
         <ProfileSummaryCard :profile="auth.user.profile" />
 
-        <v-list rounded class="mt-4 transparent">
+        <v-divider class="mt-8" />
+
+        <v-list rounded class="transparent">
           <v-list-item-group color="primary">
             <v-list-item
               v-for="(item, i) in nav"
@@ -75,9 +77,15 @@
           <v-col cols="8">
             <SearchBar />
           </v-col>
+          <v-col cols="2"> </v-col>
           <v-col cols="1">
             <v-btn icon class="mx-3">
               <v-icon>mdi-tag-plus</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col cols="1">
+            <v-btn icon class="mx-3">
+              <v-icon>mdi-tag-minus</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -165,6 +173,6 @@ export default Vue.extend({
 }
 
 .tools {
-  margin-left: 80px;
+  margin-left: 16px;
 }
 </style>

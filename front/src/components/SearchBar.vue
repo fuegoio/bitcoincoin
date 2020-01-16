@@ -3,9 +3,8 @@
     v-model="currency"
     :loading="loading"
     :items="currencies"
-    item-text="name"
-    item-value="id"
     :search-input.sync="query"
+    item-text="name"
     cache-items
     class="mx-4"
     hide-no-data
@@ -16,6 +15,17 @@
     rounded
     return-object
   >
+    <template v-slot:item="{ item, index }">
+      <v-list-item two-line>
+        <v-list-item-avatar>
+          <v-img :src="item.icon" />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{ item.symbol }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </template>
   </v-autocomplete>
 </template>
 
@@ -42,20 +52,4 @@ export default class SearchBar extends Vue {
 }
 </script>
 
-<style scoped>
-.currency-icon {
-  width: 42px;
-  margin-top: 6px;
-  margin-right: 22px;
-  float: left;
-}
-
-.currency-card-name,
-.currency-card-value {
-  border-bottom: 1px solid #3e3f3e;
-}
-
-.currency-card-value {
-  border-left: 1px solid #3e3f3e;
-}
-</style>
+<style scoped></style>
