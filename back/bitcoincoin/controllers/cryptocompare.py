@@ -11,10 +11,7 @@ headers = {'authorization': 'Apikey {}'.format('7bdf4764d02940ee49fa5198c51d2cfb
 def update_currency(*args):
     url_all = 'https://min-api.cryptocompare.com/data/blockchain/list'
     response_all = requests.get(url_all, headers=headers)
-    use_favorites = []
-    if args:
-        for symbl in args:
-            use_favorites.append(symbl)
+    use_favorites = args
     for cur in response_all.json()['Data']:
         if use_favorites != []:
             if cur in use_favorites:
