@@ -29,6 +29,7 @@ def search_transactions(filters: dict):
 
 def create_transaction(user_id: int, currency_id: int, quantity: int, is_sale: bool):
     with db.transaction():
+        value = get_currency_last_rate(currency_id) * quantity
         if is_sale:
             user_wallet_list = get_user_wallet(user_id, currency_id)
             if len(user_wallet_list) > 0 and user_wallet_list[0]["volume"] >= quantity:
@@ -40,12 +41,19 @@ def create_transaction(user_id: int, currency_id: int, quantity: int, is_sale: b
                     raise Exception(
                         "Problem while updating user's wallet for currency, transaction cancelled"
                     )
+                if (
+                    not User.update(cash_flow=User.cash_flow + value)
+                    .where(User.id == user_id)
+                    .execute()
+                ):
+                    raise Exception(
+                        "Problem while updating user's cash flow, transaction cancelled"
+                    )
             else:
                 raise Exception(
                     "Not enough money available for this currency to make this transaction"
                 )
         else:
-            value = get_currency_last_rate(currency_id) * quantity
             dollars_available = get_user_cash_flow(user_id)
             if dollars_available < value:
                 raise Exception(
@@ -58,6 +66,14 @@ def create_transaction(user_id: int, currency_id: int, quantity: int, is_sale: b
             ):
                 raise Exception(
                     "Problem while updating user's cash flow, transaction cancelled"
+                )
+            if (
+                not Wallet.update(volume=Wallet.volume + quantity)
+                .where(Wallet.user == user_id, Wallet.currency == currency_id)
+                .execute()
+            ):
+                raise Exception(
+                    "Problem while updating user's wallet for currency, transaction cancelled"
                 )
         return Transaction.create(
             user=user_id,
