@@ -2,7 +2,11 @@
   <v-card hover outlined>
     <v-row class="px-3">
       <v-col cols="7" class="pl-6 pt-3 currency-card-name">
-        <img :src="image" :alt="currency.symbol" class="currency-icon" />
+        <v-img
+          :src="currency.icon"
+          :alt="currency.symbol"
+          class="currency-icon"
+        />
         <span class="headline font-weight-bold">{{ currency.name }}</span>
         <div class="caption">
           {{ currency.symbol.toUpperCase() }}
@@ -41,10 +45,6 @@ import { Currency } from '@/models/currency'
 @Component({})
 export default class CurrencyCard extends Vue {
   @Prop() currency: Currency
-  image =
-    'https://static.coincap.io/assets/icons/' +
-    this.currency.symbol.toLowerCase() +
-    '@2x.png'
 
   value = [423, 446, 675, 510, 590, 610, 760]
   gradient = ['#617be2', '#ff6473']
