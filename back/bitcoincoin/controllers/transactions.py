@@ -5,14 +5,6 @@ from .users import get_user_cash_flow, get_user_wallet
 
 def search_transactions(filters: dict):
     # TODO: startdate and endate in query
-
-    # HOW TO DO THIS WITH PEEWEE SYNTAX
-    # filters = {"user": 3, "currency": 4}
-    # transactions_found = Transaction.select().where(**filters)
-    #   ==> where(user=3, currency=4)
-    # peewee syntax : where(Transaction.user == 3)
-
-    # Disjonction des cas
     transactions_found = Transaction.select()
     if "user" in filters:
         transactions_found = transactions_found.where(

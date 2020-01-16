@@ -1,11 +1,3 @@
-# TODO: import from managers all useful functions
-# search_currencies(query)
-# create_currency(name, symbol)
-# get_currency_by_id(currency_id)
-# delete_currency(currency_id)
-# get_currency_last_rate(currency_id)
-# get_currency_rates_history(currency_id, query)
-# create_currency_rate(currency_id, value)
 from datetime import datetime
 
 from bitcoincoin.models.currency import Currency, CurrencyRate
