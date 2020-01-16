@@ -43,8 +43,12 @@ def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_
     return [hist.get_small_data() for hist in history]
 
 
-def create_currency_rate(currency_id: int, value: float, provider: str):
-    return CurrencyRate.create(currency=currency_id, value=value, provider=provider)
+def create_currency_rate(currency_id: int, value: float, provider: str, datetime = None):
+    if datetime:
+        c = CurrencyRate(currency=currency_id, datetime=datetime, value=value, provider=provider)
+    else:
+        c = CurrencyRate(currency=currency_id, value=value, provider=provider)
+    return c.save()
 
 
 def get_currency_last_rate(currency_id: int):
