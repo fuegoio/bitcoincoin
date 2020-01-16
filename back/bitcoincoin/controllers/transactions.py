@@ -27,7 +27,7 @@ def search_transactions(filters: dict):
     return [transaction.get_small_data() for transaction in transactions_found]
 
 
-def create_transaction(user_id: int, currency_id: int, quantity: int, is_sale: bool):
+def create_transaction(user_id: int, currency_id: int, quantity: float, is_sale: bool):
     with db.transaction():
         value = get_currency_last_rate(currency_id) * quantity
         if is_sale:
