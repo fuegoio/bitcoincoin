@@ -29,21 +29,27 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col v-if="!ratesLoading" cols="12">
+      <CurrencyHistoric :rates="rates" />
+    </v-col>
   </v-row>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Currency } from '@/models/currency'
+import { Currency, CurrencyRate } from '@/models/currency'
 import axios, { AxiosResponse } from 'axios'
 import TransactionButton from '@/components/transactions/TransactionButton.vue'
+import CurrencyHistoric from '@/components/currencies/CurrencyHistoric.vue'
 
 @Component({
-  components: { TransactionButton },
+  components: { CurrencyHistoric, TransactionButton },
 })
 export default class CurrencyPage extends Vue {
   currency: Currency = null
+  rates: CurrencyRate[] = []
   loading = true
+  ratesLoading = true
 
   async fetchCurrency(): Promise<Currency> {
     const currencyId: number = parseInt(this.$route.params.currencyId)
@@ -51,10 +57,23 @@ export default class CurrencyPage extends Vue {
     return response.data
   }
 
+  async fetchCurrencyRates(): Promise<CurrencyRate[]> {
+    const currencyId: number = parseInt(this.$route.params.currencyId)
+    const response: AxiosResponse = await axios.get(
+      '/currencies/' + currencyId + '/rates',
+    )
+    return response.data
+  }
+
   created() {
     this.fetchCurrency().then(currency => {
       this.currency = currency
       this.loading = false
+    })
+
+    this.fetchCurrencyRates().then(rates => {
+      this.rates = rates
+      this.ratesLoading = false
     })
   }
 }
