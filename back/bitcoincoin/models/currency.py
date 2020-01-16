@@ -20,6 +20,7 @@ class Currency(BaseModel):
 
     def get_small_data(self):
         data = model_to_dict(self)
+        del data['coincap']
         data['icon'] = self.icon
         return data
 

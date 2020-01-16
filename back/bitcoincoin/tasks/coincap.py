@@ -34,13 +34,14 @@ def update_currencies():
 
 
 @celery.task
-def fetch_currency_history(symbol):
-    currency = Currency.get_or_none(symbol=symbol)
-    if currency:
-        request = requests.get("https://api.coincap.io/v2/assets/{}/history?interval=d1".format(currency.name))
+def fetch_currency_history(currency_id):
+    currency = Currency.get_or_none(id=currency_id)
+    if currency is not None:
+        request = requests.get("https://api.coincap.io/v2/assets/{}/history?interval=d1".format(currency.coincap))
         history = request.json()
         for rate in history['data']:
             currency_rate = rate['priceUsd']
             time = datetime.datetime.fromtimestamp(rate['time'] / 1000)
             create_currency_rate(currency_id=currency.id, value=currency_rate, datetime=time)
+
     return True
