@@ -1,9 +1,6 @@
 from peewee import *
-from playhouse.shortcuts import model_to_dict
-import pendulum
 
 from bitcoincoin.core import db
-
 from .base_model import BaseModel
 from .currency import Currency
 from .user import User

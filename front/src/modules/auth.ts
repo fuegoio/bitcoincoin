@@ -29,7 +29,6 @@ function checkAuth(jwt: string): Promise<void> {
         .then(function(response) {
           user.authenticated = true
           user.profile = response.data
-          localStorage.setItem('profile', JSON.stringify(user.profile))
           resolve()
         })
         .catch(function() {
