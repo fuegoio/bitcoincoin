@@ -12,7 +12,7 @@ class Transaction(BaseModel):
     currency = ForeignKeyField(Currency)
     quantity = IntegerField(default=0)
     value = DecimalField(decimal_places=2)
-    is_sell = BooleanField()
+    is_sale = BooleanField()
     datetime = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
 
 

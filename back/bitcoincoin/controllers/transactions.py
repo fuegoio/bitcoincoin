@@ -23,9 +23,9 @@ def search_transactions(filters: dict):
     return [transaction.get_small_data() for transaction in transactions_found]
 
 
-def create_transaction(user_id: int, currency_id: int, quantity: int, is_sell: bool):
+def create_transaction(user_id: int, currency_id: int, quantity: int, is_sale: bool):
     with db.transaction():
-        if is_sell:
+        if is_sale:
             user_wallet_list = get_user_wallet(user_id, currency_id)
             if len(user_wallet_list) > 0 and user_wallet_list[0]["volume"] >= quantity:
                 if not Wallet.update(volume=Wallet.volume-quantity).where(Wallet.user == user_id, Wallet.currency == currency_id).execute():
@@ -44,5 +44,5 @@ def create_transaction(user_id: int, currency_id: int, quantity: int, is_sell: b
             currency=currency_id,
             quantity=quantity,
             value=value,
-            is_sell=is_sell,
+            is_sale=is_sale,
         )

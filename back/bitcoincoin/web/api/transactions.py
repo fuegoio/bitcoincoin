@@ -54,6 +54,6 @@ class Transactions(Resource):
             assert quantity > 0
         except (ValueError, AssertionError):
             raise BadQuantityError(data["quantity"])
-        if not isinstance(data["is_sell"], bool):
-            raise BadBoolError(data["is_sell"])
-        return create_transaction(user_id, currency_id, quantity, data["is_sell"])
+        if not isinstance(data["is_sale"], bool):
+            raise BadBoolError(data["is_sale"])
+        return create_transaction(user_id, currency_id, quantity, data["is_sale"])
