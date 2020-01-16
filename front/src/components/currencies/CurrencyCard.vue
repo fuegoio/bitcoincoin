@@ -1,5 +1,5 @@
 <template>
-  <v-card hover outlined>
+  <v-card hover outlined :to="'/currencies/' + currency.id">
     <v-row class="px-3">
       <v-col cols="7" class="pl-6 pt-3 currency-card-name">
         <v-img

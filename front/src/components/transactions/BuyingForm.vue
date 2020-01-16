@@ -1,10 +1,6 @@
 <template>
   <v-form class="px-3">
-    <v-text-field
-      label="Amount"
-      v-model="buyingAmount"
-      type="number"
-    ></v-text-field>
+    <v-text-field label="Amount" v-model="buyingAmount"></v-text-field>
     {{ predictedCashFlowIfBuy | toCurrency }}
   </v-form>
 </template>
@@ -24,7 +20,7 @@ export default {
   },
   computed: {
     predictedCashFlowIfBuy: function() {
-      return this.user.cash_flow - this.buyingAmount * this.currency.lastValue
+      return this.user.cash_flow - this.buyingAmount * this.currency.last_value
     },
   },
 }
