@@ -1,13 +1,13 @@
 <template>
   <v-row>
     <v-col
-      v-for="currencyInfo in cryptoCurrenciesWallet"
-      :key="currencyInfo.id"
+      v-for="currencyWalletInfo in cryptoCurrenciesWallet"
+      :key="currencyWalletInfo.id"
       lg="4"
       md="6"
       sm="12"
     >
-      <WalletCurrencyCard :currencyInfo="currencyInfo" />
+      <WalletCurrencyCard :currencyWalletInfo="currencyWalletInfo" />
     </v-col>
   </v-row>
 </template>
@@ -24,9 +24,10 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get('http://localhost:8000/api/v1/me/wallet')
-      .then(response => console.log(response.data))
+    axios.get('http://localhost:8000/api/v1/me/wallet').then(response => {
+      console.log(response.data)
+      this.cryptoCurrenciesWallet = response.data
+    })
   },
 }
 </script>

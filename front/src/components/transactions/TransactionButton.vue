@@ -12,7 +12,10 @@
       Vendre
     </v-btn>
     <v-dialog v-model="dialog" transition="slide-x-reverse-transition">
-      <TransactionCard :currency="currency" :action="action" />
+      <TransactionCard
+        :currencyWalletInfo="currencyWalletInfo"
+        :action="action"
+      />
     </v-dialog>
   </v-row>
 </template>
@@ -22,7 +25,7 @@ export default {
   name: 'TransactionButton',
   components: { TransactionCard },
   props: {
-    currency: Object,
+    currencyWalletInfo: Object,
     action: String,
   },
   data: function() {

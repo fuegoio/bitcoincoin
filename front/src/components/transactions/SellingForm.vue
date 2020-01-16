@@ -10,6 +10,7 @@ export default {
   name: 'SellingForm',
   props: {
     currency: Object,
+    volume: Float32Array,
   },
 }
 </script>

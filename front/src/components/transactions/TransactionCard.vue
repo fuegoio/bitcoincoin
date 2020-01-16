@@ -15,9 +15,16 @@
         ></v-sparkline>
       </v-col>
       <v-col cols="4" class="px-3">
-        <HeaderTransactionForm :currency="currency" />
-        <BuyingForm v-if="action === 'buy'" :currency="currency" />
-        <SellingForm v-else :currency="currency" />
+        <HeaderTransactionForm :currency="currencyWalletInfo.currency" />
+        <BuyingForm
+          v-if="action === 'buy'"
+          :currency="currencyWalletInfo.currency"
+        />
+        <SellingForm
+          v-else
+          :currency="currencyWalletInfo.currency"
+          :volume="currencyWalletInfo.volume"
+        />
       </v-col>
     </v-row>
   </v-card>
@@ -33,7 +40,7 @@ export default {
   name: 'TransactionCard',
   components: { SellingForm, BuyingForm, HeaderTransactionForm },
   props: {
-    currency: Object,
+    currencyWalletInfo: Object,
     action: String,
   },
   data: function() {
