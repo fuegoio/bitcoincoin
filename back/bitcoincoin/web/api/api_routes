@@ -16,6 +16,5 @@
                                                 DELETE: delete currency
                 /rates                      =>  GET: get currency rates history (with query filters)
                                                 POST: create new currency rate
-                    /last                   =>  GET: get currency last rate
         /transactions                       =>  GET: search transactions (with query filters)
                                                 POST: create new transaction

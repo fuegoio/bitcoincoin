@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 
 from bitcoincoin.core import db
-from .currencies import Currencies, Currency, CurrencyLastRate, CurrencyRates
+from .currencies import Currencies, Currency, CurrencyRates
 from .transactions import Transactions
 from .users import (
     User,
@@ -37,7 +37,6 @@ api.add_resource(UserWalletCurrency, "/users/<int:user_id>/wallet/<int:currency_
 api.add_resource(Currencies, "/currencies")
 api.add_resource(Currency, "/currencies/<int:currency_id>")
 api.add_resource(CurrencyRates, "/currencies/<int:currency_id>/rates")
-api.add_resource(CurrencyLastRate, "/currencies/<int:currency_id>/rates/last")
 
 api.add_resource(Transactions, "/transactions")
 
