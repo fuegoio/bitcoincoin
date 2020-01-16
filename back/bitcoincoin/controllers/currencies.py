@@ -8,7 +8,7 @@ def search_currencies(query: dict):
     if "symbol" in query:
         currencies = currencies.where(Currency.symbol == query["symbol"])
     if "name" in query:
-        currencies = currencies.where(Currency.name == query["name"])
+        currencies = currencies.where(Currency.name.contains(query["name"]))
     return [cur.get_small_data() for cur in currencies]
 
 

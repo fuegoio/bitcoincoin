@@ -4,4 +4,5 @@ export interface Currency {
   symbol: string
   last_value: number
   provider: string
+  icon: string
 }
