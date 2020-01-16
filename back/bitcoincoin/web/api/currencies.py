@@ -61,19 +61,6 @@ class Currency(Resource):
             raise BadIdError(currency_id)
         return delete_currency(currency_id)
 
-    def get_historic(self, currency_id):
-        symbol = get_currency_by_id(currency_id).symbol
-        data = request.json
-        if data['nb_days']:
-            try:
-                nb_days = int(data['nb_days'])
-                assert nb_days > 0
-            except:
-                raise BadQuantityError(nb_days)
-            return cryptocompare.get_historic(symbol, data['nb_days'])
-        else:
-            return cryptocompare.get_historic(symbol)
-
 
 class CurrencyRates(Resource):
     def get(self, currency_id):
@@ -119,3 +106,19 @@ class CurrencyRates(Resource):
 class CurrencyLastRate(Resource):
     def get(self, currency_id):
         return get_currency_last_rate(currency_id)
+
+
+class CurrencyHistoric(Resource):
+    def post(self, currency_id):
+        symbol = get_currency_by_id(currency_id).symbol
+        data = request.json
+        if data['nb_days']:
+            try:
+                nb_days = int(data['nb_days'])
+                assert nb_days > 0
+            except:
+                raise BadQuantityError(nb_days)
+            return cryptocompare.retrieve_historic(symbol, data['nb_days'])
+        else:
+            return cryptocompare.retrieve_historic(symbol)
+
