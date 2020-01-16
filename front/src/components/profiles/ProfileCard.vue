@@ -10,7 +10,7 @@
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           Cash Flow :
-          {{ user.cashFlow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }} $
+          {{ user.cashFlow | toCurrency }}
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-avatar tile size="80" color="teal">

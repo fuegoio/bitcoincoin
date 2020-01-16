@@ -12,7 +12,7 @@
         <v-row justify="center" align="center">
           <v-icon large color="success">mdi-menu-up</v-icon>
           <span class="headline font-weight-light ml-3">
-            $ {{ currency.lastValue }}
+            {{ currency.lastValue | toCurrency }}
           </span>
         </v-row>
       </v-col>

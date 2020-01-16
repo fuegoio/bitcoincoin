@@ -16,7 +16,7 @@
           {{ currency.name }}
         </v-list-item-title>
         <v-list-item-subtitle>
-          Current Value : {{ currency.lastValue }} $
+          Current Value : {{ currency.lastValue | toCurrency }}
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           Quantity Owned : {{ currency.volume }}
@@ -24,7 +24,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
-      <BuyingButton :currency="currency"></BuyingButton>
+      <BuyingButton :currency="currency" />
     </v-card-actions>
   </v-card>
 </template>

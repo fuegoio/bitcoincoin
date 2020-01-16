@@ -46,12 +46,20 @@
             </v-list-item-avatar>
           </v-list-item>
 
-          <v-card-actions class="primary py-0 mt-4">
+          <v-card-actions class="py-0 mt-2">
             <v-col>
-              Balance
+              Cash
+            </v-col>
+            <v-col class="text-right">
+              {{ auth.user.profile.cash_flow | toCurrency }}
+            </v-col>
+          </v-card-actions>
+          <v-card-actions class="primary py-0">
+            <v-col>
+              Portfolio
             </v-col>
             <v-col class="text-right font-weight-bold">
-              $100,000,000.00
+              {{ auth.user.profile.wallet_value | toCurrency }}
             </v-col>
           </v-card-actions>
         </v-card>

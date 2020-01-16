@@ -15,3 +15,7 @@ new Vue({
   vuetify,
   render: h => h(App),
 }).$mount('#app')
+
+Vue.filter('toCurrency', function(value: number) {
+  return '$' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+})
