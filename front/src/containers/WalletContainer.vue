@@ -25,8 +25,8 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:8000/api/v1/users/1/wallet')
-      .then(response => (this.cryptoCurrenciesWallet = response.data))
+      .get('http://localhost:8000/api/v1/me/wallet')
+      .then(response => console.log(response.data))
   },
 }
 </script>

@@ -18,7 +18,9 @@ class Wallet(BaseModel):
         return self.currency.last_value * self.volume
 
     def get_small_data(self):
-        return model_to_dict(self, recurse=True)
+        wallet_dict = model_to_dict(self, recurse=False)
+        wallet_dict['currency'] = self.currency.get_small_data()
+        return wallet_dict
 
 
 with db:
