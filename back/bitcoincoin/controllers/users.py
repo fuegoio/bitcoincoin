@@ -23,10 +23,9 @@ def delete_user(user_id: int):
 
 
 def get_user_transactions(user_id, filters: dict):
-    transactions = Transaction.select().order_by(Transaction.datetime)
+    transactions = Transaction.select().where(Transaction.user == user_id).order_by(Transaction.datetime.desc())
     if "currency" in filters:
         transactions = transactions.where(Transaction.currency == filters["currency"])
-    transactions = transactions.where(Transaction.user == user_id)
     if "limit" in filters:
         transactions = transactions.limit(filters["limit"])
     return [transaction.get_small_data() for transaction in transactions]
