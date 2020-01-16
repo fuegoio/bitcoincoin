@@ -29,6 +29,12 @@
         Portfolio
       </v-col>
       <v-col class="text-right font-weight-bold">
+        <v-icon v-if="walletTrend === true" class="pb-1" color="success"
+          >mdi-menu-up</v-icon
+        >
+        <v-icon v-else-if="walletTrend === false" class="pb-1" color="error"
+          >mdi-menu-down</v-icon
+        >
         {{ profile.wallet_value | toCurrency }}
       </v-col>
     </v-card-actions>
@@ -36,12 +42,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { User } from '@/models/user'
 
 @Component({})
 export default class ProfileSummaryCard extends Vue {
   @Prop() profile: User
+  walletTrend: boolean | null = null
+
+  @Watch('profile.wallet_value')
+  updateWalletValue(newValue: number, oldValue: number): void {
+    this.walletTrend = newValue >= oldValue
+    console.log('test')
+  }
 }
 </script>
 

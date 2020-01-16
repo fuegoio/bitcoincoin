@@ -149,6 +149,8 @@ export default Vue.extend({
     auth.checkAuth(undefined).then(() => {
       this.auth.loading = false
     })
+
+    setInterval(() => auth.checkAuth(undefined), 5000)
   },
   methods: {
     goProfile(): void {
