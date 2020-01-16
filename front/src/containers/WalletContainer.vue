@@ -1,48 +1,60 @@
 <template>
   <v-row>
-    <v-col v-for="crypto in cryptoCurrencies" :key="crypto.id" :cols="4">
-      <CurrencyCard :crypto="crypto" />
+    <v-col
+      v-for="currency in cryptoCurrencies"
+      :key="currency.id"
+      lg="4"
+      md="6"
+      sm="12"
+    >
+      <WalletCurrencyCard :currency="currency" />
     </v-col>
   </v-row>
 </template>
 
 <script>
-import CurrencyCard from '@/components/currencies/CurrencyCard'
+import WalletCurrencyCard from '@/components/currencies/WalletCurrencyCard'
 export default {
   name: 'WalletContainer',
-  components: { CurrencyCard },
+  components: { WalletCurrencyCard },
   data: function() {
     return {
       cryptoCurrencies: [
         {
           name: 'Bitcoin',
-          number: 30,
-          currentValue: 6780.82,
+          volume: 30,
+          lastValue: 6780.82,
+          symbol: 'btc',
         },
         {
           name: 'Ethereum',
-          number: 50,
-          currentValue: 135.19,
+          volume: 50,
+          lastValue: 135.19,
+          symbol: 'eth',
         },
         {
-          name: 'CoinCoin',
-          number: 100,
-          currentValue: 150,
+          name: 'Cosmos',
+          volume: 100,
+          lastValue: 150,
+          symbol: 'atom',
         },
         {
           name: 'Bitcoin Cash',
-          number: 200,
-          currentValue: 190.86,
+          volume: 200,
+          lastValue: 190.86,
+          symbol: 'bch',
         },
         {
           name: 'Litecoin',
-          number: 100,
-          currentValue: 40.68,
+          volume: 100,
+          lastValue: 40.68,
+          symbol: 'ltc',
         },
         {
           name: 'XRP',
-          number: 100,
-          currentValue: 0.21,
+          volume: 100,
+          lastValue: 0.21,
+          symbol: 'xrp',
         },
       ],
     }
