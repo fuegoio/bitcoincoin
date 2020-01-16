@@ -73,23 +73,7 @@
 
         <v-row class="tools">
           <v-col cols="8">
-            <v-autocomplete
-              v-model="search.molecule"
-              :loading="search.loading"
-              :items="search.molecules"
-              item-text="name"
-              item-value="id"
-              :search-input.sync="search.query"
-              cache-items
-              class="mx-4"
-              hide-no-data
-              hide-details
-              placeholder="Quack ! Tu veux trouver une nouvelle crypto ?"
-              outlined
-              flat
-              rounded
-            >
-            </v-autocomplete>
+            <SearchBar />
           </v-col>
           <v-col cols="1">
             <v-btn icon class="mx-3">
@@ -116,10 +100,11 @@ import auth from './modules/auth'
 
 import LoginPage from '@/pages/AuthPage.vue'
 import ProfileSummaryCard from '@/components/profiles/ProfileSummaryCard.vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 export default Vue.extend({
   name: 'App',
-  components: { ProfileSummaryCard, LoginPage },
+  components: { SearchBar, ProfileSummaryCard, LoginPage },
   data: () => ({
     drawer: true,
     search: {
