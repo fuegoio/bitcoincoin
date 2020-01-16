@@ -39,3 +39,8 @@ class BadFromDatetimeError(BadResourceError):
 class BadToDatetimeError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'to_date')
+
+
+class BadLimitError(BadResourceError):
+    def __init__(self, resource):
+        BadResourceError.__init__(self, resource, 'limit')
