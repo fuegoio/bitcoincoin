@@ -29,8 +29,9 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col id="interval" cols="12"> </v-col>
     <v-col v-if="!ratesLoading" cols="12">
-      <CurrencyHistoric :rates="rates" />
+      <CurrencyHistoric :rates="rates" @interval="updateInterval" />
     </v-col>
   </v-row>
 </template>
@@ -50,6 +51,7 @@ export default class CurrencyPage extends Vue {
   rates: CurrencyRate[] = []
   loading = true
   ratesLoading = true
+  interval = 'day'
 
   async fetchCurrency(): Promise<Currency> {
     const currencyId: number = parseInt(this.$route.params.currencyId)
@@ -57,12 +59,22 @@ export default class CurrencyPage extends Vue {
     return response.data
   }
 
-  async fetchCurrencyRates(): Promise<CurrencyRate[]> {
+  async fetchCurrencyRates(interval: string): Promise<CurrencyRate[]> {
     const currencyId: number = parseInt(this.$route.params.currencyId)
     const response: AxiosResponse = await axios.get(
       '/currencies/' + currencyId + '/rates',
+      { params: { interval: interval } },
     )
     return response.data
+  }
+
+  updateInterval(interval: string): void {
+    this.interval = interval
+    this.ratesLoading = true
+    this.fetchCurrencyRates(this.interval).then(rates => {
+      this.rates = rates
+      this.ratesLoading = false
+    })
   }
 
   created() {
@@ -71,7 +83,7 @@ export default class CurrencyPage extends Vue {
       this.loading = false
     })
 
-    this.fetchCurrencyRates().then(rates => {
+    this.fetchCurrencyRates(this.interval).then(rates => {
       this.rates = rates
       this.ratesLoading = false
     })

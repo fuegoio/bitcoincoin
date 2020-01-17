@@ -1,5 +1,18 @@
 <template>
-  <div id="chartdiv" class="money-graph"></div>
+  <v-card>
+    <v-card-text>
+      <div id="chartdiv" class="money-graph"></div>
+    </v-card-text>
+    <v-card-actions id="interval" class="pa-0">
+      <v-overflow-btn
+        :items="['day', 'minute', 'hour']"
+        label="Interval"
+        segmented
+        target="#interval"
+        @change="interval => $emit('interval', interval)"
+      />
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
