@@ -46,8 +46,6 @@ def fetch_currency_history(currency_id):
             create_currency_rate(currency_id=currency.id, value=currency_rate, datetime=time)
 
     if currency is not None:
-        CurrencyRate.delete().where(CurrencyRate.currency == currency).execute()
-
         # 1 Day interval
         logger.info(f'[Currencies] Updating currency with 1 day interval ...')
         request = requests.get("https://api.coincap.io/v2/assets/{}/history?interval=d1".format(currency.coincap))

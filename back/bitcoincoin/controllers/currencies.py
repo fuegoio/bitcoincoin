@@ -52,7 +52,7 @@ def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_
 def create_currency_rate(currency_id: int, value: float, datetime=None):
     currency = Currency.get_by_id(currency_id)
     if datetime:
-        c = CurrencyRate.create(currency=currency, datetime=datetime, value=value)
+        c = CurrencyRate.get_or_create(currency=currency, datetime=datetime, defaults={'value': value})
     else:
         with db.transaction():
             c = CurrencyRate.create(currency=currency, value=value)
