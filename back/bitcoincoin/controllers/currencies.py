@@ -45,24 +45,32 @@ def get_currency_rates_last_days(currency_id: int, number_days: int):
     return rates
 
 
-def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_date: datetime = None):
+def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_date: datetime = None,
+                               interval_type='day', interval_number=500):
     history = CurrencyRate.select().where(CurrencyRate.currency == currency_id).order_by(CurrencyRate.datetime)
-    if from_date:
+    if from_date is not None:
         history = history.where(CurrencyRate.datetime >= from_date)
-    if to_date:
+    if to_date is not None:
         history = history.where(CurrencyRate.datetime < to_date)
 
-    history_by_day = {}
+    limit = {f"{interval_type}s": interval_number}
+    limit_date = pendulum.now('utc').subtract(**limit)
+    history = history.where(CurrencyRate.datetime >= limit_date)
+
+    history_by_interval = {}
     for rate in history:
-        date = rate.datetime.date()
-        if date not in history_by_day.keys():
-            history_by_day[date] = []
-        history_by_day[date].append(rate)
+        interval = pendulum.instance(rate.datetime)
+        if interval_type is not None:
+            interval = interval.start_of(interval_type)
+
+        if interval not in history_by_interval.keys():
+            history_by_interval[interval] = []
+        history_by_interval[interval].append(rate)
 
     rates = []
-    for day in sorted(history_by_day.keys()):
-        mean = round(statistics.mean([r.value for r in history_by_day[day]]), 2)
-        rates.append({"value": mean, "datetime": day})
+    for interval in sorted(history_by_interval.keys()):
+        mean = round(statistics.mean([r.value for r in history_by_interval[interval]]), 2)
+        rates.append({"value": mean, "datetime": interval})
 
     return rates
 
