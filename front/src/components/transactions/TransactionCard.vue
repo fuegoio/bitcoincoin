@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-row>
+    <v-row class="mx-0">
       <v-col class="currency-trend px-6" cols="8">
         <v-sparkline
           :value="value"
@@ -15,14 +15,7 @@
         ></v-sparkline>
       </v-col>
       <v-col cols="4" class="px-3">
-        <v-card-title class="headline">{{ currency.name }}</v-card-title>
-        <v-card-subtitle
-          >User Cash Flow : {{ user.cash_flow | toCurrency }}</v-card-subtitle
-        >
-        <v-card-subtitle
-          >Current Value :
-          {{ currency.lastValue | toCurrency }}</v-card-subtitle
-        >
+        <HeaderTransactionForm :currency="currency" />
         <BuyingForm v-if="action === 'buy'" :currency="currency" />
         <SellingForm v-else :currency="currency" />
       </v-col>
@@ -33,10 +26,12 @@
 <script>
 import BuyingForm from '@/components/transactions/BuyingForm'
 import SellingForm from '@/components/transactions/SellingForm'
+import HeaderTransactionForm from '@/components/transactions/HeaderTransactionForm'
 import auth from '@/modules/auth'
+
 export default {
   name: 'TransactionCard',
-  components: { SellingForm, BuyingForm },
+  components: { SellingForm, BuyingForm, HeaderTransactionForm },
   props: {
     currency: Object,
     action: String,

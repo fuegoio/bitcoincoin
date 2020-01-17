@@ -1,11 +1,9 @@
 /api
     /v1
-
         /users                              =>  GET: search users (with query filters)
             /<user_id:int>                  =>  GET: get user
                                                 DELETE: delete user
                 /transactions               =>  GET: get user transactions (with query filters)
-                    /last                   =>  GET: get user last transaction (with query filters)
                 /wallet                     =>  GET: get user wallet all currencies
                     /<currency_id:int>      =>  GET: get user wallet one currency
                 /cash_flow                  =>  GET: get user cash flow

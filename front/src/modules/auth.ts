@@ -26,7 +26,7 @@ function checkAuth(jwt: string): Promise<void> {
     if (jwt !== null) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt
       axios
-        .get('http://localhost:8000/auth/me')
+        .get('/me')
         .then(function(response) {
           user.authenticated = true
           Vue.set(user, 'profile', response.data)

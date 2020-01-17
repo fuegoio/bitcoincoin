@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-for="currency in currencies" :key="currency.name" cols="6">
+    <v-col v-for="currency in currencies" :key="currency.name" cols="12" sm="6">
       <CurrencyCard :currency="currency" />
     </v-col>
   </v-row>
