@@ -51,7 +51,20 @@ def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_
         history = history.where(CurrencyRate.datetime >= from_date)
     if to_date:
         history = history.where(CurrencyRate.datetime < to_date)
-    return [hist.get_small_data() for hist in history]
+
+    history_by_day = {}
+    for rate in history:
+        date = rate.datetime.date()
+        if date not in history_by_day.keys():
+            history_by_day[date] = []
+        history_by_day[date].append(rate)
+
+    rates = []
+    for day in sorted(history_by_day.keys()):
+        mean = round(statistics.mean([r.value for r in history_by_day[day]]), 2)
+        rates.append({"value": mean, "datetime": day})
+
+    return rates
 
 
 def create_currency_rate(currency_id: int, value: float, datetime=None):
