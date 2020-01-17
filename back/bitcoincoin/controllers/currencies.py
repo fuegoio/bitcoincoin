@@ -1,3 +1,4 @@
+import statistics
 from datetime import datetime
 
 import pendulum
@@ -7,11 +8,13 @@ from bitcoincoin.models.currency import Currency, CurrencyRate
 
 
 def search_currencies(query: dict):
-    currencies = Currency.select().order_by(Currency.rank).limit(20)
-    if "symbol" in query:
+    currencies = Currency.select().order_by(Currency.rank).limit(10)
+    if "symbol" in query.keys():
         currencies = currencies.where(Currency.symbol == query["symbol"])
-    if "name" in query:
+
+    if "name" in query.keys():
         currencies = currencies.where(Currency.name.contains(query["name"]))
+
     return [cur.get_small_data() for cur in currencies]
 
 
@@ -31,12 +34,14 @@ def get_currency_rates_last_days(currency_id: int, number_days: int):
     rates = []
     now = pendulum.today('UTC')
     for days in range(number_days - 1, -1, -1):
-        date = now.subtract(days=days)
-        available_rates = CurrencyRate.select().where(CurrencyRate.currency == currency_id, CurrencyRate.datetime >= date).order_by(CurrencyRate.datetime).limit(1)
+        from_date = now.subtract(days=days)
+        to_date = from_date.add(days=1)
+        available_rates = get_currency_rates_history(currency_id, from_date, to_date)
         if len(available_rates) > 0:
-            rates.append(available_rates[0].value)
+            mean = round(statistics.mean([r['value'] for r in available_rates]), 2)
+            rates.append(mean)
         else:
-            rates.append(0)
+            rates.append(None)
     return rates
 
 
@@ -45,7 +50,7 @@ def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_
     if from_date:
         history = history.where(CurrencyRate.datetime >= from_date)
     if to_date:
-        history = history.where(CurrencyRate.datetime <= to_date)
+        history = history.where(CurrencyRate.datetime < to_date)
     return [hist.get_small_data() for hist in history]
 
 

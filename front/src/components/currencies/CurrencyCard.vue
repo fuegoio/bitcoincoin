@@ -22,6 +22,7 @@
       </v-col>
       <v-col cols="12" class="currency-trend px-6">
         <v-sparkline
+          v-if="trend"
           :value="currency.last_rates"
           auto-draw
           :gradient="gradient"
@@ -35,6 +36,8 @@
           smooth
         >
         </v-sparkline>
+        <v-skeleton-loader v-else type="image" class="mx-auto">
+        </v-skeleton-loader>
       </v-col>
     </v-row>
   </v-card>
@@ -47,6 +50,17 @@ import { Currency } from '@/models/currency'
 @Component({})
 export default class CurrencyCard extends Vue {
   @Prop() currency: Currency
+  trend = false
+
+  created() {
+    let nullRates = false
+    this.currency.last_rates.forEach((rate: number) => {
+      if (rate === null) {
+        nullRates = true
+      }
+    })
+    this.trend = !nullRates
+  }
 
   labels = ['4j', '3j', '2j', '1j', 'ce matin', '-']
   gradient = ['#617be2', '#ff6473']
