@@ -15,9 +15,14 @@ class Transaction(BaseModel):
     is_sale = BooleanField()
     datetime = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
 
-    def get_small_data(self):
+    def get_small_data(self, currency=False, user=False):
         data = model_to_dict(self, recurse=False, backrefs=False)
-        data['user'] = self.user.get_small_data()
+
+        if user:
+            data['user'] = self.user.get_small_data()
+        if currency:
+            data['currency'] = self.currency.get_small_data()
+
         return data
 
 

@@ -28,7 +28,7 @@ def get_user_transactions(user_id, filters: dict):
         transactions = transactions.where(Transaction.currency == filters["currency"])
     if "limit" in filters:
         transactions = transactions.limit(filters["limit"])
-    return [transaction.get_small_data() for transaction in transactions]
+    return [transaction.get_small_data(currency=True) for transaction in transactions]
 
 
 def get_user_wallet(user_id, currency_id=None):

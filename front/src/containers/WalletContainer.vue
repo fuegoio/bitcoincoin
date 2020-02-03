@@ -1,5 +1,8 @@
 <template>
   <v-row>
+    <v-col cols="12" class="pl-6 title">
+      Portfolio
+    </v-col>
     <v-col
       v-for="currencyWalletInfo in cryptoCurrenciesWallet"
       :key="currencyWalletInfo.id"
