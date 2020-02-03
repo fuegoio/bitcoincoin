@@ -8,7 +8,10 @@ from bitcoincoin.tasks.coincap import update_currencies, fetch_currency_history
 
 class Currencies(Resource):
     def get(self):
-        return search_currencies(request.args)
+        currencies = search_currencies(request.args)
+        for currency in currencies:
+            currency['last_rates'] = get_currency_rates_last_days(currency['id'], 5) + [currency['last_value']]
+        return currencies
 
     def post(self):
         task = update_currencies.delay()
@@ -52,7 +55,9 @@ class CurrencyRates(Resource):
                 to_date = datetime.strptime(request.args["to_date"], '%Y-%m-%dT%H:%M:%S%z')
             except:
                 raise BadToDatetimeError(request.args["to_date"])
-        return get_currency_rates_history(currency_id, from_date, to_date)
+        interval_type = request.args.get('interval', 'day')
+        interval_number = request.args.get('limit', 500)
+        return get_currency_rates_history(currency_id, from_date, to_date, interval_type, interval_number)
 
     def post(self, currency_id):
         task = fetch_currency_history.delay(currency_id)

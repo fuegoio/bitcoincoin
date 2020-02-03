@@ -172,6 +172,14 @@ export default Vue.extend({
   background-color: #2a2e3a !important;
 }
 
+.theme--dark.v-btn-toggle:not(.v-btn-toggle--group) .v-btn.v-btn {
+  background-color: #2a2e3a !important;
+}
+
+.theme--dark.v-data-table {
+  background-color: #2a2e3a !important;
+}
+
 .tools {
   margin-left: 16px;
 }

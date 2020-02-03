@@ -9,10 +9,7 @@ class EnhancedJSONEncoder(json.JSONEncoder):
             date = pendulum.instance(obj)
             return {'str': str(date), 'diff': date.diff_for_humans(locale='fr')}
         elif isinstance(obj, datetime.date):
-            date = pendulum.instance(obj)
-            return {'str': str(date), 'diff': date.diff_for_humans(locale='fr')}
-        elif isinstance(obj, datetime.time):
-            date = pendulum.instance(obj)
+            date = pendulum.instance(datetime.datetime(obj.year, obj.month, obj.day))
             return {'str': str(date), 'diff': date.diff_for_humans(locale='fr')}
         else:
             return super().default(obj)
