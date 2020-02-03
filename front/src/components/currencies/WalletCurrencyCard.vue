@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="ml-2 pa-2"
+    class="pa-2"
     hover
     outlined
     :to="'/currencies/' + currencyWalletInfo.currency.id"
