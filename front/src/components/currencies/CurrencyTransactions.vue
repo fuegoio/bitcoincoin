@@ -9,6 +9,14 @@
       :items-per-page="5"
       class="elevation-1"
     >
+      <template v-slot:item.user="{ item }">
+        <v-list-item-avatar tile size="18" color="primary">
+          <span class="white--text">{{ item.user.username[0] }}</span>
+        </v-list-item-avatar>
+        <span class="font-weight-bold">
+          {{ item.user.username }}
+        </span>
+      </template>
       <template v-slot:item.type="{ item }">
         <v-chip v-if="item.is_sale" color="error" dark>Vente</v-chip>
         <v-chip v-else color="success" dark>Achat</v-chip>
@@ -28,6 +36,7 @@ import { Transaction } from '@/models/transaction'
 export default class CurrencyTransactions extends Vue {
   @Prop() transactions: Transaction[]
   headers = [
+    { text: 'Trader', value: 'user' },
     { text: 'Type', value: 'type' },
     { text: 'Quantitée', value: 'quantity' },
     { text: 'Valeur', value: 'value' },

@@ -16,6 +16,7 @@
     "lodash": "^4.17.15",
     "roboto-fontface": "*",
     "vue": "^2.6.10",
+    "vue-mugen-scroll": "^0.2.6",
     "vue-router": "^3.0.6",
     "vuetify": "^2.2.3",
     "vuex": "^3.0.1"
