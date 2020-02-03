@@ -3,6 +3,12 @@
     <v-col cols="12">
       <ProfileCard :profile="user" />
     </v-col>
+    <v-col v-if="historic.length > 0" cols="12">
+      <ProfileHistoric :historic="historic" />
+    </v-col>
+    <v-col v-else cols="12" class="text-center pa-12">
+      <v-progress-circular indeterminate />
+    </v-col>
     <v-col cols="12" class="my-2">
       <WalletContainer />
     </v-col>
@@ -22,9 +28,11 @@ import ProfileTransactions from '@/components/profiles/ProfileTransactions.vue'
 import auth from '../modules/auth'
 import { Transaction } from '@/models/transaction'
 import axios, { AxiosResponse } from 'axios'
+import ProfileHistoric from '@/components/profiles/ProfileHistoric.vue'
 
 @Component({
   components: {
+    ProfileHistoric,
     WalletContainer,
     ProfileCard,
     ProfileTransactions,
@@ -33,6 +41,12 @@ import axios, { AxiosResponse } from 'axios'
 export default class ProfilePage extends Vue {
   user = auth.user.profile
   transactions: Transaction[] = []
+  historic: any[] = []
+
+  async fetchProfileHistoric(): Promise<Transaction[]> {
+    const response: AxiosResponse = await axios.get('/me/historic')
+    return response.data
+  }
 
   async fetchProfileTransactions(): Promise<Transaction[]> {
     const response: AxiosResponse = await axios.get('/me/transactions')
@@ -42,6 +56,10 @@ export default class ProfilePage extends Vue {
   created() {
     this.fetchProfileTransactions().then(transactions => {
       this.transactions = transactions
+    })
+
+    this.fetchProfileHistoric().then(historic => {
+      this.historic = historic
     })
   }
 }

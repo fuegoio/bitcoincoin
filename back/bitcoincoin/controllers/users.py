@@ -1,3 +1,7 @@
+import pendulum
+from peewee import fn
+
+from bitcoincoin.models.currency import CurrencyRate
 from bitcoincoin.models.transaction import Transaction
 from bitcoincoin.models.user import User
 from bitcoincoin.models.wallet import Wallet
@@ -41,3 +45,48 @@ def get_user_wallet(user_id, currency_id=None):
 def get_user_cash_flow(user_id: int):
     user = User.get_by_id(user_id)
     return user.cash_flow
+
+
+def get_user_value_history(user_id):
+    limit = {f"hours": 500}
+    limit_date = pendulum.now('utc').subtract(**limit)
+
+    user = User.get_by_id(user_id)
+
+    wallets = Wallet.select().where(Wallet.user_id == user_id)
+    wallets_by_currency = {}
+    for w in wallets:
+        wallets_by_currency[w.currency] = w
+
+    values = []
+
+    transactions_history = list(Transaction.select().where(Transaction.datetime >= limit_date))
+    transactions_processed = []
+    for hour in range(500):
+        limit_date = pendulum.now('utc').subtract(hours=hour)
+        for t in transactions_history:
+            t_datetime = pendulum.instance(t.datetime, 'utc')
+            if t_datetime >= limit_date and t not in transactions_processed:
+                if t.is_sale:
+                    wallets_by_currency[t.currency].volume += t.quantity
+                    user.cash_flow -= t.value
+                else:
+                    wallets_by_currency[t.currency].volume -= t.quantity
+                    user.cash_flow += t.value
+                transactions_processed.append(t)
+
+        # Compute the wallet value
+        rates = CurrencyRate.select(CurrencyRate.currency, fn.AVG(CurrencyRate.value).alias('value')).where(CurrencyRate.currency << list(wallets_by_currency.keys()))
+        rates = rates.where(CurrencyRate.datetime >= limit_date.subtract(hours=1), CurrencyRate.datetime <= limit_date)
+        rates = rates.group_by(CurrencyRate.currency)
+
+        hour_value = 0
+        for rate in rates:
+            currency = rate.currency
+            value = rate.value
+            wallet_value = wallets_by_currency[currency].volume * value
+            hour_value += wallet_value
+
+        values.append({"date": str(limit_date), "value": hour_value + user.cash_flow})
+
+    return values[::-1]

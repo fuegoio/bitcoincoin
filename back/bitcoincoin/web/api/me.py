@@ -13,6 +13,13 @@ class Me(Resource):
         return get_user_by_id(user_id)
 
 
+class MeHistoric(Resource):
+    @jwt_required
+    def get(self):
+        user_id = get_jwt_identity()['id']
+        return get_user_value_history(user_id)
+
+
 class MeTransactions(Resource):
     @jwt_required
     def get(self):
