@@ -1,6 +1,8 @@
+import { User } from '@/models/user'
+
 export interface Transaction {
   id: number
-  user: number
+  user: User
   currency: number
   quantity: number
   value: number
