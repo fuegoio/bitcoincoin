@@ -1,8 +1,11 @@
 from flask import request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
 from bitcoincoin.controllers.users import *
 from bitcoincoin.errors.bad_resource import *
+from bitcoincoin.errors.forbidden import *
+from bitcoincoin.web import admins_id
 
 
 class Users(Resource):
@@ -33,12 +36,16 @@ class User(Resource):
             raise BadIdError(user_id)
         return get_user_by_id(user_id)
 
+    @jwt_required
     def delete(self, user_id):
+        identity_id = int(get_jwt_identity()['id'])
         try:
             user_id = int(user_id)
             assert user_id > 0
         except:
             raise BadIdError(user_id)
+        if identity_id not in admins_id and user_id != identity_id:
+            raise ForbiddenAdminError()
         return delete_user(user_id)
 
 
@@ -65,22 +72,30 @@ class UserTransactions(Resource):
 
 
 class UserWallet(Resource):
+    @jwt_required
     def get(self, user_id):
+        identity_id = int(get_jwt_identity()['id'])
         try:
             user_id = int(user_id)
             assert user_id > 0
         except:
             raise BadIdError(user_id)
+        if identity_id not in admins_id and user_id != identity_id:
+            raise ForbiddenAdminError()
         return get_user_wallet(user_id)
 
 
 class UserWalletCurrency(Resource):
+    @jwt_required
     def get(self, user_id, currency_id):
+        identity_id = int(get_jwt_identity()['id'])
         try:
             user_id = int(user_id)
             assert user_id > 0
         except:
             raise BadIdError(user_id)
+        if identity_id not in admins_id and user_id != identity_id:
+            raise ForbiddenAdminError()
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
