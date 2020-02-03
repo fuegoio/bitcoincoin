@@ -5,7 +5,7 @@ from flask_restful import Resource
 from bitcoincoin.controllers.users import *
 from bitcoincoin.errors.bad_resource import *
 from bitcoincoin.errors.forbidden import *
-from bitcoincoin.web import admins_id
+from bitcoincoin.web.admins_id import admins_id
 
 
 class Users(Resource):

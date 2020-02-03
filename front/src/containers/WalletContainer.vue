@@ -7,7 +7,10 @@
       md="6"
       sm="12"
     >
-      <WalletCurrencyCard :currencyWalletInfo="currencyWalletInfo" />
+      <WalletCurrencyCard
+        v-if="currencyWalletInfo.volume > 0"
+        :currencyWalletInfo="currencyWalletInfo"
+      />
     </v-col>
   </v-row>
 </template>

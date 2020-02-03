@@ -33,13 +33,21 @@ export default {
   name: 'SellingForm',
   props: {
     currency: Object,
-    volume: Number,
   },
   data: () => {
     return {
       sellingAmount: 0,
       user: auth.user.profile,
+      volume: 0,
     }
+  },
+  created() {
+    axios
+      .get(`http://localhost:8000/api/v1/me/wallet/${this.currency.id}`)
+      .then(response => {
+        this.volume = response.data.volume
+      })
+      .catch(e => {})
   },
   computed: {
     predictedCashFlowIfSell: function() {
@@ -59,7 +67,7 @@ export default {
           // Doit afficher que l'achat a bien été effectué
           // De même doit refresh
         })
-        .catch(e => this.errors.push(e))
+        .catch(e => {})
     },
     sellingVolumeNotHigherThanOwned(value) {
       return value <= this.volume

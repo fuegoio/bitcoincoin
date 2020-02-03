@@ -21,12 +21,9 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
+      <TransactionButton :currency="currencyWalletInfo.currency" action="buy" />
       <TransactionButton
-        :currencyWalletInfo="currencyWalletInfo"
-        action="buy"
-      />
-      <TransactionButton
-        :currencyWalletInfo="currencyWalletInfo"
+        :currency="currencyWalletInfo.currency"
         action="sell"
       />
     </v-card-actions>
