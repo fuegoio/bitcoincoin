@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12" class="pl-4">
-      <span class="display-1 font-weight-bold">Currencies</span>
+      <span class="display-1 font-weight-bold">Monnaies</span>
     </v-col>
     <v-col cols="12" class="mt-4">
       <CurrenciesContainer />

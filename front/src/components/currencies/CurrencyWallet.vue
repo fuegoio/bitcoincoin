@@ -2,7 +2,7 @@
   <v-card>
     <v-row class="px-3">
       <v-col cols="4" class="pl-6 pt-3 title">
-        Wallet
+        Porfolio
       </v-col>
       <v-col cols="4" class="pr-6 text-left currency-wallet-value">
         <span class="title font-weight-light ml-3">
