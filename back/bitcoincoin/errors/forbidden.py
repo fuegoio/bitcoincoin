@@ -7,6 +7,6 @@ class ForbiddenError(Exception):
         return {'error': f"The requested resource is forbidden : it requires a {self.required_status} status"}
 
 
-class ForbiddenAdminError(NotFoundError):
+class ForbiddenAdminError(ForbiddenError):
     def __init__(self):
         ForbiddenError.__init__(self, "admin")

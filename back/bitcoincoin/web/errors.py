@@ -1,4 +1,5 @@
 from . import app
+
 from bitcoincoin.errors.not_found import NotFoundError
 from bitcoincoin.errors.bad_resource import BadResourceError
 from bitcoincoin.errors.forbidden import ForbiddenError
