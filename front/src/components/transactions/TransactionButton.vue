@@ -16,6 +16,7 @@
         :currencyWalletInfo="currencyWalletInfo"
         :action="action"
       />
+      <v-btn color="primary" text @click="dialog = false">Close</v-btn>
     </v-dialog>
   </v-row>
 </template>

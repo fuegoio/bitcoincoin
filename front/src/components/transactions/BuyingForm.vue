@@ -3,8 +3,13 @@
     <v-col cols="12">
       <v-form class="px-3">
         <v-text-field
-          label="Amount Purchased"
           v-model="buyingAmount"
+          label="Amount Purchased"
+          :rules="[
+            v =>
+              buyingAmountNotBiggerThanCashFlow(v) ||
+              'Don\'t have enough cash flow',
+          ]"
         ></v-text-field>
       </v-form>
     </v-col>
@@ -22,6 +27,8 @@
 
 <script>
 import auth from '@/modules/auth'
+import axios from 'axios'
+
 export default {
   name: 'BuyingForm',
   props: {
@@ -40,7 +47,21 @@ export default {
   },
   methods: {
     validate() {
-      return true
+      axios
+        .post('http://localhost:8000/api/v1/transactions', {
+          user_id: this.user.id,
+          currency_id: this.currency.id,
+          quantity: this.buyingAmount,
+          is_sale: false,
+        })
+        .then(response => {
+          // Doit afficher que l'achat a bien été effectué
+          // De même doit refresh
+        })
+        .catch(e => this.errors.push(e))
+    },
+    buyingAmountNotBiggerThanCashFlow(value) {
+      return value * this.currency.last_value <= this.user.cash_flow
     },
   },
 }

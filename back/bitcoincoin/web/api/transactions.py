@@ -39,6 +39,7 @@ class Transactions(Resource):
 
     def post(self):
         data = request.json
+        print(data)
         try:
             user_id = int(data["user_id"])
             assert user_id > 0
