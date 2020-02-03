@@ -1,16 +1,6 @@
 # BitCoinCoin
 
-## How to use (basic)
-
-#### Installation
-
-`make install`
-
-#### Launch
-
-`make run`
-
-## How to use (without make)
+## How to use
 
 To launch the infrastructure needed (database), we use Docker and Docker-compose :
 

@@ -9,7 +9,7 @@ from .users import get_user_cash_flow, get_user_wallet
 
 
 def search_transactions(filters: dict):
-    transactions_found = Transaction.select()
+    transactions_found = Transaction.select().order_by(Transaction.datetime.desc()).limit(20)
     if "user" in filters:
         transactions_found = transactions_found.where(
             Transaction.user == filters["user"]
