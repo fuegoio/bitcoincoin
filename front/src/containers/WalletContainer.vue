@@ -18,6 +18,7 @@
 <script>
 import WalletCurrencyCard from '@/components/currencies/WalletCurrencyCard'
 import axios from 'axios'
+
 export default {
   name: 'WalletContainer',
   components: { WalletCurrencyCard },

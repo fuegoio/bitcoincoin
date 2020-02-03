@@ -1,5 +1,5 @@
 <template>
-  <v-card class="py-3">
+  <v-card class="py-3" outlined>
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">

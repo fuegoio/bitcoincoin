@@ -49,10 +49,9 @@ export default {
     validate() {
       axios
         .post('http://localhost:8000/api/v1/transactions', {
-          user_id: this.user.id,
-          currency_id: this.currency.id,
+          currency: this.currency.id,
           quantity: this.buyingAmount,
-          is_sale: false,
+          isSale: false,
         })
         .then(response => {
           // Doit afficher que l'achat a bien été effectué

@@ -1,5 +1,10 @@
 <template>
-  <v-card class="ml-2 pa-2">
+  <v-card
+    class="ml-2 pa-2"
+    hover
+    outlined
+    :to="'/currencies/' + currencyWalletInfo.currency.id"
+  >
     <v-list-item three-line>
       <v-list-item-avatar>
         <img
