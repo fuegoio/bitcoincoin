@@ -1,7 +1,7 @@
 <template>
   <v-row class="fill-height">
     <v-col cols="12">
-      <ProfileContainer />
+      <ProfileCard :profile="user" />
     </v-col>
     <v-col cols="12" class="my-2">
       <WalletContainer />
@@ -10,15 +10,21 @@
 </template>
 
 <script>
-import ProfileContainer from '@/containers/ProfileContainer'
+import { Component, Vue } from 'vue-property-decorator'
+
+import ProfileCard from '@/components/profiles/ProfileCard'
 import WalletContainer from '@/containers/WalletContainer'
 
-export default {
-  name: 'ProfilePage',
+import auth from '../modules/auth'
+
+@Component({
   components: {
     WalletContainer,
-    ProfileContainer,
+    ProfileCard,
   },
+})
+export default class ProfilePage extends Vue {
+  user = auth.user.profile
 }
 </script>
 

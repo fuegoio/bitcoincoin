@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-if="!loading" cols="12" class="pa-0 pl-4">
+    <v-col v-if="!loading" cols="12" class="px-4">
       <v-row>
         <v-col cols="5" class="pl-6 pt-3">
           <v-img

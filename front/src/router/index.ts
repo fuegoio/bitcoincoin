@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import DashboardPage from '@/pages/DashboardPage.vue'
 import CurrenciesPage from '@/pages/CurrenciesPage.vue'
 import CurrencyPage from '@/pages/CurrencyPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
@@ -12,12 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/dashboard',
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardPage,
+    redirect: '/profile',
   },
   {
     path: '/currencies',

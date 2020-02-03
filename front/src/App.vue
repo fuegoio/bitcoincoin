@@ -92,7 +92,7 @@
       </v-app-bar>
 
       <v-content class="elevation-4 background darken-1">
-        <v-container fluid class="pa-6">
+        <v-container fluid class="py-2 px-6">
           <v-fade-transition mode="out-in" appear>
             <router-view :key="$route.fullPath" />
           </v-fade-transition>
@@ -132,7 +132,6 @@ export default Vue.extend({
     },
     profile: false,
     nav: [
-      { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
       { text: 'Monnaies', icon: 'mdi-bitcoin', path: '/currencies' },
       { text: 'Banques', icon: 'mdi-bank', path: '/banks' },
       { text: 'Classement', icon: 'mdi-flag', path: '/ranking' },

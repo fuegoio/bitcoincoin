@@ -4,8 +4,8 @@ from bitcoincoin.models.currency import Currency, CurrencyRate
 
 
 def search_currencies(query: dict):
-    currencies = Currency.select()
-    if "symbol" in query:
+    currencies = Currency.select().order_by(Currency.rank).limit(int(query.get('limit', 10)))
+    if "symbol" in query.keys():
         currencies = currencies.where(Currency.symbol == query["symbol"])
     if "name" in query:
         currencies = currencies.where(Currency.name.contains(query["name"]))

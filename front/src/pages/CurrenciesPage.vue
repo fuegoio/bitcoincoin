@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" class="pa-0 pl-4">
+    <v-col cols="12" class="pl-4">
       <span class="display-1 font-weight-bold">Currencies</span>
     </v-col>
     <v-col cols="12" class="mt-4">
