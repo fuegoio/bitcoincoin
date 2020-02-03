@@ -1,5 +1,8 @@
 <template>
   <v-card>
+    <v-card-title>
+      Historique
+    </v-card-title>
     <v-card-text>
       <div id="chartdiv" class="money-graph"></div>
     </v-card-text>

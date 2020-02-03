@@ -2,8 +2,8 @@ import datetime
 
 import requests
 
-from bitcoincoin.models.currency import Currency, CurrencyRate
 from bitcoincoin.controllers.currencies import create_currency, create_currency_rate
+from bitcoincoin.models.currency import Currency
 
 from . import celery
 from ..core import logger
