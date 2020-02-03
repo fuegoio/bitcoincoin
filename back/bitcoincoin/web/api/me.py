@@ -57,4 +57,7 @@ class MeWalletCurrency(Resource):
         except:
             raise BadIdError(currency_id)
 
-        return get_user_wallet(user_id, currency_id)
+        wallets = get_user_wallet(user_id, currency_id)
+        if len(wallets) > 0:
+            return wallets[0]
+        return None

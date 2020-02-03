@@ -20,6 +20,7 @@ class Wallet(BaseModel):
     def get_small_data(self):
         wallet_dict = model_to_dict(self, recurse=False)
         wallet_dict['currency'] = self.currency.get_small_data()
+        wallet_dict['value'] = self.value
         return wallet_dict
 
 
