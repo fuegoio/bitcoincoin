@@ -29,9 +29,33 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col id="interval" cols="12"> </v-col>
+    <v-col id="interval" cols="12">
+      <v-row justify="end" class="px-4">
+        <v-btn-toggle
+          v-model="interval"
+          shaped
+          mandatory
+          @change="updateInterval"
+        >
+          <v-btn value="day">
+            1d
+          </v-btn>
+
+          <v-btn value="hour">
+            1h
+          </v-btn>
+
+          <v-btn value="minute">
+            1m
+          </v-btn>
+        </v-btn-toggle>
+      </v-row>
+    </v-col>
     <v-col v-if="!ratesLoading" cols="12">
       <CurrencyHistoric :rates="rates" @interval="updateInterval" />
+    </v-col>
+    <v-col v-else cols="12" class="text-center pa-12">
+      <v-progress-circular indeterminate />
     </v-col>
   </v-row>
 </template>
