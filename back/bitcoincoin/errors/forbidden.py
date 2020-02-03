@@ -8,5 +8,5 @@ class ForbiddenError(Exception):
 
 
 class ForbiddenAdminError(NotFoundError):
-    def __init__(self, required_status):
+    def __init__(self):
         ForbiddenError.__init__(self, "admin")
