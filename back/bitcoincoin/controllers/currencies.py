@@ -1,10 +1,11 @@
 from datetime import datetime
 
+from bitcoincoin.core import db
 from bitcoincoin.models.currency import Currency, CurrencyRate
 
 
 def search_currencies(query: dict):
-    currencies = Currency.select()
+    currencies = Currency.select().order_by(Currency.rank).limit(20)
     if "symbol" in query:
         currencies = currencies.where(Currency.symbol == query["symbol"])
     if "name" in query:
@@ -12,10 +13,8 @@ def search_currencies(query: dict):
     return [cur.get_small_data() for cur in currencies]
 
 
-def create_currency(name: str, symbol: str, last_value: float, provider: str):
-    return Currency.create(
-        name=name, symbol=symbol, last_value=last_value, provider=provider
-    )
+def create_currency(name: str, symbol: str, rank: int, coincap_name: float):
+    return Currency.create(name=name, symbol=symbol, rank=rank, coincap=coincap_name)
 
 
 def get_currency_by_id(currency_id: int):
@@ -35,12 +34,16 @@ def get_currency_rates_history(currency_id: int, from_date: datetime = None, to_
     return [hist.get_small_data() for hist in history]
 
 
-def create_currency_rate(currency_id: int, value: float, provider: str, datetime = None):
+def create_currency_rate(currency_id: int, value: float, datetime=None):
+    currency = Currency.get_by_id(currency_id)
     if datetime:
-        c = CurrencyRate(currency=currency_id, datetime=datetime, value=value, provider=provider)
+        c = CurrencyRate.create(currency=currency, datetime=datetime, value=value)
     else:
-        c = CurrencyRate(currency=currency_id, value=value, provider=provider)
-    return c.save()
+        with db.transaction():
+            c = CurrencyRate.create(currency=currency, value=value)
+            currency.last_value = value
+            currency.save()
+    return c
 
 
 def get_currency_last_rate(currency_id: int):

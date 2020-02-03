@@ -9,4 +9,4 @@ celery = Celery(
 )
 celery.conf.update({'worker_hijack_root_logger': False})
 
-from . import currencies
+from . import coincap
