@@ -1,9 +1,12 @@
 from flask import request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
 from bitcoincoin.controllers.currencies import *
 from bitcoincoin.errors.bad_resource import *
+from bitcoincoin.errors.forbidden import *
 from bitcoincoin.tasks.coincap import update_currencies, fetch_currency_history
+from bitcoincoin.web.admins_id import admins_id
 
 
 class Currencies(Resource):
@@ -13,7 +16,10 @@ class Currencies(Resource):
             currency['last_rates'] = get_currency_rates_last_days(currency['id'], 5) + [currency['last_value']]
         return currencies
 
+    @jwt_required
     def post(self):
+        if get_jwt_identity()['id'] not in admins_id:
+            raise ForbiddenAdminError()
         task = update_currencies.delay()
         return {"msg": "success"}
 
@@ -27,7 +33,10 @@ class Currency(Resource):
             raise BadIdError(currency_id)
         return get_currency_by_id(currency_id)
 
+    @jwt_required
     def delete(self, currency_id):
+        if not get_jwt_identity()['id'] in admins_id:
+            raise ForbiddenAdminError()
         try:
             currency_id = int(currency_id)
             assert currency_id > 0
@@ -59,6 +68,9 @@ class CurrencyRates(Resource):
         interval_number = request.args.get('limit', 500)
         return get_currency_rates_history(currency_id, from_date, to_date, interval_type, interval_number)
 
+    @jwt_required
     def post(self, currency_id):
+        if get_jwt_identity()['id'] not in admins_id:
+            raise ForbiddenAdminError()
         task = fetch_currency_history.delay(currency_id)
         return {"msg": "success"}

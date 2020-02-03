@@ -1,4 +1,5 @@
 from flask import request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 from datetime import datetime
 
@@ -37,10 +38,15 @@ class Transactions(Resource):
             filters["to_date"] = to_date
         return search_transactions(filters)
 
+    @jwt_required
     def post(self):
         data = request.json
+
+        user_id = int(get_jwt_identity()['id'])
+        if user_id in admin_ids and "user_id" in data:
+            user_id = data["user_id"]
         try:
-            user_id = int(data["user_id"])
+            user_id = int(user_id)
             assert user_id > 0
         except (ValueError, AssertionError):
             raise BadIdError(data["user_id"])
