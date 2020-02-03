@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" class="pl-6 title">
+    <v-col cols="12" class="pl-8 title">
       Portfolio
     </v-col>
     <v-col

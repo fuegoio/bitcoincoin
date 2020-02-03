@@ -3,14 +3,14 @@
     <v-col cols="12">
       <ProfileCard :profile="user" />
     </v-col>
+    <v-col cols="12" class="my-2">
+      <WalletContainer />
+    </v-col>
     <v-col v-if="historic.length > 0" cols="12">
       <ProfileHistoric :historic="historic" />
     </v-col>
     <v-col v-else cols="12" class="text-center pa-12">
       <v-progress-circular indeterminate />
-    </v-col>
-    <v-col cols="12" class="my-2">
-      <WalletContainer />
     </v-col>
     <v-col cols="12" class="my-2">
       <ProfileTransactions :transactions="transactions" />
