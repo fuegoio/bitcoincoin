@@ -114,7 +114,6 @@ export default class CurrencyPage extends Vue {
   }
 
   async fetchCurrencyTransactions(): Promise<Transaction[]> {
-    currency
     const currencyId: number = parseInt(this.$route.params.currencyId)
     const response: AxiosResponse = await axios.get('/transactions', {
       params: { currency: currencyId },
