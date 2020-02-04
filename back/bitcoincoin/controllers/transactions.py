@@ -26,7 +26,7 @@ def search_transactions(filters: dict):
         transactions_found = transactions_found.where(
             Transaction.datetime <= filters["to_date"]
         )
-    return [transaction.get_small_data() for transaction in transactions_found]
+    return [transaction.get_small_data(user=True) for transaction in transactions_found]
 
 
 def create_transaction(user_id: int, currency_id: int, quantity: float, is_sale: bool):

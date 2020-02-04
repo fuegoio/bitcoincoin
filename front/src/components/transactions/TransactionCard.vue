@@ -28,12 +28,13 @@ import BuyingForm from '@/components/transactions/BuyingForm'
 import SellingForm from '@/components/transactions/SellingForm'
 import HeaderTransactionForm from '@/components/transactions/HeaderTransactionForm'
 import auth from '@/modules/auth'
+import { Currency } from '@/models/currency'
 
 export default {
   name: 'TransactionCard',
   components: { SellingForm, BuyingForm, HeaderTransactionForm },
   props: {
-    currency: Object,
+    currency: Currency,
     action: String,
   },
   data: function() {

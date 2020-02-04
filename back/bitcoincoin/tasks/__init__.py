@@ -12,7 +12,7 @@ celery.conf.update({'worker_hijack_root_logger': False})
 celery.conf.beat_schedule = {
     'update_currencies_every_seconds': {
         'task': 'bitcoincoin.tasks.coincap.update_currencies',
-        'schedule': 1.0,
+        'schedule': 60.0,
     },
 }
 celery.conf.timezone = 'UTC'

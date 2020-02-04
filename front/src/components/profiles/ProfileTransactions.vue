@@ -9,13 +9,13 @@
       :items-per-page="10"
       class="elevation-1"
     >
-      <template v-slot:item.user="{ item }">
+      <template v-slot:item.currency="{ item }">
         <v-row align="center">
-          <v-list-item-avatar tile size="18" color="primary">
-            <span class="white--text">{{ item.user.username[0] }}</span>
+          <v-list-item-avatar size="24">
+            <v-img :src="item.currency.icon" :alt="item.currency.symbol" />
           </v-list-item-avatar>
-          <span class="font-weight-bold">
-            {{ item.user.username }}
+          <span class="font-weight-bold body-1">
+            {{ item.currency.name }}
           </span>
         </v-row>
       </template>
@@ -38,9 +38,9 @@ import { Transaction } from '@/models/transaction'
 export default class CurrencyTransactions extends Vue {
   @Prop() transactions: Transaction[]
   headers = [
-    { text: 'Trader', value: 'user' },
+    { text: 'Monnaie', value: 'currency' },
     { text: 'Type', value: 'type' },
-    { text: 'Quantité', value: 'quantity' },
+    { text: 'Quantitée', value: 'quantity' },
     { text: 'Valeur', value: 'value' },
     { text: 'Date', value: 'datetime.diff' },
   ]

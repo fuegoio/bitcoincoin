@@ -13,6 +13,13 @@ class Me(Resource):
         return get_user_by_id(user_id)
 
 
+class MeHistoric(Resource):
+    @jwt_required
+    def get(self):
+        user_id = get_jwt_identity()['id']
+        return get_user_value_history(user_id)
+
+
 class MeTransactions(Resource):
     @jwt_required
     def get(self):
@@ -57,4 +64,7 @@ class MeWalletCurrency(Resource):
         except:
             raise BadIdError(currency_id)
 
-        return get_user_wallet(user_id, currency_id)
+        wallets = get_user_wallet(user_id, currency_id)
+        if len(wallets) > 0:
+            return wallets[0]
+        return None

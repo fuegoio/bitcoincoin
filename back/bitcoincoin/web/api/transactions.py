@@ -5,6 +5,7 @@ from datetime import datetime
 
 from bitcoincoin.controllers.transactions import *
 from bitcoincoin.errors.bad_resource import *
+from bitcoincoin.web.admins_id import admins_id
 
 
 class Transactions(Resource):
@@ -41,29 +42,28 @@ class Transactions(Resource):
     @jwt_required
     def post(self):
         data = request.json
+        user_id = get_jwt_identity()['id']
 
-        user_id = int(get_jwt_identity()['id'])
-        if user_id in admin_ids and "user_id" in data:
-            user_id = data["user_id"]
         try:
             user_id = int(user_id)
             assert user_id > 0
         except (ValueError, AssertionError):
-            raise BadIdError(data["user_id"])
+            raise BadIdError(user_id)
 
         try:
-            currency_id = int(data["currency_id"])
+            currency_id = int(data["currency"])
             assert currency_id > 0
         except (ValueError, AssertionError):
-            raise BadIdError(data["currency_id"])
+            raise BadIdError(data["currency"])
 
         try:
             quantity = float(data["quantity"])
             assert quantity > 0
         except (ValueError, AssertionError):
             raise BadQuantityError(data["quantity"])
-        if not isinstance(data["is_sale"], bool):
-            raise BadBoolError(data["is_sale"])
 
-        transaction = create_transaction(user_id, currency_id, quantity, data["is_sale"])
+        if not isinstance(data["isSale"], bool):
+            raise BadBoolError(data["isSale"])
+
+        transaction = create_transaction(user_id, currency_id, quantity, data["isSale"])
         return transaction.get_small_data()

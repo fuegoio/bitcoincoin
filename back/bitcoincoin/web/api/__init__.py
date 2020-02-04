@@ -9,9 +9,9 @@ from .users import (
     Users,
     UserTransactions,
     UserWallet,
-    UserWalletCurrency,
+    UserWalletCurrency
 )
-from .me import Me, MeTransactions, MeWallet, MeWalletCurrency
+from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric
 from .. import app
 
 api_bp = Blueprint("api", __name__)
@@ -28,7 +28,6 @@ def before_request():
 def after_request(exception=None):
     db.close()
 
-
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<int:user_id>")
 api.add_resource(UserTransactions, "/users/<int:user_id>/transactions")
@@ -36,6 +35,7 @@ api.add_resource(UserWallet, "/users/<int:user_id>/wallet")
 api.add_resource(UserWalletCurrency, "/users/<int:user_id>/wallet/<int:currency_id>")
 
 api.add_resource(Me, "/me")
+api.add_resource(MeHistoric, "/me/historic")
 api.add_resource(MeTransactions, "/me/transactions")
 api.add_resource(MeWallet, "/me/wallet")
 api.add_resource(MeWalletCurrency, "/me/wallet/<int:currency_id>")

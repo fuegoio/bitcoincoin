@@ -5,7 +5,7 @@ from flask_restful import Resource
 from bitcoincoin.controllers.users import *
 from bitcoincoin.errors.bad_resource import *
 from bitcoincoin.errors.forbidden import *
-from bitcoincoin.web import admins_id
+from bitcoincoin.web.admins_id import admins_id
 
 
 class Users(Resource):
@@ -24,6 +24,8 @@ class Users(Resource):
             filters["username"] = request.args["username"]
         if "email" in request.args:
             filters["email"] = request.args["email"]
+        if "sorted" in request.args:
+            filters["sorted"] = request.args["sorted"]
         return search_users(filters)
 
 

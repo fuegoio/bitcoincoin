@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card outlined color="transparent">
     <v-card-title>
       Historique
     </v-card-title>

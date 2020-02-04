@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-if="!loading" cols="12" class="pa-0 px-4">
+    <v-col v-if="!loading" cols="12" class="px-4">
       <v-row>
         <v-col cols="3" class="pl-6 pt-3">
           <v-img
@@ -51,6 +51,9 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col v-if="wallet" cols="12">
+      <CurrencyWallet :wallet="wallet" />
+    </v-col>
     <v-col v-if="!ratesLoading" cols="12">
       <CurrencyHistoric :rates="rates" />
     </v-col>
@@ -72,15 +75,23 @@ import { Transaction } from '@/models/transaction'
 
 import TransactionButton from '@/components/transactions/TransactionButton.vue'
 import CurrencyHistoric from '@/components/currencies/CurrencyHistoric.vue'
+import CurrencyWallet from '@/components/currencies/CurrencyWallet.vue'
 import CurrencyTransactions from '@/components/currencies/CurrencyTransactions.vue'
+import { Wallet } from '@/models/wallet'
 
 @Component({
-  components: { CurrencyTransactions, CurrencyHistoric, TransactionButton },
+  components: {
+    CurrencyTransactions,
+    CurrencyHistoric,
+    TransactionButton,
+    CurrencyWallet,
+  },
 })
 export default class CurrencyPage extends Vue {
   currency: Currency = null
   rates: CurrencyRate[] = []
   transactions: Transaction[] = []
+  wallet: Wallet = null
   loading = true
   ratesLoading = true
   interval = 'day'
@@ -108,6 +119,12 @@ export default class CurrencyPage extends Vue {
     return response.data
   }
 
+  async fetchCurrencyWallet(): Promise<Wallet> {
+    const currencyId: number = parseInt(this.$route.params.currencyId)
+    const response: AxiosResponse = await axios.get('/me/wallet/' + currencyId)
+    return response.data
+  }
+
   updateInterval(interval: string): void {
     this.interval = interval
     this.ratesLoading = true
@@ -130,6 +147,10 @@ export default class CurrencyPage extends Vue {
 
     this.fetchCurrencyTransactions().then(transactions => {
       this.transactions = transactions
+    })
+
+    this.fetchCurrencyWallet().then(wallet => {
+      this.wallet = wallet
     })
   }
 }

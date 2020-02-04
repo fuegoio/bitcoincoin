@@ -74,25 +74,14 @@
         </v-toolbar-title>
 
         <v-row class="tools">
-          <v-col cols="8">
+          <v-col cols="12">
             <SearchBar />
-          </v-col>
-          <v-col cols="2"> </v-col>
-          <v-col cols="1">
-            <v-btn icon class="mx-3">
-              <v-icon>mdi-tag-plus</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col cols="1">
-            <v-btn icon class="mx-3">
-              <v-icon>mdi-tag-minus</v-icon>
-            </v-btn>
           </v-col>
         </v-row>
       </v-app-bar>
 
       <v-content class="elevation-4 background darken-1">
-        <v-container fluid class="pa-6">
+        <v-container fluid class="py-2 px-6">
           <v-fade-transition mode="out-in" appear>
             <router-view :key="$route.fullPath" />
           </v-fade-transition>
@@ -132,7 +121,6 @@ export default Vue.extend({
     },
     profile: false,
     nav: [
-      { text: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
       { text: 'Monnaies', icon: 'mdi-bitcoin', path: '/currencies' },
       { text: 'Banques', icon: 'mdi-bank', path: '/banks' },
       { text: 'Classement', icon: 'mdi-flag', path: '/ranking' },
@@ -143,7 +131,7 @@ export default Vue.extend({
       this.auth.loading = false
     })
 
-    setInterval(() => auth.checkAuth(undefined), 5000)
+    setInterval(() => auth.checkAuth(undefined), 60000)
   },
   methods: {
     goProfile(): void {

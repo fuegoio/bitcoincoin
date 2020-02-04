@@ -1,15 +1,12 @@
 <template>
-  <v-row>
-    <v-col cols="12" class="pa-0 pl-4">
-      <span class="display-1 font-weight-bold">Dashboard</span>
-    </v-col>
-    <v-col cols="12" class="mt-4">
-      <v-card class="pa-2">
-        <v-card-title class="headline font-weight-bold">Bitcoin</v-card-title>
-        <div id="chartdiv" class="money-graph"></div>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-card outlined color="transparent">
+    <v-card-title>
+      Historique de la valeur totale
+    </v-card-title>
+    <v-card-text>
+      <div id="chartdiv" class="money-graph"></div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -19,29 +16,28 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 // eslint-disable-next-line @typescript-eslint/camelcase
 import am4themes_dark from '@amcharts/amcharts4/themes/dark'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 am4core.useTheme(am4themes_dark)
 am4core.useTheme(am4themes_animated)
 
 @Component({})
-export default class DashboardPage extends Vue {
+export default class CurrencyHistoric extends Vue {
+  @Prop() historic: any[]
+
   chart: am4charts.XYChart = undefined
+
+  convertRatesToChart(): any {
+    return this.historic.map(historic => {
+      const date = Date.parse(historic.date)
+      return { date: date, value: historic.value }
+    })
+  }
 
   mounted(): void {
     this.chart = am4core.create('chartdiv', am4charts.XYChart)
 
-    const data = []
-    let value = 50
-    for (let i = 0; i < 300; i++) {
-      const date = new Date()
-      date.setHours(0, 0, 0, 0)
-      date.setDate(i)
-      value -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10)
-      data.push({ date: date, value: value })
-    }
-
-    this.chart.data = data
+    this.chart.data = this.convertRatesToChart()
 
     // Create axes
     const dateAxis = this.chart.xAxes.push(new am4charts.DateAxis())
@@ -114,6 +110,6 @@ export default class DashboardPage extends Vue {
 
 <style lang="scss" scoped>
 .money-graph {
-  min-height: 600px;
+  min-height: 500px;
 }
 </style>

@@ -4,11 +4,11 @@
       v-if="action === 'buy'"
       color="success"
       dark
-      @click.stop="dialog = true"
+      @click.stop.prevent="dialog = true"
     >
       Acheter
     </v-btn>
-    <v-btn v-else color="accent" dark @click.stop="dialog = true">
+    <v-btn v-else color="accent" dark @click.stop.prevent="dialog = true">
       Vendre
     </v-btn>
     <v-dialog v-model="dialog" transition="slide-x-reverse-transition">
@@ -18,6 +18,7 @@
 </template>
 <script>
 import TransactionCard from '@/components/transactions/TransactionCard'
+
 export default {
   name: 'TransactionButton',
   components: { TransactionCard },

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import DashboardPage from '@/pages/DashboardPage.vue'
 import CurrenciesPage from '@/pages/CurrenciesPage.vue'
 import CurrencyPage from '@/pages/CurrencyPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
+import RankingPage from '@/pages/RankingPage.vue'
 
 Vue.use(VueRouter)
 
@@ -12,12 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/dashboard',
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardPage,
+    redirect: '/profile',
   },
   {
     path: '/currencies',
@@ -33,6 +28,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfilePage,
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: RankingPage,
   },
 ]
 
