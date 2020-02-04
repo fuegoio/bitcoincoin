@@ -30,9 +30,9 @@
           <template v-slot:item.wallet_value="{ item }">
             <span>{{ item.wallet_value | toCurrency }}</span>
           </template>
-          <template v-slot:item.value="{ item }">
+          <templ1ate v-slot:item.value="{ item }">
             <span>{{ item.value | toCurrency }}</span>
-          </template>
+          </templ1ate>
           <template v-slot:item.membership="{ item }">
             <v-icon v-if="item.membership" small color="success">
               mdi-check
@@ -42,6 +42,38 @@
             </v-icon>
           </template>
         </v-data-table>
+      </v-card>
+    </v-col>
+    <v-col cols="12">
+      <v-card outlined>
+        <v-card-title>
+          Fonder une banque
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="8">
+              <v-text-field
+                v-model="newBankName"
+                label="Nom de la banque"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <v-text-field
+                v-model="newBankSymbol"
+                label="Symbole de la banque"
+                :counter="3"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text color="primary" @click="createBank"
+            >Créer ma banque</v-btn
+          >
+        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
@@ -63,6 +95,8 @@ export default class BanksPage extends Vue {
     { text: 'Porfolio', value: 'wallet_value' },
     { text: 'Membre', value: 'membership', align: 'right' },
   ]
+  newBankName = ''
+  newBankSymbol = ''
 
   async fetchBanks(): Promise<Bank[]> {
     const response: AxiosResponse = await axios.get('/banks')
@@ -72,6 +106,15 @@ export default class BanksPage extends Vue {
   async fetchMyBanks(): Promise<Bank[]> {
     const response: AxiosResponse = await axios.get('/me/banks')
     return response.data
+  }
+
+  async createBank(): Promise<void> {
+    const response: AxiosResponse = await axios.post('/banks', {
+      name: this.newBankName,
+      symbol: this.newBankSymbol,
+    })
+    const data = await response.data
+    await this.$router.push('/banks/' + data.id)
   }
 
   created(): void {
