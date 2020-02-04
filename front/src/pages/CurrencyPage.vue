@@ -22,10 +22,10 @@
           </v-row>
         </v-col>
         <v-col cols="2" align-self="center">
-          <TransactionButton :currency="currency" action="buy" />
+          <BuyingModal :currency="currency" />
         </v-col>
         <v-col cols="2" align-self="center">
-          <TransactionButton :currency="currency" action="sell" />
+          <SellingModal :currency="currency" />
         </v-col>
         <v-col cols="2">
           <v-row justify="end" class="px-2">
@@ -73,7 +73,8 @@ import axios, { AxiosResponse } from 'axios'
 import { Currency, CurrencyRate } from '@/models/currency'
 import { Transaction } from '@/models/transaction'
 
-import TransactionButton from '@/components/transactions/TransactionButton.vue'
+import BuyingModal from '@/components/transactions/BuyingModal.vue'
+import SellingModal from '@/components/transactions/SellingModal.vue'
 import CurrencyHistoric from '@/components/currencies/CurrencyHistoric.vue'
 import CurrencyWallet from '@/components/currencies/CurrencyWallet.vue'
 import CurrencyTransactions from '@/components/currencies/CurrencyTransactions.vue'
@@ -83,7 +84,8 @@ import { Wallet } from '@/models/wallet'
   components: {
     CurrencyTransactions,
     CurrencyHistoric,
-    TransactionButton,
+    BuyingModal,
+    SellingModal,
     CurrencyWallet,
   },
 })

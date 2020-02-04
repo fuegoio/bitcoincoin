@@ -26,22 +26,19 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
-      <TransactionButton :currency="currencyWalletInfo.currency" action="buy" />
-      <TransactionButton
-        :currency="currencyWalletInfo.currency"
-        action="sell"
-      />
+      <BuyingModal :currency="currencyWalletInfo.currency" />
+      <SellingModal :currency="currencyWalletInfo.currency" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import TransactionButton from '@/components/transactions/TransactionButton'
-import axios from 'axios'
+import BuyingModal from '@/components/transactions/BuyingModal'
+import SellingModal from '@/components/transactions/SellingModal'
 
 export default {
   name: 'WalletCurrencyCard',
-  components: { TransactionButton },
+  components: { SellingModal, BuyingModal },
   props: {
     currencyWalletInfo: Object,
   },
