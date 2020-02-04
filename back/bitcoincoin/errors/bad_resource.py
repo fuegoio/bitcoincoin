@@ -12,29 +12,36 @@ class BadIdError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'id')
 
+
 class BadQuantityError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'quantity')
+
 
 class BadCurrencyValueError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'currency value')
 
+
 class BadBoolError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'boolean')
+
 
 class BadCurrencyProviderError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'currency provider')
 
+
 class EmptyStringError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'string')
 
+
 class BadFromDatetimeError(BadResourceError):
     def __init__(self, resource):
         BadResourceError.__init__(self, resource, 'from_date')
+
 
 class BadToDatetimeError(BadResourceError):
     def __init__(self, resource):

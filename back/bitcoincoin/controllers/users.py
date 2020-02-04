@@ -48,8 +48,9 @@ def get_user_cash_flow(user_id: int):
     return user.cash_flow
 
 
-def get_user_value_history(user_id):
-    limit = {f"hours": 500}
+def get_user_value_history(user_id, interval_type='minute'):
+    limit = {f"{interval_type}s": 500}
+    interval = {f"{interval_type}s": 1}
     limit_date = pendulum.now('utc').subtract(**limit)
 
     user = User.get_by_id(user_id)
@@ -64,9 +65,10 @@ def get_user_value_history(user_id):
     transactions_history = list(Transaction.select().where(Transaction.datetime >= limit_date))
     transactions_processed = []
     for hour in range(500):
-        limit_date = pendulum.now('utc').subtract(hours=hour)
+        limit = {f"{interval_type}s": hour}
+        limit_date = pendulum.now('utc').subtract(**limit)
         for t in transactions_history:
-            t_datetime = pendulum.instance(t.datetime, 'utc')
+            t_datetime = pendulum.instance(t.datetime)
             if t_datetime >= limit_date and t not in transactions_processed:
                 if t.is_sale:
                     wallets_by_currency[t.currency].volume += t.quantity
@@ -78,7 +80,7 @@ def get_user_value_history(user_id):
 
         # Compute the wallet value
         rates = CurrencyRate.select(CurrencyRate.currency, fn.AVG(CurrencyRate.value).alias('value')).where(CurrencyRate.currency << list(wallets_by_currency.keys()))
-        rates = rates.where(CurrencyRate.datetime >= limit_date.subtract(hours=1), CurrencyRate.datetime <= limit_date)
+        rates = rates.where(CurrencyRate.datetime >= limit_date.subtract(**interval), CurrencyRate.datetime <= limit_date)
         rates = rates.group_by(CurrencyRate.currency)
 
         hour_value = 0

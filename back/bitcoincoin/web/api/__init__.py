@@ -12,6 +12,7 @@ from .users import (
     UserWalletCurrency
 )
 from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric
+from .banks import Banks, Bank
 from .. import app
 
 api_bp = Blueprint("api", __name__)
@@ -27,6 +28,7 @@ def before_request():
 @api_bp.teardown_request
 def after_request(exception=None):
     db.close()
+
 
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<int:user_id>")
@@ -45,5 +47,8 @@ api.add_resource(Currency, "/currencies/<int:currency_id>")
 api.add_resource(CurrencyRates, "/currencies/<int:currency_id>/rates")
 
 api.add_resource(Transactions, "/transactions")
+
+api.add_resource(Banks, "/banks")
+api.add_resource(Bank, "/banks/<int:bank_id>")
 
 app.register_blueprint(api_bp, url_prefix="/api/v1")
