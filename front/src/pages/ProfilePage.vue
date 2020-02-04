@@ -13,6 +13,9 @@
       <v-progress-circular indeterminate />
     </v-col>
     <v-col cols="12" class="my-2">
+      <BankList :banks="banks" />
+    </v-col>
+    <v-col cols="12" class="my-2">
       <ProfileTransactions :transactions="transactions" />
     </v-col>
   </v-row>
@@ -29,9 +32,12 @@ import auth from '../modules/auth'
 import { Transaction } from '@/models/transaction'
 import axios, { AxiosResponse } from 'axios'
 import ProfileHistoric from '@/components/profiles/ProfileHistoric.vue'
+import { Bank } from '@/models/bank'
+import BankList from '@/components/banks/BankList.vue'
 
 @Component({
   components: {
+    BankList,
     ProfileHistoric,
     WalletContainer,
     ProfileCard,
@@ -42,6 +48,7 @@ export default class ProfilePage extends Vue {
   user = auth.user.profile
   transactions: Transaction[] = []
   historic: any[] = []
+  banks: Bank[] = []
 
   async fetchProfileHistoric(): Promise<Transaction[]> {
     const response: AxiosResponse = await axios.get('/me/historic')
@@ -53,6 +60,11 @@ export default class ProfilePage extends Vue {
     return response.data
   }
 
+  async fetchMyBanks(): Promise<Bank[]> {
+    const response: AxiosResponse = await axios.get('/me/banks')
+    return response.data
+  }
+
   created() {
     this.fetchProfileTransactions().then(transactions => {
       this.transactions = transactions
@@ -60,6 +72,13 @@ export default class ProfilePage extends Vue {
 
     this.fetchProfileHistoric().then(historic => {
       this.historic = historic
+    })
+
+    this.fetchMyBanks().then(banks => {
+      this.banks = banks.map(b => {
+        b.membership = true
+        return b
+      })
     })
   }
 }
