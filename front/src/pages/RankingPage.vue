@@ -21,8 +21,8 @@
           </span>
         </v-row>
       </template>
-      <template v-slot:item.cash_flow="{ item }">
-        <span>{{ item.cash_flow | toCurrency }}</span>
+      <template v-slot:item.cashFlow="{ item }">
+        <span>{{ item.cashFlow | toCurrency }}</span>
       </template>
       <template v-slot:item.wallet_value="{ item }">
         <span>{{ item.wallet_value | toCurrency }}</span>
@@ -44,8 +44,8 @@ export default {
       headers: [
         { text: 'Rank', value: 'ranking' },
         { text: 'Username', value: 'username' },
-        { text: 'Cash Flow', value: 'cash_flow' },
-        { text: 'Wallet Value', value: 'wallet_value' },
+        { text: 'Cash Flow', value: 'cashFlow' },
+        { text: 'Wallet Value', value: 'walletValue' },
         { text: 'Total Value', value: 'value' },
       ],
       users: [],
@@ -58,8 +58,8 @@ export default {
         listUsers.push({
           ranking: index + 1,
           username: user.username,
-          cash_flow: user.cash_flow,
-          wallet_value: user.wallet_value,
+          cashFlow: user.cash_flow,
+          walletValue: user.wallet_value,
           value: user.value,
         })
       }
