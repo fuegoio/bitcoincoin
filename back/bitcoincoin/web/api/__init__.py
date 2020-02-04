@@ -11,7 +11,7 @@ from .users import (
     UserWallet,
     UserWalletCurrency
 )
-from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric
+from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric, MeBanks
 from .banks import Banks, Bank
 from .. import app
 
@@ -40,6 +40,7 @@ api.add_resource(Me, "/me")
 api.add_resource(MeHistoric, "/me/historic")
 api.add_resource(MeTransactions, "/me/transactions")
 api.add_resource(MeWallet, "/me/wallet")
+api.add_resource(MeBanks, "/me/banks")
 api.add_resource(MeWalletCurrency, "/me/wallet/<int:currency_id>")
 
 api.add_resource(Currencies, "/currencies")

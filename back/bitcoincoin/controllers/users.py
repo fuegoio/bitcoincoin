@@ -48,6 +48,11 @@ def get_user_cash_flow(user_id: int):
     return user.cash_flow
 
 
+def get_user_banks(user_id):
+    user = User.get_by_id(user_id)
+    return [b.bank.get_small_data() for b in user.banks]
+
+
 def get_user_value_history(user_id, interval_type='minute'):
     limit = {f"{interval_type}s": 500}
     interval = {f"{interval_type}s": 1}

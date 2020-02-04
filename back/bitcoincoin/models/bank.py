@@ -24,6 +24,7 @@ class Bank(BaseModel):
         data = model_to_dict(self, recurse=False)
         data['wallet_value'] = self.wallet_value
         data['cash_flow'] = self.cash_flow
+        data['value'] = self.cash_flow + self.wallet_value
         return data
 
     def get_data(self):
@@ -35,7 +36,7 @@ class Bank(BaseModel):
 class BankUser(BaseModel):
     id = AutoField()
     bank = ForeignKeyField(Bank, backref='memberships')
-    user = ForeignKeyField(User)
+    user = ForeignKeyField(User, backref='banks')
     rank = CharField()
 
     def get_small_data(self):

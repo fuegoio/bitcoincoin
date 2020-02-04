@@ -6,6 +6,7 @@ import CurrencyPage from '@/pages/CurrencyPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 import RankingPage from '@/pages/RankingPage.vue'
 import BanksPage from '@/pages/BanksPage.vue'
+import BankPage from '@/pages/BankPage.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/banks',
     name: 'banks',
     component: BanksPage,
+  },
+  {
+    path: '/banks/:bankId',
+    name: 'bank',
+    component: BankPage,
   },
 ]
 

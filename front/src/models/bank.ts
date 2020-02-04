@@ -4,4 +4,5 @@ export interface Bank {
   symbol: string
   cash_flow: number
   wallet_value: number
+  membership: boolean
 }

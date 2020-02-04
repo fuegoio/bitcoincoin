@@ -1,6 +1,14 @@
 <template>
   <v-row>
     <v-col cols="12">
+      <v-card v-if="myBanks.length === 0" outlined>
+        <v-card-text>
+          Vous ne faites partie d'aucune banque, cliquez sur l'une d'entre elle
+          pour pouvoir la rejoindre, ou créez en une ci-dessous.
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12">
       <v-card>
         <v-card-title>
           Banques
@@ -25,6 +33,11 @@
           <template v-slot:item.value="{ item }">
             <span>{{ item.value | toCurrency }}</span>
           </template>
+          <template v-slot:item.membership="{ item }">
+            <v-icon small>
+              mdi-check
+            </v-icon>
+          </template>
         </v-data-table>
       </v-card>
     </v-col>
@@ -39,11 +52,13 @@ import { Bank } from '@/models/bank'
 @Component({})
 export default class BanksPage extends Vue {
   banks: Bank[] = []
+  myBanks: Bank[] = []
   headers = [
     { text: 'Nom', value: 'name' },
     { text: 'Symbole', value: 'symbol' },
     { text: 'Cash', value: 'cash_flow' },
     { text: 'Porfolio', value: 'wallet_value' },
+    { text: 'Membre', value: 'membership', align: 'right' },
   ]
 
   async fetchBanks(): Promise<Bank[]> {
@@ -51,9 +66,23 @@ export default class BanksPage extends Vue {
     return response.data
   }
 
+  async fetchMyBanks(): Promise<Bank[]> {
+    const response: AxiosResponse = await axios.get('/me/banks')
+    return response.data
+  }
+
   created(): void {
     this.fetchBanks().then(banks => {
       this.banks = banks
+    })
+
+    this.fetchMyBanks().then(myBanks => {
+      this.myBanks = myBanks
+      this.banks.forEach(bank => {
+        if (this.myBanks.find(b => b.id === bank.id)) {
+          bank.membership = true
+        }
+      })
     })
   }
 }

@@ -6,6 +6,7 @@ from bitcoincoin.controllers.banks import get_banks, create_bank, get_bank, ask_
 
 
 class Banks(Resource):
+    @jwt_required
     def get(self):
         banks = get_banks()
         return banks
@@ -21,11 +22,13 @@ class Banks(Resource):
 
 
 class Bank(Resource):
+    @jwt_required
     def get(self, bank_id):
         user_id = get_jwt_identity()['id']
         bank = get_bank(bank_id, user_id)
         return bank
 
+    @jwt_required
     def post(self, bank_id):
         user_id = get_jwt_identity()['id']
         message = request.json['message']
