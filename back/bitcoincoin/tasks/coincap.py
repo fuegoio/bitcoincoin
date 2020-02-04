@@ -63,3 +63,12 @@ def fetch_currency_history(currency_id):
         insert_rates(request)
 
     return True
+
+
+@celery.task
+def fetch_all_currencies_history():
+    update_currencies()
+
+    currencies = Currency.select().order_by(Currency.rank)
+    for currency in currencies:
+        fetch_currency_history.delay(currency.id)

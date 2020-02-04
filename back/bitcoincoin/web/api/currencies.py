@@ -5,7 +5,7 @@ from flask_restful import Resource
 from bitcoincoin.controllers.currencies import *
 from bitcoincoin.errors.bad_resource import *
 from bitcoincoin.errors.forbidden import *
-from bitcoincoin.tasks.coincap import update_currencies, fetch_currency_history
+from bitcoincoin.tasks.coincap import fetch_all_currencies_history, fetch_currency_history
 from bitcoincoin.web.admins_id import admins_id
 
 
@@ -20,7 +20,7 @@ class Currencies(Resource):
     def post(self):
         if get_jwt_identity()['id'] not in admins_id:
             raise ForbiddenAdminError()
-        task = update_currencies.delay()
+        task = fetch_all_currencies_history.delay()
         return {"msg": "success"}
 
 
