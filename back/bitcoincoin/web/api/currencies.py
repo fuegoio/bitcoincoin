@@ -65,7 +65,7 @@ class CurrencyRates(Resource):
             except:
                 raise BadToDatetimeError(request.args["to_date"])
         interval_type = request.args.get('interval', 'day')
-        interval_number = request.args.get('limit', 500)
+        interval_number = int(request.args.get('limit', 500))
         return get_currency_rates_history(currency_id, from_date, to_date, interval_type, interval_number)
 
     @jwt_required

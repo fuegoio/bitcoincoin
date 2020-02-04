@@ -22,10 +22,10 @@
           </v-row>
         </v-col>
         <v-col cols="2" align-self="center">
-          <BuyingModal :currency="currency" />
+          <BuyingModal :currency="currency" @finished="updateWallet" />
         </v-col>
         <v-col cols="2" align-self="center">
-          <SellingModal :currency="currency" />
+          <SellingModal :currency="currency" @finished="updateWallet" />
         </v-col>
         <v-col cols="2">
           <v-row justify="end" class="px-2">
@@ -136,7 +136,7 @@ export default class CurrencyPage extends Vue {
     })
   }
 
-  created() {
+  updateWallet(): void {
     this.fetchCurrency().then(currency => {
       this.currency = currency
       this.loading = false
@@ -154,6 +154,10 @@ export default class CurrencyPage extends Vue {
     this.fetchCurrencyWallet().then(wallet => {
       this.wallet = wallet
     })
+  }
+
+  created() {
+    this.updateWallet()
   }
 }
 </script>

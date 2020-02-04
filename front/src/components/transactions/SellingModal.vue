@@ -65,10 +65,10 @@ export default {
   data: function() {
     return {
       dialog: false,
-      user: auth.user.profile,
+      user: auth.user,
       sellingAmount: 0,
       volume: 0,
-      value: [423, 446, 675, 510, 590, 610, 760],
+      value: [],
       gradient: ['#617be2', '#ff6473'],
     }
   },
@@ -79,10 +79,14 @@ export default {
         this.volume = response.data.volume
       })
       .catch(e => {})
+    this.getCurrencyRates()
   },
   computed: {
     predictedCashFlowIfSell: function() {
-      return this.user.cash_flow + this.sellingAmount * this.currency.last_value
+      return (
+        this.user.profile.cash_flow +
+        this.sellingAmount * this.currency.last_value
+      )
     },
   },
   methods: {
@@ -95,12 +99,27 @@ export default {
         })
         .then(response => {
           this.dialog = false
-          this.$router.go()
+          this.$emit('finished')
+          this.sellingAmount = 0
+          auth.checkAuth()
         })
         .catch(e => this.errors.push(e))
     },
     sellingVolumeNotHigherThanOwned(value) {
       return value <= this.volume
+    },
+    getCurrencyRates() {
+      axios
+        .get(
+          `http://localhost:8000/api/v1/currencies/${this.currency.id}/rates`,
+          {
+            params: { interval: 'hour', limit: 100 },
+          },
+        )
+        .then(response => {
+          this.value = response.data.map(x => x.value)
+        })
+        .catch(e => {})
     },
   },
 }
