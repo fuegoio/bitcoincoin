@@ -15,7 +15,7 @@
       Cash
     </v-col>
     <v-col class="text-center" cols="8">
-      {{ user.cash_flow | toCurrency }}
+      {{ user.profile.cash_flow | toCurrency }}
     </v-col>
     <v-col cols="4"> Current Value {{ currency.name }} </v-col>
     <v-col class="text-center" cols="8">
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      user: auth.user.profile,
+      user: auth.user,
     }
   },
 }

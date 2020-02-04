@@ -26,8 +26,18 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions>
-      <BuyingModal :currency="currencyWalletInfo.currency" />
-      <SellingModal :currency="currencyWalletInfo.currency" />
+      <v-row justify="center">
+        <BuyingModal
+          :currency="currencyWalletInfo.currency"
+          class="mx-3"
+          @finished="loadAll"
+        />
+        <SellingModal
+          :currency="currencyWalletInfo.currency"
+          class="mx-3"
+          @finished="loadAll"
+        />
+      </v-row>
     </v-card-actions>
   </v-card>
 </template>
@@ -41,6 +51,11 @@ export default {
   components: { SellingModal, BuyingModal },
   props: {
     currencyWalletInfo: Object,
+  },
+  methods: {
+    loadAll() {
+      this.$emit('updated')
+    },
   },
 }
 </script>
