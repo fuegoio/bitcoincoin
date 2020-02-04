@@ -49,7 +49,6 @@ class BankJoinDemand(BaseModel):
     id = AutoField()
     bank = ForeignKeyField(Bank, backref='demands')
     user = ForeignKeyField(User)
-    message = TextField()
 
     def get_small_data(self):
         data = model_to_dict(self, recurse=False)

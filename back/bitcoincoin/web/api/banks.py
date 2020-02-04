@@ -31,6 +31,14 @@ class Bank(Resource):
     @jwt_required
     def post(self, bank_id):
         user_id = get_jwt_identity()['id']
-        message = request.json['message']
-        join_demand = ask_to_join_bank(bank_id, user_id, message=message)
+        join_demand = ask_to_join_bank(bank_id, user_id)
         return join_demand
+
+
+class BankMembers(Resource):
+    @jwt_required
+    def post(self, bank_id):
+        user_id = request.json['userId']
+        rank = request.json['rank']
+        bank = join_bank(bank_id, user_id, rank)
+        return bank

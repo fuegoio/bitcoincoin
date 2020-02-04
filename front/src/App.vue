@@ -168,6 +168,15 @@ export default Vue.extend({
   background-color: #2a2e3a !important;
 }
 
+.theme--dark.v-sheet {
+  background-color: #2a2e3a !important;
+}
+
+.theme--dark.v-small-dialog__menu-content,
+.theme--dark.v-small-dialog__actions {
+  background-color: #2a2e3a !important;
+}
+
 .tools {
   margin-left: 16px;
 }

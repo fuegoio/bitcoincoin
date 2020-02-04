@@ -34,8 +34,11 @@
             <span>{{ item.value | toCurrency }}</span>
           </template>
           <template v-slot:item.membership="{ item }">
-            <v-icon small>
+            <v-icon v-if="item.membership" small color="success">
               mdi-check
+            </v-icon>
+            <v-icon v-else small color="error">
+              mdi-cancel
             </v-icon>
           </template>
         </v-data-table>
@@ -73,15 +76,14 @@ export default class BanksPage extends Vue {
 
   created(): void {
     this.fetchBanks().then(banks => {
-      this.banks = banks
-    })
-
-    this.fetchMyBanks().then(myBanks => {
-      this.myBanks = myBanks
-      this.banks.forEach(bank => {
-        if (this.myBanks.find(b => b.id === bank.id)) {
-          bank.membership = true
-        }
+      this.fetchMyBanks().then(myBanks => {
+        this.myBanks = myBanks
+        banks.forEach(bank => {
+          if (this.myBanks.find(b => b.id === bank.id)) {
+            bank.membership = true
+          }
+        })
+        this.banks = banks
       })
     })
   }

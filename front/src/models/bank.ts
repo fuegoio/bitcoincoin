@@ -5,4 +5,6 @@ export interface Bank {
   cash_flow: number
   wallet_value: number
   membership: boolean
+  memberships: any[]
+  demands: any[]
 }

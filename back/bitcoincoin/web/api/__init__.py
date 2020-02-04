@@ -12,7 +12,7 @@ from .users import (
     UserWalletCurrency
 )
 from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric, MeBanks
-from .banks import Banks, Bank
+from .banks import Banks, Bank, BankMembers
 from .. import app
 
 api_bp = Blueprint("api", __name__)
@@ -51,5 +51,6 @@ api.add_resource(Transactions, "/transactions")
 
 api.add_resource(Banks, "/banks")
 api.add_resource(Bank, "/banks/<int:bank_id>")
+api.add_resource(BankMembers, "/banks/<int:bank_id>/members")
 
 app.register_blueprint(api_bp, url_prefix="/api/v1")

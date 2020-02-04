@@ -27,6 +27,8 @@ def join_bank(bank_id: int, user_id: int, rank: str):
     bank = Bank.get(id=bank_id)
     join_demand = BankJoinDemand.get_or_none(bank=bank, user_id=user_id)
     user = BankUser.create(bank=bank, user=user_id, rank=rank)
+    join_demand.delete_instance()
+
     return bank.get_data()
 
 
@@ -39,7 +41,7 @@ def quit_bank(bank_id: int, user_id: int):
     return True
 
 
-def ask_to_join_bank(bank_id: int, user_id: int, message: str):
+def ask_to_join_bank(bank_id: int, user_id: int):
     bank = Bank.get(id=bank_id)
-    join_demand, created = BankJoinDemand.get_or_create(bank=bank, user=user_id, defaults={'message': message})
+    join_demand, created = BankJoinDemand.get_or_create(bank=bank, user=user_id)
     return created
