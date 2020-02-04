@@ -21,8 +21,8 @@
           </span>
         </v-row>
       </template>
-      <template v-slot:item.cash_flow="{ item }">
-        <span>{{ item.cash_flow | toCurrency }}</span>
+      <template v-slot:item.cashFlow="{ item }">
+        <span>{{ item.cashFlow | toCurrency }}</span>
       </template>
       <template v-slot:item.wallet_value="{ item }">
         <span>{{ item.wallet_value | toCurrency }}</span>
