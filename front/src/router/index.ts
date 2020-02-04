@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import CurrenciesPage from '@/pages/CurrenciesPage.vue'
 import CurrencyPage from '@/pages/CurrencyPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
+import RankingPage from '@/pages/RankingPage.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfilePage,
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: RankingPage,
   },
 ]
 

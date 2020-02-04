@@ -9,7 +9,7 @@ from .users import (
     Users,
     UserTransactions,
     UserWallet,
-    UserWalletCurrency,
+    UserWalletCurrency
 )
 from .me import Me, MeTransactions, MeWallet, MeWalletCurrency, MeHistoric
 from .. import app
@@ -27,7 +27,6 @@ def before_request():
 @api_bp.teardown_request
 def after_request(exception=None):
     db.close()
-
 
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<int:user_id>")

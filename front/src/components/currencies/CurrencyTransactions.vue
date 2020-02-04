@@ -40,7 +40,7 @@ export default class CurrencyTransactions extends Vue {
   headers = [
     { text: 'Trader', value: 'user' },
     { text: 'Type', value: 'type' },
-    { text: 'Quantitée', value: 'quantity' },
+    { text: 'Quantité', value: 'quantity' },
     { text: 'Valeur', value: 'value' },
     { text: 'Date', value: 'datetime.diff' },
   ]

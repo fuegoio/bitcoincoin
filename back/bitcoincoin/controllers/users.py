@@ -15,7 +15,8 @@ def search_users(filters: dict):
         users = users.where(User.username == filters["username"])
     if "email" in filters:
         users = users.where(User.email == filters["email"])
-    return [user.get_small_data() for user in users]
+    list_users = [user.get_small_data() for user in users]
+    return sorted(list_users, key=lambda k: k['value'], reverse=True)
 
 
 def get_user_by_id(user_id: int):

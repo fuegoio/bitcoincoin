@@ -24,6 +24,8 @@ class Users(Resource):
             filters["username"] = request.args["username"]
         if "email" in request.args:
             filters["email"] = request.args["email"]
+        if "sorted" in request.args:
+            filters["sorted"] = request.args["sorted"]
         return search_users(filters)
 
 
