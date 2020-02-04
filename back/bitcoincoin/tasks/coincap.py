@@ -1,5 +1,6 @@
 import datetime
 
+import pendulum
 import requests
 
 from bitcoincoin.controllers.currencies import create_currency, create_currency_rate
@@ -42,7 +43,7 @@ def fetch_currency_history(currency_id):
         history = request.json()
         for rate in history['data']:
             currency_rate = rate['priceUsd']
-            time = datetime.datetime.fromtimestamp(rate['time'] / 1000)
+            time = pendulum.from_timestamp(rate['time'] / 1000, tz='UTC')
             create_currency_rate(currency_id=currency.id, value=currency_rate, datetime=time)
 
     if currency is not None:

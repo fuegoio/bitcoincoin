@@ -94,7 +94,7 @@ export default class CurrencyPage extends Vue {
   wallet: Wallet = null
   loading = true
   ratesLoading = true
-  interval = 'day'
+  interval = 'minute'
 
   async fetchCurrency(): Promise<Currency> {
     const currencyId: number = parseInt(this.$route.params.currencyId)

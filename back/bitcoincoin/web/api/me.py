@@ -53,6 +53,13 @@ class MeWallet(Resource):
         return get_user_wallet(user_id)
 
 
+class MeBanks(Resource):
+    @jwt_required
+    def get(self):
+        user_id = get_jwt_identity()['id']
+        return get_user_banks(user_id)
+
+
 class MeWalletCurrency(Resource):
     @jwt_required
     def get(self, currency_id):
