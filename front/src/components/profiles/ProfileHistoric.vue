@@ -67,6 +67,8 @@ export default class CurrencyHistoric extends Vue {
     //chart.scrollbarY = new am4core.Scrollbar();
     // chart.scrollbarX = new am4core.Scrollbar()
     this.chart.scrollbarX = new am4charts.XYChartScrollbar()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     this.chart.scrollbarX.series.push(series)
     this.chart.scrollbarX.parent = this.chart.bottomAxesContainer
     this.chart.scrollbarX.background.fill = am4core.color('#424242')

@@ -17,19 +17,17 @@ services:
       - 6379:6379
 
   back:
-    build:
-      context: ./back
-      dockerfile: Dockerfile
-    volumes:
-      - ./back/:/app
+    build: ./back
     depends_on:
       - database
       - redis
     ports:
       - 8000:8000
-    command: "python web.py"
     environment:
       - DB_HOST=database
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_BACKEND_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
 
   cronjob:
     build: ./back
@@ -45,3 +43,5 @@ services:
 
   frontend:
     build: ./front
+    ports:
+      - 80:80
