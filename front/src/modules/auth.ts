@@ -3,6 +3,11 @@ import axios from 'axios'
 import router from '../router'
 import { User } from '@/models/user'
 
+let authUrl = 'http://bitcoincoin.kernelpanic.io:8000/auth'
+if (process.env.NODE_ENV === 'development') {
+  authUrl = 'http://localhost:8000/auth'
+}
+
 const user: { authenticated: boolean; profile: User } = {
   authenticated: false,
   profile: undefined,
@@ -49,7 +54,7 @@ function login(
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     axios
-      .post('http://localhost:8000/auth/login', {
+      .post(authUrl + '/login', {
         email: email,
         password: password,
       })
@@ -75,7 +80,7 @@ function register(
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     axios
-      .post('http://localhost:8000/auth/register', {
+      .post(authUrl + '/register', {
         email: email,
         password: password,
         username: username,
