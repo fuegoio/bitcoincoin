@@ -5,8 +5,8 @@ from bitcoincoin.core import config
 
 celery = Celery(
     'bitcoincoin',
-    broker=config.get('CELERY_BROKER_URL', 'redis://localhost'),
-    backend=config.get('CELERY_BACKEND_URL', 'redis://localhost')
+    broker=config.get('CELERY_BROKER_URL', 'redis://redis:6379'),
+    backend=config.get('CELERY_BACKEND_URL', 'redis://redis:6379')
 )
 celery.conf.update({'worker_hijack_root_logger': False})
 celery.conf.beat_schedule = {

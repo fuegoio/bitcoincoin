@@ -15,3 +15,33 @@ services:
     image: redis:latest
     ports:
       - 6379:6379
+
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    volumes:
+      - ./back/:/app
+    depends_on:
+      - database
+      - redis
+    ports:
+      - 8000:8000
+    command: "python web.py"
+    environment:
+      - DB_HOST=database
+
+  cronjob:
+    build: ./back
+    command: "python tasks.py"
+    depends_on:
+      - database
+      - redis
+    environment:
+      - DB_HOST=database
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_BACKEND_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
+
+  frontend:
+    build: ./front
