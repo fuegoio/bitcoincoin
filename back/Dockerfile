@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 ADD . /app
 
-CMD ["python", "run.py"]
+CMD ["python", "web.py"]
