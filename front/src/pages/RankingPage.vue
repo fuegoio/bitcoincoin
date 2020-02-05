@@ -52,7 +52,7 @@ export default {
     }
   },
   created() {
-    axios.get('http://localhost:8000/api/v1/users').then(response => {
+    axios.get('/users').then(response => {
       const listUsers = []
       for (const [index, user] of response.data.entries()) {
         listUsers.push({

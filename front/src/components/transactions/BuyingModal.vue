@@ -85,7 +85,7 @@ export default {
   methods: {
     validate() {
       axios
-        .post('http://localhost:8000/api/v1/transactions', {
+        .post('/transactions', {
           currency: this.currency.id,
           quantity: this.buyingAmount,
           isSale: false,
@@ -103,12 +103,9 @@ export default {
     },
     getCurrencyRates() {
       axios
-        .get(
-          `http://localhost:8000/api/v1/currencies/${this.currency.id}/rates`,
-          {
-            params: { interval: 'hour', limit: 100 },
-          },
-        )
+        .get(`/currencies/${this.currency.id}/rates`, {
+          params: { interval: 'hour', limit: 100 },
+        })
         .then(response => {
           this.value = response.data.map(x => x.value)
         })

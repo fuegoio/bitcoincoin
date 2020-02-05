@@ -38,7 +38,7 @@ export default {
       this.getCurrencyData()
     },
     getCurrencyData() {
-      axios.get('http://localhost:8000/api/v1/me/wallet').then(response => {
+      axios.get('/me/wallet').then(response => {
         const wallet = []
         for (const currencyWalletInfo of response.data) {
           if (currencyWalletInfo.volume > 0) {
