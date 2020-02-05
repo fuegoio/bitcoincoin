@@ -67,7 +67,7 @@ def get_user_value_history(user_id, interval_type='minute'):
 
     values = []
 
-    transactions_history = list(Transaction.select().where(Transaction.datetime >= limit_date))
+    transactions_history = list(Transaction.select().where(Transaction.user == user_id, Transaction.datetime >= limit_date))
     transactions_processed = []
     for hour in range(500):
         limit = {f"{interval_type}s": hour}
