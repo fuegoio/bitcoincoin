@@ -1,6 +1,6 @@
 # BitCoinCoin
 
-BitCoinCoin is a fake crypto-currency trading platform on which the rates of the crytpo-currencies are taken from the real world. You can buy and sell your favorite crypto-currencies directly on the platform and watch your value evolve with time, compare your score with every one and create or join banks together to merge efforts.
+BitCoinCoin is a fake cryptocurrency trading platform on which the rates of the cryptocurrencies are taken from the real world. You can buy and sell your favorite cryptocurrencies directly on the platform and watch your value evolve with time, compare your score with every one and create or join banks together to merge efforts.
 
 ## Getting started
 
