@@ -1,18 +1,33 @@
 /api
     /v1
-        /users                              =>  GET: search users (with query filters)
+-----------------------------------------------------------------------------------------------------
+        /me                                 =>  GET: get user
+            /historic                       =>  GET: get user value history
+            /transactions                   =>  GET: search user transactions (query filters: currency, limit)
+            /banks                          =>  GET: get user banks
+            /wallet                         =>  GET: get user wallet
+                /<int:currency_id>          =>  GET: get user wallet one currencies
+-----------------------------------------------------------------------------------------------------
+        /users                              =>  GET: search users (query filters: user, username, email, sorted)
             /<user_id:int>                  =>  GET: get user
                                                 DELETE: delete user
-                /transactions               =>  GET: get user transactions (with query filters)
-                /wallet                     =>  GET: get user wallet all currencies
-                    /<currency_id:int>      =>  GET: get user wallet one currency
-                /cash_flow                  =>  GET: get user cash flow
-
-        /currencies                         =>  GET: search currencies (with query filters)
-                                                POST: create new currency
-            /<currency_id:int>              =>  GET: get currency
+                /transactions               =>  GET: search user transactions (query filters: currency, limit)
+                /wallet                     =>  GET: get user wallet
+                    /<int:currency_id>      =>  GET: get user wallet one currency
+-----------------------------------------------------------------------------------------------------
+        /currencies                         =>  GET: search currencies (query filters: limit, offset, symbol, name)
+                                                POST: launch task to fetch all currencies history
+            /<int:currency_id>              =>  GET: get currency
                                                 DELETE: delete currency
-                /rates                      =>  GET: get currency rates history (with query filters)
-                                                POST: create new currency rate
-        /transactions                       =>  GET: search transactions (with query filters)
+                /rates                      =>  GET: get currency rates history (query filters: from_date, to_date, interval, limit)
+                                                POST: launch task to fetch currency history
+-----------------------------------------------------------------------------------------------------
+        /transactions                       =>  GET: search transactions (query filters: user, currency, from_date, to_date)
                                                 POST: create new transaction
+-----------------------------------------------------------------------------------------------------
+        /banks                              =>  GET: get all banks
+                                                POST: create new bank
+            /<int:bank_id>                  =>  GET: get bank
+                                                POST: ask to join a bank
+                /members                    =>  POST: add a new member
+-----------------------------------------------------------------------------------------------------

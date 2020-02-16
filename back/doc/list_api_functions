@@ -1,34 +1,60 @@
 USERS
 
-get all users
-    or search with query
-get one user
-delete one user
-get one user all transactions
-    or one currency
-    or time period
-get one user last transaction
-    or one currency
-get one user wallet all currencies
-get one user wallet one currency
+search users
+    GET /users (query filters: user, username, email, sorted)
+get user
+    GET /users/<int:user_id>
+    GET /me
+delete user
+    DELETE /users/<int:user_id>
+search user transactions
+    GET /users/<int:user_id>/transactions (query filters: currency, limit)
+    GET /me/transactions (query filters: currency, limit)
+get user wallet
+    GET /users/<int:user_id>/wallet
+    GET /me/wallet
+get user wallet one currency
+    GET /users/<int:user_id>/wallet/<int:currency_id>
+    GET /me/wallet/<int:currency_id>
+get user value history
+    GET /me/historic
+get user banks
+    GET /me/banks
 
 
 CURRENCIES
 
-get all currencies
-    or search with query
-get one currency
-create one currency
-delete one currency
-get one currency rate history
-    or time period history
-create one currency new rate
+search currencies
+    GET /currencies (query filters: limit, offset, symbol, name)
+fetch all currencies history
+    POST /currencies
+get currency
+    GET /currencies/<int:currency_id>
+delete currency
+    DELETE /currencies/<int:currency_id>
+get currency rates history
+    GET /currencies/<int:currency_id>/rates (query filters: from_date, to_date, interval, limit)
+fetch currency history
+    POST /currencies/<int:currency_id>/rates
 
 
 TRANSACTIONS
 
-get all transactions
-    or search with query (user, currency)
-    or time period
+search transactions
+    GET /transactions (query filters: user, currency, from_date, to_date)
 create one transaction
+    POST /transactions
 
+
+BANKS
+
+get all banks
+    GET /banks
+create new bank
+    POST /banks
+get bank
+    GET /banks/<int:bank_id>
+ask to join a bank
+    POST /banks/<int:bank_id>
+add member to bank
+    POST /banks/<int:bank_id>/members
