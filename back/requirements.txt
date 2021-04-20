@@ -23,7 +23,7 @@ peewee==3.11.0
 pendulum==2.0.5
 pluggy==0.13.1
 psycopg2-binary==2.8.3
-py==1.8.1
+py==1.10.0
 PyJWT==1.7.1
 pyparsing==2.4.6
 pytest==5.3.2
